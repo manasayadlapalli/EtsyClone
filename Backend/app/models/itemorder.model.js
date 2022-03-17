@@ -1,7 +1,10 @@
 module.exports = (sequelize, Sequelize) => {
     const ItemOrder = sequelize.define("itemorders", {
       quantity: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
+      },
+      inprogress: {
+        type: Sequelize.BOOLEAN
       }
     });
     return ItemOrder;

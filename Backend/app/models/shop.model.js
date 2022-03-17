@@ -10,7 +10,7 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING
       },
       salescount: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
       }
     });
     return Shop;

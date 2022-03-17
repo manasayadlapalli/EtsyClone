@@ -1,4 +1,4 @@
-const { authJwt } = require("../middleware");
+const { authJwt, verifyUserProfile } = require("../middleware");
 const controller = require("../controllers/user.controller");
 
 module.exports = function(app) {
@@ -30,7 +30,10 @@ module.exports = function(app) {
 
   app.post(
     "/api/user/profile",
-    [authJwt.verifyToken],
+    [
+      authJwt.verifyToken,
+      verifyUserProfile.checkDuplicateUserProfile
+    ],
     controller.userprofilecreate
   );
 

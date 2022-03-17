@@ -39,22 +39,22 @@ db.favourite = require("../models/favourite.model.js")(sequelize, Sequelize);
 
 // table associations
 db.userprofile.belongsTo(db.user, {
-  foriegnKey: "userid", 
+  foriegnKey: "userId", 
   as: "user"
 });
 
 db.shop.belongsTo(db.user, {
-  foriegnKey: "userid",
+  foriegnKey: "ownerId",
   as: "owner"
 });
 
 db.favourite.belongsTo(db.user, {
-  foriegnKey: "userid",
+  foriegnKey: "userId",
   as: "user"
 });
 
 db.cartorder.belongsTo(db.user, {
-  foriegnKey: "userid",
+  foriegnKey: "userId",
   as: "user"
 });
 
@@ -63,36 +63,36 @@ db.shop.hasMany(db.item, {
 });
 
 db.item.belongsTo(db.shop, {
-  foriegnKey: "shopid",
+  foriegnKey: "shopId",
   as: "shop"
 });
 
 db.item.belongsTo(db.category, {
-  foriegnKey: "categoryid",
+  foriegnKey: "categoryId",
   as: "category"
 });
 
 db.itemorder.belongsToMany(db.item, {
   through: "itemorder_items",
   as: "items",
-  foriegnKey: "itemorderid"
+  foriegnKey: "itemorderId"
 });
 
 db.cartorder.belongsToMany(db.itemorder, {
   through: "cartorders_itemorders",
   as: "itemorders",
-  foriegnKey: "cartorderid",
+  foriegnKey: "cartorderId",
 });
 
 db.category.hasMany(db.item, {
-  foriegnKey: "itemid",
+  foriegnKey: "itemId",
   as: "items"
 });
 
 db.favourite.belongsToMany(db.item, {
   through: "favourites_items",
   as: "favouriteitems",
-  foriegnKey: "favouriteid"
+  foriegnKey: "favouriteId"
 });
 
 module.exports = db;

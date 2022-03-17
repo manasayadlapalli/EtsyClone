@@ -10,10 +10,10 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING
       },
       availablecount: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
       },
       price: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
       }
     });
     return Item;
