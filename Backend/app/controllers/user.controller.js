@@ -1,6 +1,6 @@
 const db = require("../models");
 const config = require("../config/auth.config");
-const user = db.user;
+const User = db.user;
 const Userprofile = db.userprofile;
 
 exports.userhome = (req, res) => {
@@ -12,7 +12,33 @@ exports.userdelete = (req, res) => {
 };
 
 exports.userprofile = (req, res) => {
-  res.status(200).send("User Profile page.");
+  Userprofile.findOne({
+    where: {
+      userId: req.body.userid
+    }
+  })
+    .then(userprofile => {
+      if (!userprofile) {
+        return res.status(404).send({ message: "Userprofile Not found for this user." });
+      }
+
+      res.status(200).send({
+        userprofileid: userprofile.id,
+        name: userprofile.name,
+        address: userprofile.address,
+        city: userprofile.city,
+        zipcode: userprofile.zipcode,
+        country: userprofile.country,
+        image: userprofile.image,
+        description: userprofile.description,
+        gender: userprofile.gender,
+        dateofbirth: userprofile.dateofbirth,
+        phonenumber: userprofile.phonenumber
+      });
+    })
+    .catch(err => {
+      res.status(500).send({ message: err.message });
+    });
 };
 
 exports.userprofilecreate = (req, res) => {
