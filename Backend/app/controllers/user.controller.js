@@ -71,7 +71,23 @@ exports.userprofileupdate = (req, res) => {
 };
 
 exports.userfavourites = (req, res) => {
-  res.status(200).send("User Favourites page.");
+  Favourite.findAll({
+    attributes: ['itemId'],
+    where: {
+      userId: req.body.userid
+    }
+  })
+    .then(favourite => {
+      if (!favourite) {
+        return res.status(404).send({ message: "User doesn't have any favourites!" });
+      }
+      res.status(200).send(
+        [favourite]
+      );
+    })
+    .catch(err => {
+      res.status(500).send({ message: err.message });
+    });
 };
 
 exports.userfavouritesadd = (req, res) => {
