@@ -1,0 +1,25 @@
+.Nav1{
+    justify-content: space-evenly;
+    display: flex;
+    float:left;
+    background: #FFF;
+    padding: 20px;
+    width: 1350px;
+    font-family: "Guardian-EgypTT",Charter,"Charter Bitstream",Cambria,"Noto Serif Light","Droid Serif",Georgia,serif;
+    
+}
+.Nav2{
+   justify-content: space-evenly;
+    display: inline-flex;
+    width:1300px;
+    background: #FFF;
+    font-family: "Guardian-EgypTT",Charter,"Charter Bitstream",Cambria,"Noto Serif Light","Droid Serif",Georgia,serif;
+}
+.h6{
+    color: black;
+}
+.searchbar{
+    width: 720px;
+    border-radius: 40px;
+    border: 2px rgba(0, 0, 0, 0.699) solid;
+}

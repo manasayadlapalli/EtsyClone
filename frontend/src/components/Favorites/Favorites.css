@@ -1,0 +1,9 @@
+.h1{
+    align-content: left;
+}
+.searchfav{
+    width: 350px; 
+    height:28px;
+    border-radius: 50px;
+    border: 2px rgba(0, 0, 0, 0.699) solid;
+}

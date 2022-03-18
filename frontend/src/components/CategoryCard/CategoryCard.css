@@ -1,0 +1,35 @@
+.categCard{
+    width:1300px;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    background-color: #FDEBD0;
+  }
+.categ_div {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin: 0 20px 20px 0 !important;
+    padding: 20px 10px 10px 10px !important;
+  }
+
+.categ_name {
+      color: black !important
+  }
+
+.categ_image {
+    
+      height: 100px !important;
+      border-radius: 50% !important;
+      margin: 0 0 10px 0 !important;
+}
+
+.catge_effect a {
+  text-decoration: none !important;
+}
+
+.catge_effect:hover {
+  opacity: 1 !important;
+  transform: scale(1.02) !important;
+}
