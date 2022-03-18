@@ -21,7 +21,7 @@ module.exports = function(app) {
   );
 
   app.get(
-    "/api/user/favourites/search",
+    "/api/search/user/favourites",
     [authJwt.verifyToken],
     controller.searchuserfavourites
   );

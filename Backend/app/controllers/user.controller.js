@@ -72,6 +72,14 @@ exports.userfavourites = (req, res) => {
   res.status(200).send("User Favourites page.");
 };
 
+exports.userfavouritesadd = (req, res) => {
+  res.status(200).send("User Favourites page.");
+};
+
+exports.userfavouritesdelete = (req, res) => {
+  res.status(200).send("User Favourites page.");
+};
+
 exports.userpurchases = (req, res) => {
   res.status(200).send("User Purchases page.");
 };

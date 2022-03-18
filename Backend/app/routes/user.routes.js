@@ -49,6 +49,18 @@ module.exports = function(app) {
     controller.userfavourites
   );
 
+  app.post(
+    "/api/user/favourites",
+    [authJwt.verifyToken],
+    controller.userfavouritesadd
+  );
+
+  app.delete(
+    "/api/user/favourites",
+    [authJwt.verifyToken],
+    controller.userfavouritesdelete
+  );
+
   app.get(
     "/api/user/purchases",
     [authJwt.verifyToken],

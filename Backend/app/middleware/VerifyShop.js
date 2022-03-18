@@ -36,10 +36,28 @@ checkDuplicateShop = (req, res, next) => {
     next();
   });
 };
-  
+
+checkShopExists = (req, res, next) => {
+  // check if shop exists
+  Shop.findOne({
+    where: {
+      id: req.body.shopid
+    }
+  }).then(shop => {
+    if (!shop) {
+      res.status(400).send({
+        message: "Failed! shop doesn't exist!"
+      });
+      return;
+    }
+    next();
+  });
+};
+
 const verifyShop = {
     checkShopOwnerExists: checkShopOwnerExists,
-    checkDuplicateShop: checkDuplicateShop
+    checkDuplicateShop: checkDuplicateShop,
+    checkShopExists: checkShopExists
 };
 
 module.exports = verifyShop;

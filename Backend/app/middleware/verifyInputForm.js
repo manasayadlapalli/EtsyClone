@@ -32,11 +32,24 @@ checkPasswordForm = (req, res, next) => {
   }
   next();
 };
-  
+
+checkCategoryIsAlpha = (req, res, next) => {
+  // Email
+  if (!validator.isAlpha(req.body.category)) {
+    res.status(400).send({
+        message: "Failed! Category name has to be within (a-zA-Z)"
+      });
+    return;
+  }
+  next();
+};
+
+
 const verifyInputForm = {
     checkUsernameForm: checkUsernameForm,
     checkEmailForm: checkEmailForm,
-    checkPasswordForm: checkPasswordForm
+    checkPasswordForm: checkPasswordForm,
+    checkCategoryIsAlpha: checkCategoryIsAlpha
 };
 
 module.exports = verifyInputForm;

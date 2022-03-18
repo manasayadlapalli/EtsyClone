@@ -1,4 +1,4 @@
-const { authJwt } = require("../middleware");
+const { authJwt, verifyShop, verifyInputForm } = require("../middleware");
 const controller = require("../controllers/item.controller");
 
 module.exports = function(app) {
@@ -17,7 +17,11 @@ module.exports = function(app) {
 
   app.post(
     "/api/shop/owner/item",
-    [authJwt.verifyToken], 
+    [
+      authJwt.verifyToken,
+      verifyShop.checkShopExists,
+      verifyInputForm.checkCategoryIsAlpha
+    ], 
     controller.itemcreate
   );
 

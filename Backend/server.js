@@ -16,18 +16,18 @@ app.use(express.urlencoded({ extended: true }));
 // database
 const db = require("./app/models");
 
-//db.sequelize.sync();
+db.sequelize.sync();
 
 // force: true will drop the table if it already exists
-db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0').then(() => {
-  console.log('Set foriegn key checks to False')
-  db.sequelize.sync({force: true}).then(() => {
-    console.log('Drop and Resync Database with { force: true }');
-    db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1').then(() => {
-      console.log('Set foriegn key checks to True');
-    });
-  });
-});
+//db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0').then(() => {
+//  console.log('Set foriegn key checks to False')
+//  db.sequelize.sync({force: true}).then(() => {
+//    console.log('Drop and Resync Database with { force: true }');
+//    db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1').then(() => {
+//      console.log('Set foriegn key checks to True');
+//    });
+//  });
+//});
 
 // simple route
 // app.get("/", (req, res) => {
