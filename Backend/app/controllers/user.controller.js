@@ -2,6 +2,8 @@ const db = require("../models");
 const config = require("../config/auth.config");
 const User = db.user;
 const Userprofile = db.userprofile;
+const Favourite = db.favourite;
+const Item = db.item;
 
 exports.userhome = (req, res) => {
   res.status(200).send("User Homepage.");
@@ -73,7 +75,17 @@ exports.userfavourites = (req, res) => {
 };
 
 exports.userfavouritesadd = (req, res) => {
-  res.status(200).send("User Favourites page.");
+  // Save items as Favourites
+  Favourite.create({
+    userId: req.body.userid,
+    itemId: req.body.itemid
+  })
+  .then(favourite => {
+    res.send({ message: "User added item as favourite!" });
+  })
+  .catch(err => {
+    res.status(500).send({ message: err.message });
+  });
 };
 
 exports.userfavouritesdelete = (req, res) => {

@@ -53,13 +53,18 @@ db.favourite.belongsTo(db.user, {
   as: "user"
 });
 
+db.favourite.belongsTo(db.item, {
+  foriegnKey: "itemId",
+  as: "item"
+});
+
 db.cartorder.belongsTo(db.user, {
   foriegnKey: "userId",
   as: "user"
 });
 
 db.shop.hasMany(db.item, {
-  as: "shopitems",
+  as: "shopitem",
 });
 
 db.item.belongsTo(db.shop, {
@@ -73,26 +78,20 @@ db.item.belongsTo(db.category, {
 });
 
 db.itemorder.belongsToMany(db.item, {
-  through: "itemorder_items",
-  as: "items",
+  through: "itemorder_track_item",
+  as: "item",
   foriegnKey: "itemorderId"
 });
 
 db.cartorder.belongsToMany(db.itemorder, {
-  through: "cartorders_itemorders",
-  as: "itemorders",
+  through: "cartorder_track_itemorder",
+  as: "itemorder",
   foriegnKey: "cartorderId",
 });
 
 db.category.hasMany(db.item, {
   foriegnKey: "itemId",
-  as: "items"
-});
-
-db.favourite.belongsToMany(db.item, {
-  through: "favourites_items",
-  as: "favouriteitems",
-  foriegnKey: "favouriteId"
+  as: "item"
 });
 
 module.exports = db;

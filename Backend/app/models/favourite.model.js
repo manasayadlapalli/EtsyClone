@@ -1,8 +1,6 @@
 module.exports = (sequelize, Sequelize) => {
-    const Favourite = sequelize.define("favourites", {
-      count: {
-          type: Sequelize.INTEGER
-      },
+    const Favourite = sequelize.define("favourite", {
+      
     });
     return Favourite;
 };

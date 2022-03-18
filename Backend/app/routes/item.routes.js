@@ -1,4 +1,4 @@
-const { authJwt, verifyShop, verifyInputForm } = require("../middleware");
+const { authJwt, verifyShop, verifyInputForm, verifyItem } = require("../middleware");
 const controller = require("../controllers/item.controller");
 
 module.exports = function(app) {
@@ -20,7 +20,8 @@ module.exports = function(app) {
     [
       authJwt.verifyToken,
       verifyShop.checkShopExists,
-      verifyInputForm.checkCategoryIsAlpha
+      verifyInputForm.checkCategoryIsAlpha,
+      verifyItem.checkDuplicateItem
     ], 
     controller.itemcreate
   );
