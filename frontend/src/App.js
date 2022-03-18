@@ -1,14 +1,21 @@
-import Navbar from './components/Navbar/Navbar';
-import { BrowserRouter as Router, Route, Routes,nav } from "react-router-dom";
-import Footer from './components/Footer/Footer';
-import UserProfileProfile from './components/UserProfilePage/UserProfilePage';
-import Cart from './components/Cart/Cart';
-import Login from './components/Auth/Login';
-import Signup from './components/Auth/Signup';
-import RegisterShop from './components/UserShopRegister/RegisterShop';
-import Favorites from './components/Favorites/Favorites';
-import CategoryCard from './components/CategoryCard/CategoryCard';
+import React, { useState, useEffect, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+
+import "bootstrap/dist/css/bootstrap.min.css";
 import './App.css';
+
+import SignIn from './components/Auth/SignIn';
+import Signup from './components/Auth/SignUp';
+
+//import Navbar from './components/Navbar/Navbar';
+//import Footer from './components/Footer/Footer';
+//
+//import UserProfilePage from './components/UserProfilePage/UserProfilePage';
+//import Cart from './components/Cart/Cart';
+//import RegisterShop from './components/UserShopRegister/RegisterShop';
+//import Favorites from './components/Favorites/Favorites';
+//import CategoryCard from './components/CategoryCard/CategoryCard';
 
 function App() {
   return (
@@ -21,7 +28,7 @@ function App() {
       
          <Routes>
            <Route path ="/" element={ <CategoryCard/>}/>
-           <Route path="/profile" element={<UserProfileProfile/>}  />
+           <Route path="/profile" element={<UserProfilePage/>}  />
           
           <Route path="/login" element={<Login />} />
           {/* <Route path="/data"> <Datarender />  </Route> */}

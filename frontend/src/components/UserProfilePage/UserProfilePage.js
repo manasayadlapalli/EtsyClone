@@ -1,6 +1,6 @@
 import React from 'react'
 
-function UserProfilepage() {
+function UserProfilePage() {
 
   
   return (
@@ -14,4 +14,4 @@ function UserProfilepage() {
   )
 }
 
-export default UserProfilepage
+export default UserProfilePage

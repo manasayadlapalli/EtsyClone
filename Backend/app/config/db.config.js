@@ -1,8 +1,8 @@
 module.exports = {
-  HOST: "mysql-test.cxmochu07w7u.us-west-1.rds.amazonaws.com",
+  HOST: "mysql-cmpe273-lab1.czsizzvuqd3q.us-east-1.rds.amazonaws.com",
   USER: "admin",
-  PASSWORD: "12121212",
-  DB: "test",
+  PASSWORD: "12345678",
+  DB: "etsydb",
   dialect: "mysql",
   pool: {
     max: 5,
