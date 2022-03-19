@@ -1,86 +1,108 @@
-import React, { useState } from "react";
-import Navbar from "../Navbar/Navbar";
-import Error from "./AlertError";
-import axios from "axios";
-import Cookies from "js-cookie";
-import { Navigate } from "react-router";
+import React, { useState, useEffect  } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Redirect } from "react-router-dom";
+import { Formik, Field, Form, ErrorMessage } from "formik";
+import * as Yup from "yup";
 
-export default function SignIn() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [auth, setAuth] = useState(false);
-  const [invalid, setInvalid] = useState(false);
+import { signin } from "../slices/auth";
+import { clearMessage } from "../slices/message";
 
-  const [redirect, setRedirect] = useState(Cookies.get("auth"));
+const SignIn = (props) => {
+  const [loading, setLoading] = useState(false);
 
-  const login = () => {
-    const data = {
-      username: username,
-      password: password,
-    };
+  const { isSignedIn } = useSelector((state) => state.auth);
+  const { message } = useSelector((state) => state.message);
 
-    axios.defaults.withCredentials = true;
-    axios.post("http://127.0.0.1:3001/login", data).then((response) => {
-      if (response.data === "SUCCESS") {
-        setAuth(true);
-        console.log("Status Code : ", response.status);
-        Cookies.set("username", username, { expires: 1 });
-        Cookies.set("password", password, { expires: 1 });
-        Cookies.set("auth", true, { expires: 1 });
-        setRedirect(true);
-      } else {
-        setAuth(false);
-      }
-      if (response.data === "UNSUCCESS") {
-        setInvalid(true);
-        console.log(response.data);
-      }
-    });
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(clearMessage());
+  }, [dispatch]);
+
+  const initialValues = {
+    username: "",
+    password: "",
   };
 
-  return (
-    <>
-      {redirect ? <Navigate to={"/"} /> : ""}
-      <Navbar loggedin={true} />
-      <form className="form-signin">
-        <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
-        <label htmlFor="inputUsername" className="sr-only">
-          Username
-        </label>
-        <input
-          type="text"
-          id="inputEmail"
-          className="form-control"
-          placeholder="Username"
-          required=""
-          autoFocus=""
-          name="username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <label htmlFor="inputPassword" className="sr-only">
-          Password
-        </label>
-        <input
-          type="password"
-          id="inputPassword"
-          className="form-control"
-          placeholder="Password"
-          required=""
-          name="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+  const validationSchema = Yup.object().shape({
+    username: Yup.string().required("This field is required!"),
+    password: Yup.string().required("This field is required!"),
+  });
 
-        <a
-          className="btn btn-lg btn-block default-button mt-2"
-          type="submit"
-          onClick={login}
+  const handleSignIn = (formValue) => {
+    const { username, password } = formValue;
+    setLoading(true);
+
+    dispatch(signin({ username, password }))
+      .unwrap()
+      .then(() => {
+        props.history.push("/profile");
+        window.location.reload();
+      })
+      .catch(() => {
+        setLoading(false);
+      });
+  };
+
+  if (isSignedIn) {
+    return <Redirect to="/home" />;
+  }
+
+  return (
+    <div className="col-md-12 login-form">
+      <div className="card card-container">
+        <img
+          src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+          alt="profile-img"
+          className="profile-img-card"
+        />
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={handleSignIn}
         >
-          Sign in
-        </a>
-      </form>
-      {invalid ? <Error message="Invalid Credentials" /> : ""}
-    </>
+          <Form>
+            <div className="form-group">
+              <label htmlFor="username">Username</label>
+              <Field name="username" type="text" className="form-control" />
+              <ErrorMessage
+                name="username"
+                component="div"
+                className="alert alert-danger"
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="password">Password</label>
+              <Field name="password" type="password" className="form-control" />
+              <ErrorMessage
+                name="password"
+                component="div"
+                className="alert alert-danger"
+              />
+            </div>
+
+            <div className="form-group">
+              <button type="submit" className="btn btn-primary btn-block" disabled={loading}>
+                {loading && (
+                  <span className="spinner-border spinner-border-sm"></span>
+                )}
+                <span>SignIn</span>
+              </button>
+            </div>
+          </Form>
+        </Formik>
+      </div>
+
+      {message && (
+        <div className="form-group">
+          <div className="alert alert-danger" role="alert">
+            {message}
+          </div>
+        </div>
+      )}
+    </div>
   );
-}
+};
+
+export default SignIn;
