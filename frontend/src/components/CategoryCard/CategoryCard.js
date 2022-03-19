@@ -1,5 +1,5 @@
 import './CategoryCard.css'
-import { Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 let cardDetailsList = [{"id" : 1, "image" : "https://i.etsystatic.com/12397853/r/il/505fa0/2426681051/il_300x300.2426681051_mocv.jpg", "title": "Wall decor" },

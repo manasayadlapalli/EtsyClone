@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-import { signUp } from "../slices/auth";
-import { clearMessage } from "../slices/message";
+import { signup } from "../../slices/auth";
+import { clearMessage } from "../../slices/message";
 
 const SignUp = (props) => {
   const [successful, setSuccessful] = useState(false);
@@ -53,7 +53,7 @@ const SignUp = (props) => {
 
     setSuccessful(false);
 
-    dispatch(signUp({ username, email, password }))
+    dispatch(signup({ username, email, password }))
       .unwrap()
       .then(() => {
         setSuccessful(true);

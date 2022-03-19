@@ -1,71 +1,76 @@
-import { DropdownButton,Dropdown } from 'react-bootstrap';
-import React,{Component} from 'react';
-import {Link} from 'react-router-dom';
-import { GrFavorite } from 'react-icons/gr';
-import {AiOutlineShop} from 'react-icons/ai';
-import {BiLogOut, } from 'react-icons/bi';
-import {BsCart4} from 'react-icons/bs';
-import 'bootstrap/dist/css/bootstrap.css';
+import React, { useEffect, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./Navbar.css";
 
+import { signout } from "../../slices/auth";
+import eventBus from "../../common/EventBus";
 
-class Navbar extends Component {
-    constructor() {
-        super();
-        
-        this.state = {
-          showMenu: false,
-        }        
-        this.showMenu = this.showMenu.bind(this);
-      }      
-      showMenu(event) {
-        event.preventDefault();
-        
-        this.setState({
-          showMenu: true,
-        });
-      }
-    render(){
+const Navbar = () => {
+  const { user: currentUser } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
-     //   const { currentUser } = this.state;
-       return(
-           
-        <div className='container'>
-         <nav className='Nav1'>
-           <Link to='/'><img src ={"https://upload.wikimedia.org/wikipedia/commons/8/89/Etsy_logo.svg"} alt = "logo" width="84" height="43"/></Link><br/>&emsp;
-            <input type='text' className='searchbar' placeholder='Search for anything'></input>
-            <Link to='/favorites' ><GrFavorite size={22} /></Link>
-            <Link to='/registerShop'><AiOutlineShop size={25}/></Link>
-            <div className='searchIcon'></div>
-            <Link to='/login'>Login</Link> 
-            <Link to='/signup'>Signup</Link>
-              <div>
-            <DropdownButton title="Username">
-            <Link to  ="/profile">User Profile</Link><br/>
-            <Link to="/signout"><BiLogOut/>Signout</Link>
-            </DropdownButton>
-            </div>
-            <Link to='/cart'><BsCart4 color="black" fontSize="1.5em" /></Link>
-            </nav> <hr/>
-      
-            <h6>
-            <nav className='Nav2'>
-            <Link to='/homeFavorites'  >Home Favorites </Link>
-            <Link to='/jewelryAccesorries'>Jewelry & Accesorries </Link>
-            <Link to='/clothingShoes'>Clothing & Shoes </Link>
-            <Link to='/homeLiving'>Home & Living </Link>
-            <Link to='/weddingParty'>Wedding & Party </Link>
-            <Link to='/toysEntertainment'>Toys & Entertainment </Link>
-            <Link to='/artCollectibles'>Art & Collectibles </Link>
-            <Link to='/craftSupplies' >Craft Supplies </Link>
-            <Link to='/giftsGiftCards'>Gifts & Gift Cards </Link>
-            </nav>   
-            </h6> 
-             <hr/>
-             <footer/>
+  const signOut = useCallback(() => {
+    dispatch(signout());
+  }, [dispatch]);
+
+  useEffect(() => {
+    eventBus.on("signout", () => {
+      signout();
+    });
+
+    return () => {
+      eventBus.remove("signout");
+    };
+  }, [currentUser, signOut]);
+
+
+  return (
+    <nav className="navbar navbar-expand navbar-dark bg-dark">
+      <Link to={"/"} className="navbar-brand">
+        MyEtsy
+      </Link>
+      <div className="navbar-nav mr-auto">
+     {currentUser && (
+          <li className="nav-item">
+            <Link to={"/profile"} className="nav-link">
+              User
+            </Link>
+          </li>
+        )}
+      </div>
+            
+      {currentUser ? (
+        <div className="navbar-nav ml-auto">
+          <li className="nav-item">
+            <Link to={"/profile"} className="nav-link">
+              {currentUser.username}
+            </Link>
+          </li>
+          <li className="nav-item">
+            <a href="/" className="nav-link" onClick={signOut}>
+              SignOut
+            </a>
+          </li>
         </div>
-        )
-       }
-}
+      ) : (
+        <div className="navbar-nav ml-auto">
+          <li className="nav-item">
+            <Link to={"/signin"} className="nav-link">
+              SignIn
+            </Link>
+          </li>
+       <li className="nav-item">
+            <Link to={"/signup"} className="nav-link">
+              SignUp
+            </Link>
+          </li>
+        </div>
+      )}
+    </nav>
+  );
+};
 
-export default Navbar
+export default Navbar;

@@ -1,11 +1,11 @@
 import React, { useState, useEffect  } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-import { signin } from "../slices/auth";
-import { clearMessage } from "../slices/message";
+import { signin } from "../../slices/auth";
+import { clearMessage } from "../../slices/message";
 
 const SignIn = (props) => {
   const [loading, setLoading] = useState(false);
@@ -45,7 +45,7 @@ const SignIn = (props) => {
   };
 
   if (isSignedIn) {
-    return <Redirect to="/home" />;
+    return <Navigate to="/home" />;
   }
 
   return (
