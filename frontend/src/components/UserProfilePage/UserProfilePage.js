@@ -4,9 +4,14 @@ import { useSelector } from "react-redux";
 
 const UserProfilePage = () => {
   const { user: currentUser } = useSelector((state) => state.auth);
+  const { userProfileExists } = useSelector((state) => state.user);
 
   if (!currentUser) {
     return <Navigate to="/signin" />;
+  }
+
+  if(!userProfileExists) {
+    return <Navigate to="/userprofilecreate" />;
   }
 
   return (

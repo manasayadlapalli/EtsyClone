@@ -6,14 +6,31 @@ import './App.css';
 import SignIn from './components/Auth/SignIn';
 import Signup from './components/Auth/SignUp';
 
+import Home from './components/Home/Home';
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
 
+// import UserHomePage from './components/UserHomePage/UserHomePage';
 import UserProfilePage from './components/UserProfilePage/UserProfilePage';
-//import Cart from './components/Cart/Cart';
-//import RegisterShop from './components/UserShopRegister/RegisterShop';
-//import Favorites from './components/Favorites/Favorites';
-import CategoryCard from './components/CategoryCard/CategoryCard';
+import UserProfilePageCreate from './components/UserProfilePage/UserProfilePageCreate';
+import UserPurchaseHistory from './components/UserPurchasePage/UserPurchaseHistory';
+
+import Shop from './components/Shop/Shop';
+import ShopOwner from './components/Shop/ShopOwner';
+import ShopCreate from './components/ShopCreate/ShopCreate';
+
+import Item from './components/Item/Item';
+import ItemCreate from './components/ItemCreate/ItemCreate';
+
+import Category from './components/Category/Category';
+
+import Search from './components/Search/Search';
+import SearchShop from './components/Search/SearchShop';
+import SearchUser from './components/Search/SearchUser';
+
+import UserFavorites from './components/UserFavourites/UserFavourites';
+
+import Cart from './components/Cart/Cart';
 
 const App = () => {
   return (
@@ -23,23 +40,33 @@ const App = () => {
           <Navbar/> 
         </nav>
           <Routes>
-            <Route exact path ="/" element={ <CategoryCard/>}/>
-            <Route exact path="/profile" element={<UserProfilePage/>}  />
-           
+            {/* <Route exact path ="/" element={ <Home/>}/> */}
+            
             <Route exact path="/signin" element={<SignIn />} />
-            {/* <Route path="/data"> <Datarender />  </Route> */}
-            {/* <Route path="/upload">  <Upload /> </Route> */}
-            {/* <Route path="/cart" element={<Cart/>} /> */}
-            {/* <Route path="/favorites" element={<Favorites />} /> */}
-            {/* <Route path="/purchases"> <Purchases />  </Route> */}
             <Route exact path="/signup" element={<Signup />} />
-            {/* <Route path="/Shop">  <ShoppingHome /> </Route> */}
-            {/* <Route path="/registerShop" element={<RegisterShop/>} /> */}
-            {/* <Route path="/individualshop"> <IndividualShop />  </Route>
-            <Route path="/individualproduct/:id"> <IndividualProduct />  </Route>
-            <Route path="/shoppingpage"> <IndividualShop /> </Route>
-            <Route path="/search">  <SearchResults />  </Route>
-            <Route path="/ptest"> <ParamsExample />  </Route>  */}
+
+            {/* <Route exact path ="/userhome" element={ <UserHomePage/>}/> */}
+            {/* <Route exact path="/userprofile" element={<UserProfilePage/>}  /> */}
+            {/* <Route exact path="/userprofilecreate" element={<UserProfilePageCreate/>}  /> */}
+            {/* <Route exact path="/userpurchases" element={<UserPurchaseHistory/>} /> */}
+
+            {/* <Route path="/shop">  <Shop /> </Route> */}
+            {/* <Route path="/shopowner">  <ShopOwner /> </Route> */}
+            {/* <Route path="/shopcreate">  <ShopCreate /> </Route> */}
+
+            {/* <Route path="/item"> <Item />  </Route> */}
+            {/* <Route path="/itemcreate"> <ItemCreate />  </Route> */}
+
+            {/* <Route path="/category"> <Category />  </Route> */}
+
+            {/* <Route path="/search"> <Search />  </Route> */}
+            {/* <Route path="/searchshop"> <SearchShop />  </Route> */}
+            {/* <Route path="/searchuser"> <SearchUser />  </Route> */}
+
+            {/* <Route path="/userfavourites">  <UserFavorites /> </Route> */}
+
+            {/* <Route path="/cart" element={<Cart/>} /> */}
+            
           </Routes>
       </Router>
       <Footer/>
