@@ -5,6 +5,7 @@ import AuthService from "../services/auth.service";
 
 const user = JSON.parse(localStorage.getItem("user"));
 
+
 export const signup = createAsyncThunk(
   "auth/signup",
   async ({ username, email, password }, thunkAPI) => {
@@ -51,6 +52,8 @@ export const signout = createAsyncThunk("auth/signout", async () => {
 const initialState = user
   ? { isSignedIn: true, user }
   : { isSignedIn: false, user: null };
+
+
 
 const authSlice = createSlice({
   name: "auth",

@@ -1,5 +1,6 @@
 import './CategoryCard.css'
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 
 let cardDetailsList = [{"id" : 1, "image" : "https://i.etsystatic.com/12397853/r/il/505fa0/2426681051/il_300x300.2426681051_mocv.jpg", "title": "Wall decor" },
@@ -10,11 +11,14 @@ let cardDetailsList = [{"id" : 1, "image" : "https://i.etsystatic.com/12397853/r
                         {"id" : 6, "image": "https://i.etsystatic.com/10448437/r/il/8d7c57/1985247369/il_300x300.1985247369_d33t.jpg", "title": "On Sale"}
                         ]
 
-const CategoryCard = () => {
+const CategoryCard = () => {    
+    
+    const { user: currentUser } = useSelector((state) => state.auth); 
 
         return (
             <div className='container'>
-                <h1>Welcome to Etsy "username"!</h1>
+                
+                <h1>Welcome to Etsy!</h1>
                 <div className="categCard">
                     {(cardDetailsList.map(cardDetails =>{
                         return (                            

@@ -1,38 +1,23 @@
-import React from "react";
-import { Navigate } from 'react-router-dom';
-import { useSelector } from "react-redux";
+import React from 'react';
+import {BsPencil} from 'react-icons/bs';
+import { Link } from "react-router-dom";
+//import { Formik, Field, Form,} from "formik";
 
-const UserProfilePage = () => {
-  const { user: currentUser } = useSelector((state) => state.auth);
-  const { userProfileExists } = useSelector((state) => state.user);
+function UserProfilePage() {
 
-  if (!currentUser) {
-    return <Navigate to="/signin" />;
-  }
-
-  if(!userProfileExists) {
-    return <Navigate to="/userprofilecreate" />;
-  }
-
+  
   return (
-    <div className="container">
-      <header className="jumbotron">
-        <h3>
-          <strong>{currentUser.username}</strong> Profile
-        </h3>
-      </header>
-      <p>
-        <strong>Token:</strong> {currentUser.accessToken.substring(0, 20)} ...{" "}
-        {currentUser.accessToken.substr(currentUser.accessToken.length - 20)}
-      </p>
-      <p>
-        <strong>Id:</strong> {currentUser.id}
-      </p>
-      <p>
-        <strong>Email:</strong> {currentUser.email}
-      </p>
-    </div>
-  );
-};
+    <div>
+     
+        <div className="form-group">
+                  <label htmlFor="username">USER NAME  </label>
+                  <li><Link to='/updateprofile'><BsPencil size={20}/></Link></li>
+                  <input name="username" type="text" className="form-control" />
+                  
+        </div>
 
-export default UserProfilePage;
+    </div>
+  )
+}
+
+export default UserProfilePage

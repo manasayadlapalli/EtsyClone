@@ -45,18 +45,13 @@ const SignIn = (props) => {
   };
 
   if (isSignedIn) {
-    return <Navigate to="/home" />;
+    return <Navigate to="/"/>;
   }
 
   return (
-    <div className="col-md-12 login-form">
+    <div className="col-md-6 login-form">
       <div className="card card-container">
-        <img
-          src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-          alt="profile-img"
-          className="profile-img-card"
-        />
-        <Formik
+          <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
           onSubmit={handleSignIn}
@@ -83,7 +78,7 @@ const SignIn = (props) => {
             </div>
 
             <div className="form-group">
-              <button type="submit" className="btn btn-primary btn-block" disabled={loading}>
+              <button type="submit" className="btn btn-secondary btn-block" disabled={loading}>
                 {loading && (
                   <span className="spinner-border spinner-border-sm"></span>
                 )}

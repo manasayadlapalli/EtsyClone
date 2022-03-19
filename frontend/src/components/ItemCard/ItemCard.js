@@ -14,6 +14,8 @@ const ProductCard = ({id,price,images,title}) => {
                         <img className= 'productImage' src={image} alt="Product"/>
                         <span className='productTitle'>{title}</span>
                         <span className='productPrice'>${price}</span>
+                        <span className='favorite'>${price}</span>
+
                     </div>
                 </NavLink>
             </div>
