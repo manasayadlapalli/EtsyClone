@@ -1,17 +1,33 @@
-import React from 'react'
+import React from "react";
+import { Redirect } from 'react-router-dom';
+import { useSelector } from "react-redux";
 
-function UserProfilePage() {
+const UserProfilePage = () => {
+  const { user: currentUser } = useSelector((state) => state.auth);
 
-  
+  if (!currentUser) {
+    return <Redirect to="/signin" />;
+  }
+
   return (
-    <div>
-      <h3> Your public profile </h3>
-      <p>Everything on this page can be seen by everyone</p><hr/>
-      <form className='form'>
-        Profile Picture
-      </form>
+    <div className="container">
+      <header className="jumbotron">
+        <h3>
+          <strong>{currentUser.username}</strong> Profile
+        </h3>
+      </header>
+      <p>
+        <strong>Token:</strong> {currentUser.accessToken.substring(0, 20)} ...{" "}
+        {currentUser.accessToken.substr(currentUser.accessToken.length - 20)}
+      </p>
+      <p>
+        <strong>Id:</strong> {currentUser.id}
+      </p>
+      <p>
+        <strong>Email:</strong> {currentUser.email}
+      </p>
     </div>
-  )
-}
+  );
+};
 
-export default UserProfilePage
+export default UserProfilePage;
