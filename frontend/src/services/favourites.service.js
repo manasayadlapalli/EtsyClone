@@ -3,22 +3,27 @@ import authHeader from "./auth-header";
 
 const API_URL = "http://localhost:8080/api/";
 
-const search = () => {
-  return axios.get(API_URL + "search");
+const userFavourites = () => {
+  return axios.get(API_URL + "user/favourites", { headers: authHeader() });
 };
 
-const searchInShop = () => {
-  return axios.get(API_URL + "search/shop", { headers: authHeader() });
+const userFavouritesAdd = () => {
+  return axios.get(API_URL + "user/favourites/add", { headers: authHeader() });
 };
 
-const searchUserFavourites = () => {
-    return axios.get(API_URL + "search/user/favourites", { headers: authHeader() });
+const userFavouritesDelete = () => {
+    return axios.get(API_URL + "user/favourites/delete", { headers: authHeader() });
+};
+
+const userFavouritesCount = () => {
+  return axios.get(API_URL + "user/favourites/count", { headers: authHeader() });
 };
 
 const favouritesService = {
-  search,
-  searchInShop,
-  searchUserFavourites
+  userFavourites,
+  userFavouritesAdd,
+  userFavouritesDelete,
+  userFavouritesCount
 };
 
 export default favouritesService
