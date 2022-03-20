@@ -40,7 +40,7 @@ const App = () => {
           <Navbar/> 
         </nav>
           <Routes>
-            <Route exact path ="/" component={ <Home/>}/>
+            <Route exact path ="/" element={ <Home/>}/>
             
             <Route exact path="/signin" element={<SignIn />} />
             <Route exact path="/signup" element={<Signup />} />

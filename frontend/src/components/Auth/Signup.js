@@ -26,7 +26,7 @@ const SignUp = (props) => {
     username: Yup.string()
       .test(
         "len",
-        "The username must be between 3 and 20 characters.",
+        "The username must be between 5 and 20 characters.",
         (val) =>
           val &&
           val.toString().length >= 5 &&
@@ -39,7 +39,7 @@ const SignUp = (props) => {
     password: Yup.string()
       .test(
         "len",
-        "The password must be between 6 and 40 characters.",
+        "The password must be between 5 and 40 characters.",
         (val) =>
           val &&
           val.toString().length >= 5 &&
