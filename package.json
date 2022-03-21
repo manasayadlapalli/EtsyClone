@@ -4,9 +4,8 @@
   "description": "",
   "main": "javascript.js",
   "scripts": {
-    "client": "cd client && npm run start",
-    "server": "cd server && npm run start",
-    "start": "npx run concurrently \"npm run server\" \"npm run client\""
+    "start": "nodemon ./server/index.js",
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "author": "",
   "license": "ISC",

@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon index.js"
   },
-  "author": "DivyaMaddipudi",
+  "author": "Sai Manasa Yadlapalli",
   "license": "ISC",
   "dependencies": {
     "antd": "^4.19.1",
