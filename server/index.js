@@ -78,7 +78,7 @@ const db = mysql.createConnection({
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "../client/public/Images");
+    cb(null, "../client/build/Images");
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + file.originalname);
@@ -88,7 +88,7 @@ const storage = multer.diskStorage({
 //shop storage
 const shopStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "../client/public/Images");
+    cb(null, "../client/build/Images");
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + file.originalname);
@@ -97,7 +97,7 @@ const shopStorage = multer.diskStorage({
 
 const userStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "../client/public/Users/Images");
+    cb(null, "../client/build/Users/Images");
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + file.originalname);
