@@ -16,7 +16,7 @@ const editShopImage = ({ editShopPage }) => {
     formData.append("shopImage", shopImage);
     console.log("Inedit client axios");
     Axios.put(
-      "http://localhost:4000/updateShopImageById/" + user.id,
+      "https://etsy-prototype.herokuapp.com/updateShopImageById/" + user.id,
       formData
     ).then((response) => {
       if (response.data.success) {
@@ -34,7 +34,7 @@ const editShopImage = ({ editShopPage }) => {
   }, []);
 
   const fetchItemDetails = () => {
-    Axios.get("http://localhost:4000/getShopById/" + user.id).then(
+    Axios.get("https://etsy-prototype.herokuapp.com/getShopById/" + user.id).then(
       (response) => {
         if (response) {
           console.log(response.data.result[0].shopImage);

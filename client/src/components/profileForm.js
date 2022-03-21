@@ -37,7 +37,7 @@ function profileForm() {
 
     console.log(dob);
 
-    Axios.put("http://localhost:4000/updateUser/" + user.id, formData, {
+    Axios.put("https://etsy-prototype.herokuapp.com/updateUser/" + user.id, formData, {
       headers: { "content-Type": "multipart/form-data" },
     }).then((response) => {
       console.warn(response);
@@ -65,7 +65,7 @@ function profileForm() {
   }, []);
 
   const fetchItemDetails = () => {
-    Axios.get("http://localhost:4000/getShopById/" + user.id).then(
+    Axios.get("https://etsy-prototype.herokuapp.com/getShopById/" + user.id).then(
       (response) => {
         // console.log(response);
 
@@ -94,7 +94,7 @@ function profileForm() {
   // }, []);
 
   // const fetchItemDetails = () => {
-  //   Axios.get("http://localhost:4000/getShopById/" + user.id).then(
+  //   Axios.get("https://etsy-prototype.herokuapp.com/getShopById/" + user.id).then(
   //     (response) => {
   //       if (response) {
   //         console.log(response.data.result[0].shopImage);

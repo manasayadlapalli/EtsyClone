@@ -15,7 +15,7 @@ function editItemImage({ setShowProductsEditPage, products, itemId }) {
     formData.append("itemImage", itemImage);
     console.log("Inedit client axios");
     Axios.put(
-      "http://localhost:4000/updateItemImageById/" + itemId,
+      "https://etsy-prototype.herokuapp.com/updateItemImageById/" + itemId,
       formData
     ).then((response) => {
       if (response.data.success) {
@@ -30,7 +30,7 @@ function editItemImage({ setShowProductsEditPage, products, itemId }) {
   }, []);
 
   const fetchItemDetails = () => {
-    Axios.get("http://localhost:4000/getItemById/" + itemId).then(
+    Axios.get("https://etsy-prototype.herokuapp.com/getItemById/" + itemId).then(
       (response) => {
         if (response) {
           setItemImage(response.data[0].itemImage);

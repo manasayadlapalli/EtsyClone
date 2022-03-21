@@ -61,7 +61,7 @@ function shopHome() {
     setShowProds(true);
     console.log("---------------in view Items-------------------");
     Axios.post(
-      "http://localhost:4000/getAllProducts/" + user.id,
+      "https://etsy-prototype.herokuapp.com/getAllProducts/" + user.id,
       variables
     ).then((response) => {
       if (response.data.success) {

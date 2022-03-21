@@ -37,7 +37,7 @@ function addProducts({ setShowProductsAddPage }) {
     //   itemPrice,
     // };
 
-    Axios.post("http://localhost:4000/addProduct/" + user.id, formData, {
+    Axios.post("https://etsy-prototype.herokuapp.com/addProduct/" + user.id, formData, {
       headers: { "content-Type": "multipart/form-data" },
     }).then((response) => {
       console.warn(response);

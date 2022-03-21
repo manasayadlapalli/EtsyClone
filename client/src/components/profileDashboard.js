@@ -27,7 +27,7 @@ function profileDashboard() {
   }, []);
 
   const getFavouriteItems = () => {
-    Axios.get("http://localhost:4000/getFavourites/" + user.id).then(
+    Axios.get("https://etsy-prototype.herokuapp.com/getFavourites/" + user.id).then(
       (response) => {
         console.log(response.data.result);
         if (response.data.success === true) {
@@ -48,7 +48,7 @@ function profileDashboard() {
   const handleFavourite = (itemId, userId) => {
     console.log("Favourites deletd" + itemId + userId);
     Axios.delete(
-      "http://localhost:4000/deleteFavourite/" + itemId + "/" + userId,
+      "https://etsy-prototype.herokuapp.com/deleteFavourite/" + itemId + "/" + userId,
       {
         itemId: itemId,
         userId: userId,

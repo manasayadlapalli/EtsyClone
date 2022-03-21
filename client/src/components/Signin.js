@@ -30,7 +30,7 @@ function Signin({ setshowSignIn }) {
   const checkUser = (e) => {
     e.preventDefault();
 
-    Axios.post("http://localhost:4000/signin", {
+    Axios.post("https://etsy-prototype.herokuapp.com/signin", {
       email: email,
       password: password,
     })
@@ -68,7 +68,7 @@ function Signin({ setshowSignIn }) {
   };
 
   useEffect(() => {
-    Axios.get("http://localhost:4000/signin").then((response) => {
+    Axios.get("https://etsy-prototype.herokuapp.com/signin").then((response) => {
       // console.log(response);
 
       if (response.data.loggedIn === true) {
