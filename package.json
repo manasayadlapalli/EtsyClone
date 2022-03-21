@@ -6,7 +6,7 @@
   "scripts": {
     "client": "cd client && npm run start",
     "server": "cd server && npm run start",
-    "start": "concurrently \"npm run server\" \"npm run client\""
+    "start": "npx run concurrently \"npm run server\" \"npm run client\""
   },
   "author": "",
   "license": "ISC",
