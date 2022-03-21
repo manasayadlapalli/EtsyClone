@@ -18,6 +18,12 @@ const { count } = require("console");
 
 const app = express();
 
+// Use client's npm run build version
+app.use(express.static(path.resolve(__dirname, "../client/build")));
+app.get("*", function (request, response) {
+  response.sendFile(path.resolve(__dirname, "../client/build", "index.html"));
+});
+
 app.use(
   cors({
     origin: ["http://localhost:3000"],
