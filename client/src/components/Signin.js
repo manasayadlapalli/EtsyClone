@@ -37,32 +37,28 @@ function Signin({ setshowSignIn }) {
       password: password,
     })
       .then((response) => {
-        if (response.data.length === 1) {
+        //console.log(response);
           console.log(response);
-          console.log(response.data[0]);
+          //console.log(response.data._id)
           console.log("In frontend signin");
 
           dispatch(
             login({
-              id: response.data[0].id,
-              email: response.data[0].email,
-              name: response.data[0].name,
-              shopName: response.data[0].shopName,
-              dob: response.data[0].dob,
-              gender: response.data[0].gender,
-              city: response.data[0].city,
-              phoneNumber: response.data[0].phoneNumber,
-              profilePic: response.data[0].profilePic,
-              about: response.data[0].about,
-              shopImage: response.data[0].shopImage,
+              id: response.data._id,
+              email: response.data.email,
+              name: response.data.username,
+              shopName: response.data.shopName,
+              dob: response.data.dob,
+              gender: response.data.gender,
+              city: response.data.city,
+              phoneNumber: response.data.phoneNumber,
+              profilePic: response.data.profilePic,
+              about: response.data.about,
+              shopImage: response.data.shopImage,
               loggedIn: true,
             })
           );
-
           window.location.pathname = "/home";
-        } else {
-          setError("Invalid Credentials!");
-        }
       })
       .catch((err) => {
         setError("Invalid credentials");
@@ -71,8 +67,7 @@ function Signin({ setshowSignIn }) {
 
   useEffect(() => {
     Axios.get("http://54.193.95.78:4000/signin").then((response) => {
-      // console.log(response);
-
+      
       if (response.data.loggedIn === true) {
         setLoginStatus(response.data.user[0]);
         console.log(loginStatus);
@@ -80,13 +75,7 @@ function Signin({ setshowSignIn }) {
     });
   }, []);
 
-  // let redirVal = null;
-  // if (loginStatus) {
-  //   console.log(loginStatus);
-  //   redirVal = <Navigate to="/home" />;
-  //   setLoginStatus(null);
-  // }
-
+  
   return (
     <>
       {/* {redirVal} */}
@@ -97,8 +86,7 @@ function Signin({ setshowSignIn }) {
             <h4>Sign in</h4>
             <button
               onClick={handleRegister}
-              className="register-btn btn-primary"
-            >
+              className="register-btn btn-primary">
               Register
             </button>
           </div>
@@ -140,15 +128,11 @@ function Signin({ setshowSignIn }) {
             <button
               onClick={checkUser}
               type="submit"
-              className="btn btn-primary"
-            >
+              className="btn btn-primary">
               Sign In
             </button>
           </form>
-          <div className="google_signin">
-            <p style={{ textAlign: "center", marginTop: "5px" }}>OR</p>
-            </div>
-        </div>
+         </div>
         {showRegister === true && (
           <Register setShowRegister={setShowRegister} />
         )}

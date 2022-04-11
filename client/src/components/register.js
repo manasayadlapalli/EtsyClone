@@ -11,7 +11,7 @@ function register({ setShowRegister }) {
 
   const addUser = (e) => {
     e.preventDefault();
-    // localStorage.Item("preferedCurrency", userPreferedCurrency);
+    
     console.log(username)
     Axios.post("http://localhost:4000/register", {
       email: email,
@@ -19,7 +19,7 @@ function register({ setShowRegister }) {
       password: password,
     }).then((response) => {
       if (response.data.success === true) {
-        console.log("Success========: " + response.data.success);
+        console.log("Success: " + response.data.success);
 
         dispatch(
           registerUser({
@@ -28,7 +28,6 @@ function register({ setShowRegister }) {
           })
         );
         console.log("In frontend register");
-
         window.location.pathname = "/home";
       }
     });

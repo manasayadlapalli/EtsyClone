@@ -37,33 +37,33 @@ app.use(
 app.use(express.json());
 require("dotenv").config({path:"./config.env"});
 
-// app.use(
-//   session({
-//     key: "email",
-//     secret: "cmpe273_kafka_passport_mongo",
-//     resave: false, 
-//     saveUninitialized: false, 
-//     activeDuration: 5 * 60 * 1000,
-//     cookie: {
-//       expiresIn: 60 * 60 * 24,
-//     },
-//   })
-// );
+app.use(
+  session({
+    key: "email",
+    secret: "cmpe273_kafka_passport_mongo",
+    resave: false, 
+    saveUninitialized: false, 
+    activeDuration: 5 * 60 * 1000,
+    cookie: {
+      expiresIn: 60 * 60 * 24,
+    },
+  })
+);
 
-// app.use(function (req, res, next) {
-//   // res.setHeader("Access-Control-Allow-Origin", "http://54.193.95.78:3000");
-//   // res.setHeader("Access-Control-Allow-Credentials", "true");
-//   res.setHeader(
-//     "Access-Control-Allow-Methods",
-//     "GET,HEAD,OPTIONS,POST,PUT,DELETE"
-//   );
-//   res.setHeader(
-//     "Access-Control-Allow-Headers",
-//     "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"
-//   );
-//   res.setHeader("Cache-Control", "no-cache");
-//   next();
-// });
+app.use(function (req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET,HEAD,OPTIONS,POST,PUT,DELETE"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"
+  );
+  res.setHeader("Cache-Control", "no-cache");
+  next();
+});
 
 // const db = mysql.createConnection({
 //   host: constants.development.host,
@@ -133,11 +133,7 @@ app.use("/Images", express.static("./Images"));
 app.post('/register',async (req,res)=>{     
 
   try{
-      const {username,email,password} = req.body;
-
-      console.log(username)
-      console.log(email)
-
+      const {username,email,password} = req.body; 
       const userExists = await Users.findOne({email});
       if(userExists){
          return res.status(400).send('User already exists')
@@ -146,8 +142,7 @@ app.post('/register',async (req,res)=>{
           username,email,password
       })
       newUser.save();
-      return res.send({success:true, newUser});
-      
+      return res.send({success:true, newUser});      
   }catch(err){
       console.log(err);      
   }
@@ -161,32 +156,36 @@ app.get("/signin", (req, res) => {
   }
 });
 
-app.post('/signin',async (req, res) => {
+app.post('/signin', async (req, res) => {
   try{
       const {email,password} = req.body;
-      let userExist = await Users.findOne({email});
-      if(!userExist) {
+      let user = await Users.findOne(
+        {
+          $and: [
+                 { 'email' : email },
+                 { 'password': password }
+               ]
+        }
+      );
+      //console.log("res " + user);
+      if(!user) {
           return res.status(400).send('User Not Found');
       }
-      if(userExist.password !== password) {
-          return res.status(400).send('Invalid credentials');
-      }
-      let payload = {
-          user:{
-              id : userExist.id
-          }
-      }
-      jwt.sign(payload,'jwtPassword',{expiresIn:3600000},
-        (err,token) =>{
-            if (err) throw err;
-            return res.json({token})
-        })
+      res.cookie("user", user.username, {
+        maxAge: 900000,
+        httpOnly: false,
+        path: "/",
+      });
+      req.session.user = user;
+      res.send(user);   
   }
   catch(err){
       console.log(err);
       return res.status(500).send('Server Error')
   }
 })
+
+
 app.get("/user", (req, res) => {
   console.log("hello" + req.session);
   if (req.session.user) {
@@ -196,47 +195,65 @@ app.get("/user", (req, res) => {
   }
 });
 
-app.post("/findShopDuplicates", (req, res) => {
-  const shopName = req.body.shopName;
-  console.log("In findShopDuplicates " + shopName);
-  db.query(
-    "SELECT * FROM Users WHERE shopName=?",
-    [shopName],
-    (err, result) => {
-      console.log(result.length);
-      if (result.length !== 0) {
-        res.send({
-          message: "duplicate",
-        });
-        console.log("In shops db shop name found");
-      } else {
-        res.send({
-          message: "No duplicates",
-        });
-        console.log("In shops db and no shop name found");
+
+app.post("/findShopDuplicates", async (req, res) => {
+       const {shopName} = req.body;
+      const shopNameExists = await Users.findOne({shopName});
+      if(!shopNameExists){
+        res.send({message:"duplicate"});
+        console.log("Shop  name already exists");
       }
+      else{
+        res.send({ message: "No duplicates", });
+        console.log("Shop name is available");
+       }         
     }
-  );
+);
+
+
+// app.post("/createShop/:id", (req, res) => {
+//   const shopName = req.body.shopName;
+//   const id = req.params.id;
+//   console.log("In create shop " + id);
+//   db.query(
+//     "UPDATE Users SET shopName=? WHERE id=?",
+//     [shopName, id],
+//     (err, result) => {
+//       if (err) {
+//         console.log(err);
+//       } else {
+//         console.log(result);
+//         // res.send(result);
+//         res.send("Shops Value Inserted in user successfully");
+//       }
+//     }
+//   );
+// });
+
+
+app.post("/createShop", async(req, res) => {
+
+  try {
+    console.log("Creating Shop for " + req.query.id + " Shop Id is " + req.body.shopName);
+
+    await Users.updateOne(
+      {
+        '_id': req.query.id
+      }, 
+      { 
+        $set: {
+          'shopName': req.body.shopName
+        }  
+      }
+    );
+    
+    res.send("Shops Value Inserted in user successfully");
+  }
+  catch(err) {
+    console.log(err);
+  }
 });
 
-app.post("/createShop/:id", (req, res) => {
-  const shopName = req.body.shopName;
-  const id = req.params.id;
-  console.log("In create shop " + id);
-  db.query(
-    "UPDATE Users SET shopName=? WHERE id=?",
-    [shopName, id],
-    (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log(result);
-        // res.send(result);
-        res.send("Shops Value Inserted in user successfully");
-      }
-    }
-  );
-});
 
 const addProduct = async (req, res) => {
   const userId = req.params.id;

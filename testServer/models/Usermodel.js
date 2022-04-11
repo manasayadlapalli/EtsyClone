@@ -54,7 +54,7 @@ const mongoose = require('mongoose');
       shopName: {
         type: String,
         default:null
-        // required:true,
+        
      },
       shopImage: {
         type: String,

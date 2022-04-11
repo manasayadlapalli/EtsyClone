@@ -8,7 +8,7 @@ import {
   NotificationsNoneSharp,
   FavoriteBorderSharp,
 } from "@material-ui/icons";
-// import { PersonIcon, ShoppingCart } from "@mui/icons-material";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import ProfileList from "./profileList";
 import { useSelector } from "react-redux";
@@ -128,13 +128,7 @@ function Navbar() {
         {navLogin}
       </header>
       {showSignIn && <Signin setshowSignIn={setshowSignIn} />}
-
-      {console.log(
-        showSignIn + "-------------- " + showProfileLists + "------------------"
-      )}
-      {showProfileLists && (
-        <ProfileList setShowProfileLists={setShowProfileLists} />
-      )}
+      {showProfileLists && (<ProfileList setShowProfileLists={setShowProfileLists} /> )}
     </div>
   );
 }
