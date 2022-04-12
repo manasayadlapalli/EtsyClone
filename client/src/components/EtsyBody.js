@@ -37,7 +37,7 @@ function EtsyBody() {
   }, []);
 
   const getItems = () => {
-    Axios.get("http://54.193.95.78:4000/getItems").then((response) => {
+    Axios.get("http://localhost:4000/getItems").then((response) => {
       if (response.data.success === true) {
         console.log(response.data.result);
         dispatch(getAllItems(response.data.result));
@@ -58,7 +58,7 @@ function EtsyBody() {
             },
           ];
           SetItems(updateItems);
-          console.log("-------------geting all products----------------");
+          console.log("All products");
           console.log(items);
         }
       }
@@ -67,11 +67,10 @@ function EtsyBody() {
 
   const getFavourites = () => {
     if (user !== null) {
-      Axios.get("http://54.193.95.78:4000/getFavourites/" + user.id).then(
+      Axios.get("http://localhost:4000/getFavourites/" + user.id).then(
         (response) => {
           console.log("user id for favourites" + user.id);
-          console.log(response.data.result);
-          if (response.data.success === true) {
+         if (response.data.success === true) {
             dispatch(favouritesList(response.data.result));
           }
         }
@@ -80,8 +79,8 @@ function EtsyBody() {
   };
 
   const handleFavourite = (itemId, userId) => {
-    console.log("Favourites added" + itemId + userId);
-    Axios.post("http://54.193.95.78:4000/addFavourite", {
+    console.log("Favourites added for itemdid: " + itemId + " userid: " + userId);
+    Axios.post("http://localhost:4000/addFavourite", {
       itemId: itemId,
       userId: userId,
     }).then((response) => {
@@ -94,7 +93,7 @@ function EtsyBody() {
   };
 
   const handleOpenImage = (pro) => {
-    // console.log(pro.itemId);
+    // console.log(pro._id);
     // console.log(pro.itemImage);
     dispatch(productOverview(pro));
     // console.log(pro.itemCount);
@@ -116,7 +115,9 @@ function EtsyBody() {
             }}
             className="favourite_icon"
             onClick={() => {
-              handleFavourite(pro.itemId, user.id);
+              console.log("prooooo -- " + JSON.stringify(pro));
+              console.log("Favourites itemid --- " + pro._id + " user.id --- " + user.id);
+              handleFavourite(pro._id, user.id);
             }}
           >
             {/* {toggleFavourites} */}

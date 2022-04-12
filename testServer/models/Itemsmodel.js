@@ -1,39 +1,38 @@
 const mongoose  = require("mongoose")
 
 const Itemsmodel = new mongoose.Schema({
-    itemId: {
-      type: Integer,
-      required:true,
-      unique: true      
-    },
+   
     userId: {
-      type: Integer,
+      type: mongoose.Schema.Types.ObjectId,
       ref:  "Users"      
     },
     itemName: {
-      type: Data,
+      type: String,
+      default:null
     },
     itemCategory: {
       type: String,
-      required:true,
+      default:null,
     },
     itemPrice: {
-      type: Integer,
-      required:true,
+      type: String,
+      default:null,
     },
     itemDescription: {
       type: String,
-      required:true,
+      default:null,
     },
     itemCount: {
-      type: Integer,
-      required:true,
+      type: String,
+      default:null,
     },
     itemImage: {
       type: String,
+      default:null
     },
     sales: {
       type: String,
+      default:null
       
     },
   })

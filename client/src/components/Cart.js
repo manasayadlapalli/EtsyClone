@@ -52,8 +52,8 @@ const CartScreen = () => {
         .toFixed(2);
     }
 
-    // setFinalAmount(finalPrice);
-    // return finalPrice;
+    //  setFinalAmount(finalPrice);
+    //  return finalPrice;
   };
 
   const handleCheckOut = () => {
@@ -61,7 +61,7 @@ const CartScreen = () => {
     localStorage.setItem("purchase", JSON.stringify(finalCartProducts));
 
     finalCartProducts.map((product) => {
-      Axios.post(`http://54.193.95.78:4000/editCount/${product.itemId}`, {
+      Axios.post(`http://localhost:4000/editCount/${product.itemId}`, {
         quantity: product.qty,
       })
         .then((response) => {
@@ -71,20 +71,20 @@ const CartScreen = () => {
           console.log(err);
         });
     });
-    // dispatch(clearCart());
+     dispatch(clearCart());
     window.location.pathname = "/purchase";
 
-    // Axios.post("http://54.193.95.78:4000/addCartProduct/" + user.id, {
-    //   items: JSON.stringify(finalCartProducts),
-    //   orderId: Math.floor(Math.random() * 1000),
-    //   price: getCartSubTotal(),
-    // }).then((response) => {
-    //   if (response.data.success === true) {
-    //     console.log("item create in cart");
-    //
-    //   }
-    // });
-    // window.localStorage("purchase" + user.id, {});
+    Axios.post("http://:4000/addCartProduct/" + user.id, {
+      items: JSON.stringify(finalCartProducts),
+      orderId: Math.floor(Math.random() * 1000),
+      price: getCartSubTotal(),
+    }).then((response) => {
+      if (response.data.success === true) {
+        console.log("item create in cart");
+    
+      }
+    });
+    window.localStorage("purchase" + user.id, {});
   };
 
   return (

@@ -37,16 +37,14 @@ function profileForm() {
     formData.append("about", about);
     formData.append("phoneNumber", phoneNumber);
 
-    console.log(dob);
+    console.log(formData);
 
-    Axios.put("http://54.193.95.78:4000/updateUser/" + user.id, formData, {
+    Axios.put("http://localhost:4000/updateUser/" + user.id, formData, {
       headers: { "content-Type": "multipart/form-data" },
     }).then((response) => {
-      console.warn(response);
       if (response.data.message === "success") {
         console.log("Image uploaded successfully");
-        // console.log(response.data[0].result);
-        // console.log(response.data[0].result.name);
+     
         dispatch(
           updateUserDetails({
             name: userName,
@@ -69,7 +67,7 @@ function profileForm() {
 
   const fetchItemDetails = (e) => {
     // e.preventDefault();
-    Axios.get("http://54.193.95.78:4000/getShopById/" + user.id).then(
+    Axios.get("http://localhost:4000/getShopById/" + user.id).then(
       (response) => {
         console.log(response);
 
@@ -99,7 +97,7 @@ function profileForm() {
   // }, []);
 
   // const fetchItemDetails = () => {
-  //   Axios.get("http://54.193.95.78:4000/getShopById/" + user.id).then(
+  //   Axios.get("http://localhost:4000/getShopById/" + user.id).then(
   //     (response) => {
   //       if (response) {
   //         console.log(response.data.result[0].shopImage);

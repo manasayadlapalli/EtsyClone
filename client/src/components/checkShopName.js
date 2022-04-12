@@ -20,7 +20,7 @@ function checkShopName() {
       setError("Minimum 4 characters required");
     } else {
       setError("Available");
-      Axios.post("http://54.193.95.78:4000/findShopDuplicates/", {
+      Axios.post("http://localhost:4000/findShopDuplicates/", {
         shopName: shopName,
       })
         .then((response) => {

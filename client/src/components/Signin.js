@@ -66,7 +66,7 @@ function Signin({ setshowSignIn }) {
   };
 
   useEffect(() => {
-    Axios.get("http://54.193.95.78:4000/signin").then((response) => {
+    Axios.get("http://localhost:4000/signin").then((response) => {
       
       if (response.data.loggedIn === true) {
         setLoginStatus(response.data.user[0]);
