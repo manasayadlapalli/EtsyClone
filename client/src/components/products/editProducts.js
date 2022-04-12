@@ -31,7 +31,7 @@ function editProducts({ setShowProductsEditPage, products, itemId }) {
       itemDetails
     ).then((response) => {
       if (response.data.success) {
-        console.log("Item details edited successfully.....");
+        console.log("Item details udated successfully");
       }
     });
   };
@@ -44,13 +44,13 @@ function editProducts({ setShowProductsEditPage, products, itemId }) {
     Axios.get("http://localhost:4000/getItemById/" + itemId).then(
       (response) => {
         if (response) {
-          console.log(response.data[0]);
-          setItemName(response.data[0].itemName);
-          setItemDescription(response.data[0].itemDescription);
-          setItemPrice(response.data[0].itemPrice);
-          setItemCount(response.data[0].itemCount);
-          setItemCategory(response.data[0].itemCategory);
-          setProduct(response.data[0]);
+          console.log(response.data);
+          setItemName(response.data.itemName);
+          setItemDescription(response.data.itemDescription);
+          setItemPrice(response.data.itemPrice);
+          setItemCount(response.data.itemCount);
+          setItemCategory(response.data.itemCategory);
+          setProduct(response.data);
           setProductExist(true);
           console.log("Products stored in product");
         }

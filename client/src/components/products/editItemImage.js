@@ -58,7 +58,7 @@ function editItemImage({ setShowProductsEditPage, products, itemId }) {
               className="item_image"
               id="item_image"
               onChange={(event) => {
-                setItemImage(event.target.files[0]);
+                setItemImage(event.target.files);
               }}
               required
             />

@@ -56,7 +56,7 @@ function editShop({ editShopPage, userId }) {
               className="shop_image"
               id="shop_image"
               onChange={(event) => {
-                setShopImage(event.target.files[0]);
+                setShopImage(event.target.files);
               }}
               required
             />

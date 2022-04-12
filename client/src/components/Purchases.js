@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { getFinalCart } from "../features/cartItemsSlice";
 import { selectUser } from "../features/userSlice";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import AirportShuttleIcon from "@mui/icons-material/AirportShuttle";
+
 import Navbar from "./Navbar";
 import Hoverbar from "./Hoverbar";
 
@@ -22,9 +22,9 @@ function Purchases() {
   //     (response) => {
   //       if (response.data.success === true) {
   //         console.log("----------------Purchased products-------------------");
-  //         // console.log(response.data.result[0].items);
+  //         // console.log(response.data.result.items);
   //         //   setPurchasedProducts(response.data.result);
-  //         // setPurchasedProducts(response.data.result[0].items);
+  //         // setPurchasedProducts(response.data.result.items);
   //       }
   //     }
   //   );
@@ -61,7 +61,7 @@ function Purchases() {
               alt="..."
             />
             <p className="home_price">
-              <AirportShuttleIcon /> ${pro.itemPrice}
+               ${pro.itemPrice}
             </p>
 
             <div className="card-body">

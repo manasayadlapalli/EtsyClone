@@ -16,14 +16,14 @@ const editShopImage = ({ editShopPage }) => {
 
     const formData = new FormData();
     formData.append("shopImage", shopImage);
-    console.log("Inedit client axios");
+    console.log("Shop image update");
     Axios.put(
       "http://localhost:4000/updateShopImageById/" + user.id,
       formData
     ).then((response) => {
       if (response.data.success) {
         console.log(response);
-        // setShopImage(shopImage);
+        
         console.log("Item details edited successfully.....");
         window.location.pathname = "/shopHome";
       }
@@ -38,10 +38,7 @@ const editShopImage = ({ editShopPage }) => {
     Axios.get("http://localhost:4000/getShopById/" + user.id).then(
       (response) => {
         if (response) {
-          console.log(response.data.result[0].shopImage);
-          setShopImage(response.data.result[0].shopImage);
-          // setProductExist(true);
-          console.log("Products stored in get shop by id");
+          setShopImage(response.data.result.shopImage);
         }
       }
     );
@@ -62,7 +59,7 @@ const editShopImage = ({ editShopPage }) => {
               className="item_image"
               id="item_image"
               onChange={(event) => {
-                setShopImage(event.target.files[0]);
+                setShopImage(event.target.files);
               }}
               required
             />

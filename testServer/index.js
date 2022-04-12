@@ -7,28 +7,12 @@ const Items = require('./models/Itemsmodel');
 const Favourites  = require('./models/Favouritesmodel');
 const Cart = require('./models/Cartmodel');
 const mongoose = require("mongoose");
-const jwt = require("jsonwebtoken");
 const cookieParser = express("cookie-parser");
 const multer = require("multer");
 const path = require("path");
 const Favouritesmodel = require("./models/Favouritesmodel");
 const Cartmodel = require("./models/Cartmodel");
 const app = express();
-
-//import routes
-// const userRoutes = require("./routes/user");
-// const { count } = require("console");
-
-// const app = express();
-// app.use(express.static(__dirname + "/public"));
-
-// app.use(
-//   cors({
-//     origin: ["http://54.193.95.78:3000"],
-//     methods: ["GET", "POST", "PUT", "DELETE"],
-//     credentials: true,
-//   })
-// );
 
 app.use(bodyParser.json({ limit: "20mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "20mb", extended: true }));
@@ -41,6 +25,7 @@ app.use(
 );
 app.use(express.json());
 require("dotenv").config({path:"./config.env"});
+
 
 app.use(
   session({
@@ -73,7 +58,7 @@ app.use(function (req, res, next) {
 mongoose.connect(process.env.MONGODB_URI,{
     useUnifiedTopology:true,
     useNewUrlParser:true
-}).then(()=> console.log('DB connected...'))
+}).then(()=> console.log('Database connected...'))
   .catch(err =>console.log(err))
 
 // storage
@@ -186,11 +171,11 @@ app.get("/user", (req, res) => {
 
 
 app.post("/findShopDuplicates", async (req, res) => {
-       const {shopName} = req.body;
-      const shopNameExists = await Users.findOne({shopName});
+       const shopName = req.body.shopName;
+      const shopNameExists = await Users.findOne({filter:shopName});
       if(!shopNameExists){
         res.send({message:"duplicate"});
-        console.log("Shop  name already exists");
+        console.log("Shop name already exists");
       }
       else{
         res.send({ message: "No duplicates", });
@@ -199,12 +184,12 @@ app.post("/findShopDuplicates", async (req, res) => {
     }
 );
 
-app.post("/createShop", async(req, res) => {
+app.post("/createShop/:id", async(req, res) => {
   try {
-    console.log("Creating Shop for " + req.query.id + " Shop Id is " + req.body.shopName);
+    console.log("Creating Shop for " + req.params.id + " Shop Id is " + req.body.shopName);
     await Users.updateOne(
       {
-        '_id': req.query.id
+        '_id': req.params.id
       }, 
       { 
         $set: {
@@ -221,8 +206,7 @@ app.post("/createShop", async(req, res) => {
 });
 
 
-app.post("/addProduct", async (req, res) => {
-  
+app.post("/addProduct/:id", async (req, res) => {
     let upload = multer({ storage: storage }).single("itemImage");
     console.log(req.body);
     upload(req, res, function (err) {
@@ -233,8 +217,7 @@ app.post("/addProduct", async (req, res) => {
       } else if (err) {
         return res.send(err);
       }
-      try{
-      const userId = req.query.id;
+      const userId = req.params.id;
       const itemName = req.body.itemName;
       const itemDescription = req.body.itemDescription;
       const itemPrice = req.body.itemPrice;
@@ -242,53 +225,42 @@ app.post("/addProduct", async (req, res) => {
       const itemImage = req.file.filename;
       const itemCategory = req.body.itemCategory;
 
-        let newProduct = new Items({ userId,itemImage,itemName,itemDescription,itemPrice,itemCount,itemCategory })
-            newProduct.save();
-            res.send({ message: "success" });  
-         }catch(err){
-          console.log(err);    
-          res.send({ message: "error" });  
-        }  
-      })    
- });
-
+      Items.create( {userId,itemImage,itemName,itemDescription,itemPrice,itemCount,itemCategory },(err, result) => {
+        console.log(result);
+        if (err) {
+          console.log(err);
+          res.send(err);
+        } else {
+          res.send({ success: true, result });
+        }
+      })
+    })
+  });
+    
 
 app.post("/getAllProducts/:id", (req, res) => {
-  const id = req.params._id;
+  const _id = req.params.id;
   const limit = req.body.limit ? parseInt(req.body.limit) : 100;
   const skip = parseInt(req.body.skip);
   const term = req.body.searchTerm;
+  const itemName = req.body.itemName;
   console.log("In get all prods");
-  console.log(term);
-
-  if (term) {
-    console.log("In term");
-    db.query(
-      // SELECT * FROM test_schema.Items WHERE itemName LIKE "%Rice%" AND userId=1;
-      `SELECT * FROM Items WHERE itemName LIKE "%${term}%" AND userId=? LIMIT  ?, ?`,
-      [id, skip, limit],
-      (err, result) => {
+  if (term) {    
+    console.log("Inside get all prodcuts, term :" + term)
+    Items.find(_id).limit(100)
+       .exec((err, result) => {
         if (err) {
-          // console.log(result + "result in db");
-
           res.send(err + "err");
           console.log(err);
         } else {
-          console.log("Out term");
-
           console.log(result + "result");
-          res
-            .status(200)
-            .json({ success: true, result, postSize: result.length });
+          res.status(200).json({ success: true, result, postSize: result.length });
         }
       }
     );
   } else {
-    db.query(
-      "SELECT * FROM Items WHERE userId=? LIMIT  ?, ?",
-      [id, skip, limit],
+    Items.findById(_id,
       (err, result) => {
-        console.log(result.length + "result in db");
         if (err) {
           console.log("err");
           res.send(err + "err");
@@ -303,12 +275,11 @@ app.post("/getAllProducts/:id", (req, res) => {
   }
 });
 
-app.get("/getItemById/", (req, res) => {
+app.get("/getItemById/:userId", (req, res) => {
   
   console.log("Get items by item ID");
-  Items.find({
-    'id': req.query.id
-  },   (err, result) => {  
+  const userId = req.params.userid;
+  Items.find(userId, (err, result) => {  
     if (err) {
       res.send(err);
     } else {
@@ -331,7 +302,7 @@ app.get("/getItemsByCategory", (req, res) => {
   );
 });
 
-app.put("/updateItemById/", (req, res) => {
+app.put("/updateItemById/:itemId", (req, res) => {
   
   const itemName = req.body.itemName;
   const itemDescription = req.body.itemDescription;
@@ -352,7 +323,7 @@ app.put("/updateItemById/", (req, res) => {
   );
 });
 
-app.put("/updateItemImageById/", (req, res) => {
+app.put("/updateItemImageById/:id", (req, res) => {
   try {
     let upload = multer({ storage: storage }).single("itemImage");
     upload(req, res, function (err) {
@@ -363,9 +334,9 @@ app.put("/updateItemImageById/", (req, res) => {
       } else if (err) {
         return res.send(err);
       }
-      const id = req.params.itemId;
+      const _id = req.params.id;
       const itemImage = req.file.filename;      
-      Items.updateOne({itemImage},
+      Items.findOneAndUpdate(_id,itemImage,{overwrite: true},
           (err, result) => {
           console.log(result);
           if (err) {
@@ -382,11 +353,9 @@ app.put("/updateItemImageById/", (req, res) => {
   }
 });
 
-app.get("/getShopById/", (req, res) => {
-    
-  Users.find({
-    'id': req.query.id
-  },   (err, result) => {  
+app.get("/getShopById/:id", (req, res) => {
+  const _id = req.params.id; 
+  Users.findById(_id, (err, result) => {  
     if (err) {
       res.send(err);
     } else {
@@ -408,7 +377,7 @@ app.get("/getUserInfo/", (req, res) => {
 });
 
   
-app.put("/updateShopImageById/", (req, res) => {
+app.put("/updateShopImageById/:id", (req, res) => {
   console.log("Updating shop image");
   try {
     let upload = multer({ storage: shopStorage }).single("shopImage");
@@ -421,10 +390,11 @@ app.put("/updateShopImageById/", (req, res) => {
         return res.send(err);
       }
       const shopImage = req.file.filename;
+      const _id = req.params.id;
 
-      Users.updateOne({shopImage},
+      Users.findByIdAndUpdate(_id, shopImage,
         (err, result) => {
-        console.log(result.shopImage);
+        console.log(result);
         if (err) {
           console.log(err);
           res.send(err);
@@ -441,12 +411,8 @@ app.put("/updateShopImageById/", (req, res) => {
 
 app.get("/getSearchItems/:searchValue", (req, res) => {
   const searchValue = req.params.searchValue;
-  console.log(searchValue);
-
-  db.query(
-    `SELECT * FROM Items WHERE itemName REGEXP '${searchValue}'`,
-    (err, result) => {
-      console.log(result);
+  console.log('Searching for ' + searchValue);
+  Items.find({'itemName':{ "$regex": searchValue, "$options": "i" }},(err, result) => {
       if (err) {
         res.send(err);
       } else {
@@ -476,7 +442,7 @@ app.put("/updateUser/:id", async (req, res) => {
       const about = req.body.about;
       const phoneNumber = req.body.phoneNumber;
       console.log(userImage);     
-      Users.updateOne(_id, {userName, city, dob, gender, about, phoneNumber, userImage}, (err, result) => {
+      Users.updateOne(_id, userName, city, dob, gender, about, phoneNumber, userImage, (err, result) => {
         Object.assign(result, req.body);
         result.save(
           (err, data) => {

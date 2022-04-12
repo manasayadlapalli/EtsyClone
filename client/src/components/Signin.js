@@ -69,7 +69,7 @@ function Signin({ setshowSignIn }) {
     Axios.get("http://localhost:4000/signin").then((response) => {
       
       if (response.data.loggedIn === true) {
-        setLoginStatus(response.data.user[0]);
+        setLoginStatus(response.data.user);
         console.log(loginStatus);
             }
     });

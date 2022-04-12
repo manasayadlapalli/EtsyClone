@@ -42,9 +42,11 @@ function profileForm() {
     Axios.put("http://localhost:4000/updateUser/" + user.id, formData, {
       headers: { "content-Type": "multipart/form-data" },
     }).then((response) => {
+      console.warn(response);
       if (response.data.message === "success") {
         console.log("Image uploaded successfully");
-     
+        // console.log(response.data[0].result);
+        // console.log(response.data[0].result.name);
         dispatch(
           updateUserDetails({
             name: userName,
@@ -69,19 +71,18 @@ function profileForm() {
     // e.preventDefault();
     Axios.get("http://localhost:4000/getShopById/" + user.id).then(
       (response) => {
-        console.log(response);
+        console.log("getshopbyId" + response);
 
-        // console.log("In get of profile form");
         if (response.data.success === true) {
-          console.log("In get of profile form");
-          console.log(response.data.result[0]);
-          setUserName(response.data.result[0].name);
-          setUserImage(response.data.result[0].profilePic);
-          setDob(response.data.result[0].dob);
-          setGender(response.data.result[0].gender);
-          setCity(response.data.result[0].city);
-          setAbout(response.data.result[0].about);
-          setPhoneNumber(response.data.result[0].phoneNumber);
+          console.log("Getting profile data form");
+          console.log(response.data.result);
+          setUserName(response.data.result.name);
+          setUserImage(response.data.result.profilePic);
+          setDob(response.data.result.dob);
+          setGender(response.data.result.gender);
+          setCity(response.data.result.city);
+          setAbout(response.data.result.about);
+          setPhoneNumber(response.data.result.phoneNumber);
           console.log("Products stored in product");
         }
       }
@@ -97,11 +98,11 @@ function profileForm() {
   // }, []);
 
   // const fetchItemDetails = () => {
-  //   Axios.get("http://localhost:4000/getShopById/" + user.id).then(
+  //   Axios.get("http://54.193.95.78:4000/getShopById/" + user.id).then(
   //     (response) => {
   //       if (response) {
-  //         console.log(response.data.result[0].shopImage);
-  //         setShopImage(response.data.result[0].shopImage);
+  //         console.log(response.shopImage);
+  //         setShopImage(response.shopImage);
   //         // setProductExist(true);
   //         console.log("Products stored in get shop by id");
   //       }

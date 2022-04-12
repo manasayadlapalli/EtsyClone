@@ -22,9 +22,9 @@ function shopHeader({ searchProductUserId }) {
       (response) => {
         if (response.data.success) {
           // setShop(response.data.result);
-          setShopName(response.data.result[0].shopName);
-          setUserName(response.data.result[0].name);
-          setShopImage(response.data.result[0].shopImage);
+          setShopName(response.data.result.shopName);
+          setUserName(response.data.result.name);
+          setShopImage(response.data.result.shopImage);
         } else {
           console.log("Failed in getting shop by id ");
         }

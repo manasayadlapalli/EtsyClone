@@ -11,7 +11,7 @@ import {
 } from "../features/productsSlice";
 import FavoriteTwoToneIcon from "@mui/icons-material/FavoriteTwoTone";
 // import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import AirportShuttleIcon from "@mui/icons-material/AirportShuttle";
+
 import { selectUser } from "../features/userSlice";
 import { Link } from "react-router-dom";
 import { productOverview } from "../features/cartSlice";
@@ -134,7 +134,7 @@ function EtsyBody() {
             }}
           />
           <p className="home_price">
-            <AirportShuttleIcon />
+            
             &nbsp;
             {localStorage.getItem("preferedCurrency")}
             {pro.itemPrice}

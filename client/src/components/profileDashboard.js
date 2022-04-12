@@ -11,7 +11,7 @@ import {
   updateFavourites,
 } from "../features/productsSlice";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import AirportShuttleIcon from "@mui/icons-material/AirportShuttle";
+
 import { Navigate } from "react-router-dom";
 
 function profileDashboard() {
@@ -88,7 +88,7 @@ function profileDashboard() {
               alt="..."
             />
             <p className="home_price">
-              <AirportShuttleIcon /> ${pro.itemPrice}
+               ${pro.itemPrice}
             </p>
 
             <div className="card-body">

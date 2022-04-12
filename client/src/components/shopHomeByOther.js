@@ -41,7 +41,7 @@ function shopHomeByOther() {
   const getUserIdFromItemId = () => {
     Axios.get("http://localhost:4000/getItemById/" + id).then((response) => {
       if (response) {
-        dispatch(userId(response.data[0].userId));
+        dispatch(userId(response.data.userId));
       }
     });
   };
@@ -66,8 +66,8 @@ function shopHomeByOther() {
         if (response) {
           console.log(response);
           // setUserInfo(response.data.result[0]);
-          dispatch(userDetails(response.data.result[0]));
-          // console.log(response.data.result[0].name);
+          dispatch(userDetails(response.data.result));
+          // console.log(response.data.result.name);
           console.log("hi");
         }
       }
