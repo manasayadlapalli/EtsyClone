@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import CartItem from "./CartItem";
 import Axios from "axios";
+import {GiftWrap} from "./GiftWrap";
 
 // Components
 // import CartItem from "../components/CartItem";
@@ -112,6 +113,7 @@ const CartScreen = () => {
               />
             ))
           )}
+          <GiftWrap/>
         </div>
         <div
           className="cartscreen__right"
