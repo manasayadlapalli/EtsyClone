@@ -68,6 +68,7 @@ function ProductView() {
     //   console.log("Add to cart clicked");
     // }
   };
+  
   return (
     <>
       <Navbar />

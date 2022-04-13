@@ -20,15 +20,8 @@ function profileForm() {
 
   const handleUserData = (e) => {
     e.preventDefault();
-    // console.log("User data submitted successfully");
-    // console.log(userImage);
-    // console.log(userName);
-    // console.log(gender);
-    // console.log(city);
-    // console.log(dob);
-    // console.log(about);
+    
     const formData = new FormData();
-    console.log(userImage.lastModified + userImage.name);
     formData.append("userImage", userImage);
     formData.append("userName", userName);
     formData.append("gender", gender);
@@ -47,6 +40,7 @@ function profileForm() {
         console.log("Image uploaded successfully");
         // console.log(response.data[0].result);
         // console.log(response.data[0].result.name);
+
         dispatch(
           updateUserDetails({
             name: userName,
@@ -563,8 +557,9 @@ function profileForm() {
               <div className="section">
                 <div className="label">Birthday</div>
                 <input
-                  defaultValue={
+                  defaultValue={                    
                     dateFunction(user.dob).toISOString().split("T")[0]
+                    
                   }
                   type="date"
                   style={{ marginLeft: "-2%" }}
@@ -573,7 +568,6 @@ function profileForm() {
                   }}
                 />
               </div>
-
               <div className="section">
                 <div className="label">
                   About

@@ -52,8 +52,8 @@ const CartScreen = () => {
         .toFixed(2);
     }
 
-    //  setFinalAmount(finalPrice);
-    //  return finalPrice;
+    // setFinalAmount(finalPrice);
+    // return finalPrice;
   };
 
   const handleCheckOut = () => {
@@ -71,10 +71,10 @@ const CartScreen = () => {
           console.log(err);
         });
     });
-     dispatch(clearCart());
+    // dispatch(clearCart());
     window.location.pathname = "/purchase";
 
-    Axios.post("http://:4000/addCartProduct/" + user.id, {
+    Axios.post("http://localhost:4000/addCartProduct/" + user.id, {
       items: JSON.stringify(finalCartProducts),
       orderId: Math.floor(Math.random() * 1000),
       price: getCartSubTotal(),
@@ -125,14 +125,9 @@ const CartScreen = () => {
             <button
               onClick={() => {
                 handleCheckOut();
-                // item.itemId,
-                // item.itemImage,
-                // item.itemName,
-                // item.itemPrice,
-                // item.qty
-              }}
+                }}
             >
-              Proceed To Checkout
+              Continue to Checkout
             </button>
           </div>
         </div>

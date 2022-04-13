@@ -31,6 +31,7 @@ const mongoose = require('mongoose');
       },
       dob: {
         type: String,
+        default:null
         
       },
       gender: {

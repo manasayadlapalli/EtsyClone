@@ -9,8 +9,10 @@ export const cartItemsSlice = createSlice({
   reducers: {
     // by id
     createCartItem: (state, action) => {
+      console.log(" >>>> In createCartItem >>>> " + state.cartItems);
+
       const exist = state.cartItems.findIndex(
-        (ele) => ele.itemId === action.payload.itemId
+        (ele) => ele.id === action.payload.itemId
       );
       console.log(exist + "--: exist");
       if (exist !== -1) {
@@ -36,7 +38,7 @@ export const cartItemsSlice = createSlice({
       // console.log(item + "----------------------------: deleted");
     },
     clearCart: (state) => {
-      state.cartItems = null;
+      state.cartItems = [];
     },
     updateCartItem: (state, action) => {
       state.cartItems = action.payload;

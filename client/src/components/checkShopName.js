@@ -64,7 +64,7 @@ function checkShopName() {
     console.log(error + " in if block");
     errorMsg = (
       <div>
-        <span style={{ color: "green" }}>{error}</span>
+        <span style={{ color: "#eb6d20" }}>{error}</span>
       </div>
     );
   } else {

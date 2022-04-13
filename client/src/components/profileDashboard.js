@@ -31,7 +31,7 @@ function profileDashboard() {
       (response) => {
         console.log(response.data.result);
         if (response.data.success === true) {
-          console.log("geting all fav products and storing in redux");
+          console.log("geting all fav");
           dispatch(favouritesList(response.data.result));
           console.log(response.data.result.length);
           console.log(favProds);

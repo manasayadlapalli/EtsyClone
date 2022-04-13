@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
      
       userId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User' 
       },
       itemId: {
         type: mongoose.Schema.Types.ObjectId
