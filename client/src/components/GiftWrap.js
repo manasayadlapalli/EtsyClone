@@ -12,7 +12,6 @@ export class GiftWrap extends Component {
 
   render() {
     const CheckboxGroup = Checkbox.Group;
-    console.log(this.state.checked, "checked items");
     return (
       <div className="App">
         <CheckboxGroup onChange={(value) => this.setState({ checked: value })}>

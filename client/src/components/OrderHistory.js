@@ -4,11 +4,10 @@ import { useSelector } from "react-redux";
 import { getFinalCart } from "../features/cartItemsSlice";
 import { selectUser } from "../features/userSlice";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-
 import Navbar from "./Navbar";
 import Hoverbar from "./Hoverbar";
 
-function Purchases() {
+function OrderHistory() {
   const user = useSelector(selectUser);
   //   const [purchasedProducts, setPurchasedProducts] = useState([]);
   // const [purchasedProducts, setPurchasedProducts] = useState([]);
@@ -36,7 +35,7 @@ function Purchases() {
 
   if (purchasedProducts.length === 0) {
     renderFavourites = () => {
-      return <div>No Purchases till now...</div>;    };
+      return <div>No orders found!</div>;    };
   } else {
     renderFavourites = purchasedProducts.map((pro) => {
       return (
@@ -81,7 +80,8 @@ function Purchases() {
       <Navbar />
       <Hoverbar />
       <hr></hr>
-      <h2 style={{ marginLeft: "110px" }}>Purchases Page</h2>
+      <h2 style={{ marginLeft: "110px" }}> Order History </h2>
+      
       <div className="profile_favourites">
         <div className="container-fluid mx-1">
           <div className="row mt-5 mx-1">
@@ -95,4 +95,4 @@ function Purchases() {
   );
 }
 
-export default Purchases;
+export default OrderHistory;

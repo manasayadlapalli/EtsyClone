@@ -6,11 +6,6 @@ import CartItem from "./CartItem";
 import Axios from "axios";
 import {GiftWrap} from "./GiftWrap";
 
-// Components
-// import CartItem from "../components/CartItem";
-
-// Actions
-// import { addToCart, removeFromCart } from "../redux/actions/cartActions";
 import {
   clearCart,
   createCartItem,
@@ -58,7 +53,7 @@ const CartScreen = () => {
   };
 
   const handleCheckOut = () => {
-    console.log(JSON.stringify(finalCartProducts));
+    
     localStorage.setItem("purchase", JSON.stringify(finalCartProducts));
 
     finalCartProducts.map((product) => {
@@ -72,8 +67,8 @@ const CartScreen = () => {
           console.log(err);
         });
     });
-    // dispatch(clearCart());
-    window.location.pathname = "/purchase";
+    
+    window.location.pathname = "/orderhistory";
 
     Axios.post("http://localhost:4000/addCartProduct/" + user.id, {
       items: JSON.stringify(finalCartProducts),
@@ -85,7 +80,7 @@ const CartScreen = () => {
     
       }
     });
-    window.localStorage("purchase" + user.id, {});
+    window.localStorage("orderhistory" + user.id, {});
   };
 
   return (

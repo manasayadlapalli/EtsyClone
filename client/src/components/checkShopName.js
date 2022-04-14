@@ -14,8 +14,7 @@ function checkShopName() {
   const [error, setError] = useState("");
 
   const CheckAvailability = (shopName) => {
-    console.log(shopName.length + " in check availability");
-
+    
     if (shopName.length < 4) {
       setError("Minimum 4 characters required");
     } else {
@@ -41,9 +40,7 @@ function checkShopName() {
       shopName: shopName,
     }).then((response) => {
       if (response.data) {
-        console.log("Data Inserted successfully using post shop method");
-        // console.log(response.data[0]);
-        // console.log(response.data);
+        
         dispatch(
           updateUser({
             shopName: shopName,
@@ -59,7 +56,6 @@ function checkShopName() {
   //   };
 
   let errorMsg = null;
-  console.log(error);
   if (error === "Available") {
     console.log(error + " in if block");
     errorMsg = (
@@ -91,8 +87,7 @@ function checkShopName() {
 
   let redirectVar = null;
   if (!user) {
-    console.log("cookie is found " + user);
-    redirectVar = <Navigate to="/home" />;
+     redirectVar = <Navigate to="/home" />;
   }
   return (
     <div>

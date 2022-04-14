@@ -9,7 +9,7 @@ const mongoose = require('mongoose');
         type: mongoose.Schema.Types.ObjectId
       },
       orderId: {
-        type: String,
+        type: String
       },
       qty: {
         type: String,

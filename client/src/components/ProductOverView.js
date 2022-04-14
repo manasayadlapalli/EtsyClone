@@ -61,7 +61,7 @@ function ProductOverView() {
     // qty: qty,
     //   }).then((response) => {
     //     if (response.data.success === true) {
-    //       console.log("-------------responce data ------", response.data);
+    //       
     //     }
     //   });
     //   console.log("Add to cart clicked");

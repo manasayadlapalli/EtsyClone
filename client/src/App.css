@@ -11,10 +11,6 @@
   font-size: 48px;
 }
 
-* {
-  margin: 0px;
-  padding: 0px;
-}
 
 body {
   overflow-x: hidden;
@@ -24,23 +20,20 @@ body {
   width: 100%;
   height: 10vh;
   margin-top: 10px;
-  /* background-color: green; */
   display: flex;
   line-height: 8vh;
 }
 
 .logo {
-  font-family: "Times New Roman", Times, serif;
+  font-family: "Guardian-EgypTT",Charter,"Charter Bitstream",Cambria,"Noto Serif Light","Droid Serif",Georgia,serif;
   margin-left: 4%;
   color: rgb(255, 81, 0);
   font-size: 40px;
-  font-weight: 10;
   line-height: 8vh;
 }
 
 .search_form {
   width: 120%;
-  /* background-color: red; */
   height: 6vh;
   max-height: 8vh;
   margin-top: 9px;
@@ -51,26 +44,19 @@ body {
 
 .search_form > .searchBar {
   width: 200%;
-  /* margin-top: 10px; */
   height: 6vh;
   max-height: 8vh;
   border-radius: 25px;
-  border: 2px solid black;
-  background-color: rgb(243, 234, 223);
-  font-size: 20px;
+  font-family: "Guardian-EgypTT",Charter,"Charter Bitstream",Cambria,"Noto Serif Light","Droid Serif",Georgia,serif;;
+  border: 2px solid rgba(0, 0, 0, 0.51);
+  font-size: 16px;
   padding-left: 15px;
 }
 
 .searchBtn {
-  /* margin-top: 5px; */
   width: 5%;
   height: 30px;
-  /* visibility: hidden; */
-  /* background-color: green; */
   border: none;
-  /* background-color: red; */
-  background-color: rgb(243, 234, 223);
-  /* margin-left: -50%; */
   position: relative;
   left: -4%;
   top: 16%;
@@ -81,6 +67,7 @@ body {
   margin-top: -110%;
   margin-left: -20%;
   position: relative;
+  color: rgba(0, 0, 0, 0.692);
   top: 0;
   display: inline-block;
 }
@@ -103,23 +90,21 @@ body {
   height: 50px;
   border-radius: 20px;
   display: flex;
-  font-size: 18px;
-  /* background-color: rgb(243, 234, 223); */
-}
+  font-size: 16px;
+ }
 
 .sectionItems {
   width: 90%;
   margin-left: 5%;
-  margin-top: 1%;
-  /* background-color: red; */
-}
+  }
 
 .sectionItems_list {
   display: flex;
   list-style-type: none;
+  color: rgba(0, 0, 0, 0.798);
   justify-content: space-evenly;
   font-size: 14px;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Guardian-EgypTT",Charter,"Charter Bitstream",Cambria,"Noto Serif Light","Droid Serif",Georgia,serif;
 }
 
 .sectionItems_list > li:hover {
@@ -129,36 +114,30 @@ body {
 
 .dash_board {
   width: 100%;
-  height: 200px;
-  background-color: blanchedalmond;
+  height: 180px;
+  background-color: rgba(194, 224, 205, 0.866);
   margin-top: 10px;
+  color: rgba(0, 0, 0, 0.716);
   box-shadow: 3px 0px 4px 2px #888888;
 }
 .title {
   padding-top: 20px;
   text-align: center;
-  font-family: "Guardian-EgypTT", Charter, "Charter Bitstream", Cambria,
-    "Noto Serif Light", "Droid Serif", Georgia, serif;
+  font-family: "Guardian-EgypTT",Charter,"Charter Bitstream",Cambria,"Noto Serif Light","Droid Serif",Georgia,serif;
   font-size: 35px;
   font-weight: 500;
 }
 .dashboard_items {
   width: 100%;
-  padding-top: 80px;
+  padding-top: 40px;
   display: flex;
   justify-content: space-evenly;
 }
-/* .dashboard_image:hover {
-  background-color: red;
-} */
 
 .dashboard_item > img:hover {
   cursor: pointer;
   transform: scale(1.1);
   transition: 0.5s;
-
-  /* animation-delay: 150ms; */
-  /* background-color: red; */
 }
 
 .dashboard_item > img:hover + h3 {
@@ -172,7 +151,7 @@ body {
 .dashboard_item > img {
   width: 100px;
   border-radius: 50%;
-  height: 105px;
+  height: 100px;
 }
 
 .signin_title {
@@ -188,7 +167,7 @@ body {
 
 .form-group label {
   font-size: 18px;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Guardian-EgypTT",Charter,"Charter Bitstream",Cambria,"Noto Serif Light","Droid Serif",Georgia,serif;
   font-weight: 500;
 }
 .form-group input {
@@ -210,7 +189,7 @@ body {
 .bg-modal {
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.387);
   position: absolute;
   top: 0;
   z-index: 10;
@@ -241,15 +220,15 @@ body {
 }
 
 .signin_form label {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: "Guardian-EgypTT",Charter,"Charter Bitstream",Cambria,"Noto Serif Light","Droid Serif",Georgia,serif;
   font-size: 14px;
   padding-top: 10px;
   padding-bottom: 3px;
   font-weight: bold;
 }
 .signin_form input {
-  border-radius: 4px;
-  border: 1px solid black;
+  border-radius: 50px;
+  border: 1px solid rgba(0, 0, 0, 0.329);
   width: 100%;
   height: 45px;
   padding: 10px;
@@ -258,33 +237,24 @@ body {
 .signin_form .btn {
   margin-top: 15px;
   width: 99%;
-  background-color: black;
-  border-radius: 100px;
-  height: 50px;
-  border: 1px solid black;
-}
-
-.googleauth_btn {
-  margin-top: 15px;
-  margin-left: 18px;
-  width: 90%;
-  border-radius: 100px;
+  background-color: rgb(28, 27, 27);
+  border-radius: 50px;
   height: 50px;
   border: 1px solid black;
 }
 
 .signin_form .btn:hover {
-  background-color: rgb(41, 41, 41);
   height: 55px;
   width: 100%;
   font-size: 18px;
-  transition: 0.4s;
+  transition: 0.5s;
 }
 
 .forgot_password {
   margin-top: 3%;
   text-decoration: underline;
   text-align: end;
+  font-family: "Guardian-EgypTT",Charter,"Charter Bitstream",Cambria,"Noto Serif Light","Droid Serif",Georgia,serif;;
 }
 
 .signin_close {
@@ -293,7 +263,6 @@ body {
   height: 8%;
   padding-top: 2px;
   text-align: center;
-  /* background-color: red; */
   font-size: 25px;
   top: 0;
   z-index: 1;
@@ -313,15 +282,14 @@ body {
   background-color: white;
   color: black;
   padding: 8px 16px;
-  border: 2px solid black;
+  border: 1px solid rgb(29, 28, 28);
   border-radius: 100px;
   margin-top: -10px;
 }
 
 .signin_heading button:hover {
-  background-color: white;
-  border: 2px solid black;
-  color: black;
+  border: 1px solid black;
+  color: white;
   font-size: 18px;
   padding: 8px 16px;
   transition: 0.4s;
@@ -337,8 +305,7 @@ body {
   top: 8%;
   right: 5%;
   z-index: 5;
-  /* justify-content: center;
-  align-items: center; */
+ 
 }
 
 .profile-content {
@@ -358,13 +325,13 @@ body {
 .profile-icon {
   margin-left: -15px;
   font-size: 14px;
-  font-family: sans-serif;
+  font-family: "Guardian-EgypTT",Charter,"Charter Bitstream",Cambria,"Noto Serif Light","Droid Serif",Georgia,serif;
   width: 90%;
   padding: 8px;
 }
 
 .profile-icon:hover {
-  background-color: rgb(227, 227, 227);
+  background-color: rgba(94, 91, 91, 0.13);
   cursor: pointer;
 }
 
@@ -382,7 +349,7 @@ body {
   height: 130px;
   border-radius: 50%;
   display: inline-block;
-  background-color: rgb(135, 103, 135);
+  background-color: rgb(122, 118, 122);
 }
 
 .profile_imageIcon {
@@ -442,7 +409,7 @@ body {
 .profile_page_header {
   margin-bottom: 3%;
   margin-top: 3%;
-  font-size: 20px;
+  font-size: 14px;
   width: 100%;
   height: 5px;
   display: flex;
@@ -478,7 +445,7 @@ body {
   width: 12%;
   height: 25px;
   padding: 2px;
-  font-size: 14px;
+  font-size: 10px;
   text-decoration: underline;
   line-height: 10px;
   background-color: white;
@@ -501,10 +468,6 @@ body {
 .sell_page > hr {
   width: 50%;
   margin-left: 25%;
-}
-
-.shop_name {
-  /* background-color: red; */
 }
 
 .shop_name > input {
@@ -554,12 +517,10 @@ body {
 }
 
 .owner_details {
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif;
+  font-family: "Guardian-EgypTT",Charter,"Charter Bitstream",Cambria,"Noto Serif Light","Droid Serif",Georgia,serif;
   margin-right: 5%;
   width: 20%;
   height: 170px;
-  /* background-color: blue; */
   text-align: center;
 }
 
@@ -648,20 +609,20 @@ body {
 
 .favourite_icon:hover {
   cursor: pointer;
-  color: rgb(255, 147, 147);
-  background-color: rgb(255, 0, 0);
+  color: rgb(223, 25, 87);
 }
 
 .home_card:hover > .favourite_icon {
-  /* cursor: pointer; */
+  cursor: pointer; 
   display: block;
+  
 }
 
 .home_price {
   width: 30%;
-  border-radius: 20px;
+  border-radius: 3px;
   padding-left: 4px;
-  background-color: #d4e9d7;
+  background-color: #dde8df17;
   margin-left: 3%;
   margin-top: 50%;
   position: absolute;
@@ -697,6 +658,7 @@ body {
   background-color: #fdebd2;
   padding: 40px 0;
   margin-top: 250px;
+  font-family: "Guardian-EgypTT",Charter,"Charter Bitstream",Cambria,"Noto Serif Light","Droid Serif",Georgia,serif;
 }
 .etsy-area {
   display: flex;
@@ -807,10 +769,11 @@ body {
 }
 
 .categories_title {
-  font-family: "Graphik Webfont", -apple-system, "Helvetica Neue", "Droid Sans",
+  font-family: "Guardian-EgypTT",Charter,"Charter Bitstream",Cambria,"Noto Serif Light","Droid Serif",Georgia,serif,
     Arial, sans-serif;
-  font-weight: 700;
-  font-size: 28px;
+  font-weight: 400;
+  font-size: 18px;
+  color: rgba(0, 0, 0, 0.716);
   line-height: 36px;
 }
 

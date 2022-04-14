@@ -9,9 +9,8 @@ import {
   getProducts,
   updateFavourites,
 } from "../features/productsSlice";
-import FavoriteTwoToneIcon from "@mui/icons-material/FavoriteTwoTone";
-// import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
+import FavoriteTwoToneIcon from "@mui/icons-material/FavoriteTwoTone";
 import { selectUser } from "../features/userSlice";
 import { Link } from "react-router-dom";
 import { productOverview } from "../features/cartSlice";
@@ -39,12 +38,10 @@ function EtsyBody() {
   const getItems = () => {
     Axios.get("http://localhost:4000/getItems").then((response) => {
       if (response.data.success === true) {
-        console.log(response.data.result);
-        dispatch(getAllItems(response.data.result));
+         dispatch(getAllItems(response.data.result));
 
         for (let i = 0; i < response.data.result.length; i++) {
-          // console.log(response.data.result[i].itemId);
-          const updateItems = [
+             const updateItems = [
             ...items,
             {
               itemId: response.data.result[i].itemId,
@@ -69,8 +66,7 @@ function EtsyBody() {
     if (user !== null) {
       Axios.get("http://localhost:4000/getFavourites/" + user.id).then(
         (response) => {
-          console.log("user id for favourites" + user.id);
-         if (response.data.success === true) {
+          if (response.data.success === true) {
             dispatch(favouritesList(response.data.result));
           }
         }
@@ -86,8 +82,7 @@ function EtsyBody() {
     }).then((response) => {
       if (response.data.success === true) {
         console.log(response.data.result);
-        console.log("new fav added");
-        // setFavoutriteIcon(true);
+       
       }
     });
   };
@@ -115,15 +110,10 @@ function EtsyBody() {
             }}
             className="favourite_icon"
             onClick={() => {
-              console.log("prooooo -- " + JSON.stringify(pro));
-              console.log("Favourites itemid --- " + pro._id + " user.id --- " + user.id);
-              handleFavourite(pro._id, user.id);
+               handleFavourite(pro._id, user.id, pro.itemImage);
             }}
           >
-            {/* {toggleFavourites} */}
-            <FavoriteTwoToneIcon />
-            {/* {favourites.itemId === products.itemId &&
-              favourites.userId === user.id} */}
+            <FavoriteTwoToneIcon />           
           </div>
           <img
             src={"/Images/" + pro.itemImage}
@@ -133,11 +123,12 @@ function EtsyBody() {
               handleOpenImage(pro);
             }}
           />
-          <p className="home_price">
+           <p className="home_price">
             
             &nbsp;
             {localStorage.getItem("preferedCurrency")}
-            {pro.itemPrice}
+            {pro.itemPrice} <br/>
+            {pro.itemName}
           </p>
 
           {/* <div className="card-body">
@@ -176,7 +167,7 @@ function EtsyBody() {
               ""
             ) : (
               <p className="categories_title">
-                Items you may like from all the shops
+              These presents are full of lasting love, so you can keep celebrating Mom way beyond one special Sunday.
               </p>
             )}
           </div>

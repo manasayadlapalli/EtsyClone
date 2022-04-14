@@ -241,7 +241,6 @@ app.post("/addProduct/:id", async (req, res) => {
 
 app.post("/getAllProducts/:id", (req, res) => {
   const _id = req.params.id;
-  console.log("In get all prods");
    
   Items.find({"_id" : _id}).limit(100)
       .exec((err, result) => {
@@ -421,7 +420,7 @@ app.put("/updateUser/:id", async (req, res) => {
       const userImage = req.file.filename;
       const about = req.body.about;
       const phoneNumber = req.body.phoneNumber;
-      console.log(userImage);           
+                
       Users.findOneAndUpdate({"_id":req.params.id}, 
       {$set: { userName, city, dob, gender, about, phoneNumber, userImage}},
          (err, result) => {
@@ -464,7 +463,7 @@ app.get("/getItemsBasedOnUser/", (req, res) => {
 app.post("/addFavourite", (req, res) => {  
   const userId = req.body.itemId;
   const itemId = req.body.userId;
-  console.log("userId --- " + userId + " itemId --- " + itemId);
+  
   Favourites.create({userId,itemId},(err, result) => {
     
     if (err) {
@@ -496,7 +495,7 @@ app.delete("/deleteFavourite/:itemId/:userId", (req, res) => {
   const itemId = req.body.itemId;
   const userId = req.body.userId;
   console.log("Deleting Fav Item");
-  Favourites.findOneAndRemove({filter: { itemId,userId }}, (err, result) => {
+  Favourites.findOneAndRemove(itemId, userId, (err, result) => {
         if (err) {
         console.log(err);
         res.send(err);
@@ -508,18 +507,14 @@ app.delete("/deleteFavourite/:itemId/:userId", (req, res) => {
 });
 
 
-app.post("/addCartProduct/:userId", (req, res) => {
-
-  console.log("Inside addCartProduct");
+app.post("/addCartProduct/:userId", (req, res) => {  
     
   const userId = req.params.userId;
   const items = req.body.items;
   const orderId = req.body.orderId;
   const price = req.body.price;
 
-  console.log({items, orderId, price, userId});
-
-  Cart.save({items, orderId, price, userId},
+  Cart.create({items, orderId, price, userId},
     (err, result) => {
       console.log(result);
       if (err) {
@@ -532,14 +527,12 @@ app.post("/addCartProduct/:userId", (req, res) => {
   );
 });
 
+
 app.get("/getFinalCartProducts/:userId", (req, res) => {
   const userId = req.params.userId;
   console.log("Getting cart products in cart");
   Items.find({"itemId" : { $in : userId}},
-  // db.query(
-  //   "SELECT * FROM Items WHERE itemId IN (SELECT itemId FROM Carts WHERE userId=?)",
-
-  //   [userId],
+  
     (err, result) => {
       console.log(result);
       if (err) {
@@ -558,11 +551,7 @@ app.put("/updateCartQuantity/:userId", (req, res) => {
   const itemId = req.body.itemId;
   const qty = req.body.qty;
 
-  console.log("In update cart");
-  console.log(itemId);
-  console.log(qty);
-
-
+  
   Cart.updateOne({"userId" : userId, "itemId" : itemId}, {$set: {"qty" : qty} },
     [qty, itemId, userId],
     (err, result) => {
@@ -584,10 +573,7 @@ app.get("/getQtyFromCart/:userid/:itemId", (req, res) => {
   const userId = req.params.userid;
   const itemId = req.params.itemId;
   console.log("Getting all cart products in home");
-  db.query(
-    "select qty from Carts where userId=? AND itemId=?",
-    [userId, itemId],
-    (err, result) => {
+  Cart.find(userId, itemId, (err, result) => {
       console.log(result);
       if (err) {
         console.log(err);
@@ -598,13 +584,12 @@ app.get("/getQtyFromCart/:userid/:itemId", (req, res) => {
     }
   );
 });
+
+
 app.get("/getPurchases/:UserId", (req, res) => {
-  const userid = req.params.UserId;
+  const userId = req.params.UserId;
   console.log("Get purchased items");
-  db.query(
-    "SELECT * FROM Carts WHERE userId=? order by cartId desc limit 0, 1 ",
-    [userid],
-    (err, result) => {
+  Cart.find(userId, (err, result) => {
       console.log(result);
       if (err) {
         res.send(err);
@@ -615,23 +600,17 @@ app.get("/getPurchases/:UserId", (req, res) => {
   );
 });
 
-app.put("/updateItemById/:itemId", (req, res) => {
-  const id = req.params.itemId;
+app.put("/updateItemById/:id", (req, res) => {
+  const _id = req.params.id; 
   // const userId = req.params.id;
   const itemName = req.body.itemName;
-  const itemDescriprion = req.body.itemDescription;
+  const itemDescription = req.body.itemDescription;
   const itemPrice = req.body.itemPrice;
   const itemCount = req.body.itemCount;
   const itemCategory = req.body.itemCategory;
 
-  console.log("In update item post");
-  console.log(itemDescriprion);
-  console.log(itemName);
-  console.log(id);
-
-  db.query(
-    "UPDATE Items SET itemName=?, itemPrice=?, itemDescription=?, itemCount=?, itemCategory=? WHERE itemId=?",
-    [itemName, itemPrice, itemDescriprion, itemCount, itemCategory, id],
+ Items.updateOne( _id,
+                 { $set:{itemName, itemDescription, itemPrice, itemCount, itemCount, itemCategory }},
     (err, result) => {
       console.log(result.itemName);
       if (err) {
@@ -644,14 +623,11 @@ app.put("/updateItemById/:itemId", (req, res) => {
   );
 });
 
-app.post("/editCount/:id", (req, res) => {
-  const productid = req.params.id;
+app.put("/editCount/:id", (req, res) => {
+  const _id = req.params.id;  
   const quantity = req.body.quantity;
-  console.log(productid);
-  console.log(quantity);
-  db.query(
-    "UPDATE Items SET itemCount=itemCount-?,sales=sales+? WHERE itemId=?",
-    [quantity, quantity, productid],
+  const sales = req.body.sales;
+ Items.findByIdAndUpdate(_id, { $set:{ quantity, sales }},
     (err, result) => {
       if (err) {
         console.log(err);

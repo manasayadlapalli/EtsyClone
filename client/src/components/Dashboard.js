@@ -9,52 +9,52 @@ function Dashboard() {
         <div className="dashboard_items">
           <div className="dashboard_item">
             <img
-              src="https://i.etsystatic.com/12397853/r/il/505fa0/2426681051/il_300x300.2426681051_mocv.jpg"
+              src="https://i.etsystatic.com/8505634/r/il/3cfcca/3016768150/il_300x300.3016768150_9thy.jpg"
               alt="home"
             ></img>
-            <h3 style={{ fontSize: "20px" }}>Wall Decor</h3>
+            <h3 style={{ fontSize: "16px" ,textAlign:"center"}}>Gifts for Mom</h3>
           </div>
           <div className="dashboard_item">
             <img
-              src="https://i.etsystatic.com/29669210/r/il/48a8a1/3619807266/il_300x300.3619807266_4hg4.jpg"
+              src="https://i.etsystatic.com/5395361/r/il/f22821/1118367255/il_300x300.1118367255_k17t.jpg"
               alt="home"
             ></img>
-            <h3 style={{ fontSize: "20px", marginLeft: "-10%" }}>
-              Outdoor & Garden
+            <h3 style={{ fontSize: "16px", marginLeft: "-10%" ,textAlign:"center"}}>
+              Necklaces
             </h3>
           </div>
           <div className="dashboard_item">
             <img
-              src="https://i.etsystatic.com/8928370/r/il/f32f25/3376320499/il_300x300.3376320499_7sqq.jpg"
+              src="https://i.etsystatic.com/15249051/r/il/6c00cb/3730064431/il_300x300.3730064431_ndck.jpg"
               alt="home"
             ></img>
-            <h3 style={{ fontSize: "20px", marginLeft: "-10%" }}>
-              Kitchen & Dining
+            <h3 style={{ fontSize: "16px", marginLeft: "-10%",textAlign:"center" }}>
+              Gift baskets
             </h3>
           </div>
           <div className="dashboard_item">
             <img
-              src="https://i.etsystatic.com/5395361/r/il/5bb896/3641190222/il_300x300.3641190222_fydq.jpg"
+              src="https://i.etsystatic.com/9341357/r/il/0146f9/3323020889/il_300x300.3323020889_qli1.jpg"
               alt="home"
             ></img>
-            <h3 style={{ fontSize: "20px", marginLeft: "10%" }}>Necklaces</h3>
+            <h3 style={{ fontSize: "16px", marginLeft: "10%",textAlign:"center" }}>Linen Clothing</h3>
           </div>
           <div className="dashboard_item">
             <img
-              src="https://images.pexels.com/photos/1410226/pexels-photo-1410226.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+              src="https://i.etsystatic.com/21713476/r/il/c61161/3775624801/il_300x300.3775624801_htkn.jpg"
               alt="home"
             ></img>
-            <h3 style={{ fontSize: "20px", marginLeft: "-10%" }}>
-              Wedding Decor
+            <h3 style={{ fontSize: "16px", marginLeft: "-10%" ,textAlign:"center"}}>
+              Easter
             </h3>
           </div>
           <div className="dashboard_item">
             <img
-              src="https://i.etsystatic.com/10448437/r/il/8d7c57/1985247369/il_300x300.1985247369_d33t.jpg"
+              src="https://i.etsystatic.com/22434491/r/il/27c541/3125257928/il_300x300.3125257928_op93.jpg"
               alt="home"
             ></img>
-            <h3 style={{ fontSize: "20px", marginLeft: "-15%" }}>
-              On Sale & Discount
+            <h3 style={{ fontSize: "16px", marginLeft: "-15%",textAlign:"center" }}>
+              On Sale 
             </h3>
           </div>
         </div>

@@ -22,7 +22,6 @@ function Cart() {
   const getCartItems = () => {
     Axios.get("http://localhost:4000/getFinalCartProducts/" + user.id).then(
       (response) => {
-        console.log(response);
         setCartItems([...cartItems, ...response.data.result]);
       }
     );
@@ -30,7 +29,7 @@ function Cart() {
 
   const qtyChangeHandler = (itemId, qty) => {
     // dispatch(addProductToCart(id, qty));
-    console.log(itemId);
+    
     Axios.put("http://localhost:4000/updateCartQuantity/" + user.id, {
       itemId: itemId,
       qty: qty,

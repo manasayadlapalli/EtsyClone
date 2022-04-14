@@ -25,7 +25,6 @@ function profileForm() {
             <b>Your public profile</b>
             <button className="view_profile">View Profile</button>
           </div>
-          <p>Everything on this page can be seen by anyone</p>
           <form className="edit_profile">
             <table className="profile_table">
               <table>
@@ -37,7 +36,7 @@ function profileForm() {
                 </tr>
                 <tr>
                   <td>Profile Name</td>
-                  <td>Divya Maddipudi</td>
+                  <td>Manasa</td>
                 </tr>
                 <tr>
                   <td>Gender</td>

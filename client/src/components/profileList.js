@@ -52,7 +52,7 @@ function profileList({ setShowProfileLists }) {
   // }
   return (
     <div>
-      {/* {redirectVar} */}
+      
       <div onClick={showHomePage} className="profile-modal">
         <div className="profile-content">
           {/* <CloseLogin setshowSignIn={setshowSignIn} /> */}
@@ -65,7 +65,7 @@ function profileList({ setShowProfileLists }) {
             </li>
             <li className="profile-icon">Gift card balance: $0.00</li>
             <li className="profile-icon">Messages</li>
-            <li className="profile-icon">Purchases and reviews</li>
+            <li className="profile-icon">My Purchases</li>
             <li className="profile-icon">Account Settings</li>
             <li onClick={handleSellOnEtsy} className="profile-icon">
               Sell on Etsy

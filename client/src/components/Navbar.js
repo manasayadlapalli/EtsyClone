@@ -44,8 +44,7 @@ function Navbar() {
 
   let navLogin = null;
   if (user && cookie.load("user")) {
-    console.log("Able to read cookie");
-    console.log(cookie.load("user"));
+    
     navLogin = (
       <ul className="icons">
         <li onClick={showFavourites}>
@@ -63,7 +62,7 @@ function Navbar() {
       </ul>
     );
   } else {
-    console.log("Not Able to read cookie in navbar");
+    
     navLogin = (
       <ul className="icons">
         <li className="icons_nav" onClick={popUpSignIn}>
@@ -122,7 +121,7 @@ function Navbar() {
           <h2 className="logo">Etsy</h2>
         </a>
         <SearchBar
-          placeholder="Search for anything"
+          placeholder="or anything"
           // refreshFunction={updateSearchTerm}
         />
         {navLogin}

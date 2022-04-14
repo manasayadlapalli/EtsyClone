@@ -26,7 +26,7 @@ import ProfileDashboard from "./components/profileDashboard";
 import ProductOverView from "./components/ProductOverView";
 // import CartScreen from "./components/CartScreen";
 import Cart from "./components/Cart";
-import Purchases from "./components/Purchases";
+import OrderHistory from "./components/OrderHistory";
 import ProductView from "./components/ProductView";
 import ShopHomeByOther from "./components/shopHomeByOther";
 
@@ -53,7 +53,7 @@ function App() {
           <Route path="/profileForm" element={<ProfileForm />} />
           <Route path="/productOverview" element={<ProductOverView />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/purchase" element={<Purchases />} />
+          <Route path="/orderhistory" element={<OrderHistory />} />
           <Route path="/productView/:id" element={<ProductView />} />
         </Routes>
       </Router>

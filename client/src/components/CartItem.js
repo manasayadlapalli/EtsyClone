@@ -27,10 +27,11 @@ const CartItem = ({ item }) => {
   };
 
   const removeHandler = (id) => {
-    console.log("remove");
-    dispatch(removeCartItem(id));
-    // window.location.reload(true);
-    // dispatch(removeFromCart(id));
+    dispatch(
+      removeCartItem({
+        itemId: item.itemId,
+      })
+    );
   };
 
   return (
@@ -39,6 +40,7 @@ const CartItem = ({ item }) => {
       style={{
         display: "flex",
         width: "100%",
+        // backgroundColor: "green",
         height: "200px",
       }}
     >
