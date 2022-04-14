@@ -29,13 +29,9 @@ function profileDashboard() {
   const getFavouriteItems = () => {
     Axios.get("http://localhost:4000/getFavourites/" + user.id).then(
       (response) => {
-        console.log(response.data.result);
-        if (response.data.success === true) {
-          console.log("geting all fav");
+         if (response.data.success === true) {
           dispatch(favouritesList(response.data.result));
-          console.log(response.data.result.length);
-          console.log(favProds);
-        }
+         }
       }
     );
   };
@@ -105,14 +101,12 @@ function profileDashboard() {
 
   let redirectVar = null;
   if (user === null || !cookie.load("user")) {
-    console.log("cookie is found " + user);
     redirectVar = <Navigate to="/home" />;
   }
   return (
     <div>
       {redirectVar}
-      {/* <h1>{favProdS}</h1> */}
-
+   
       <div className="profile_dashboard">
         {user !== null && (
           <img

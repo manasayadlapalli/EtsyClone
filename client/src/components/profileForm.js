@@ -125,8 +125,8 @@ function profileForm() {
           <div className="user-profile-edit">
             <div className="header-section">
               <div className="title">
-                <h3 style={{ marginLeft: "-30%" }}>Your Public Profile</h3>
-                <p>Everything on this page can be seen by anyone</p>
+                <h3 style={{ marginLeft: "-1%" }}>Your Public Profile</h3>
+               
               </div>
             </div>
 
@@ -591,7 +591,7 @@ function profileForm() {
               </div>
 
               <button className="clicky" onClick={handleUserData}>
-                Save Changes
+                Update
               </button>
             </form>
           </div>
