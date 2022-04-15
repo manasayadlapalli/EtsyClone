@@ -1,5 +1,8 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+// const jwt = require('jsonwebtoken');
+// require('./passport');
+// const passport = require("passport");
 const cors = require("cors");
 const session = require("express-session");
 const Users = require('./models/Usermodel');
@@ -13,6 +16,50 @@ const path = require("path");
 const Favouritesmodel = require("./models/Favouritesmodel");
 const Cartmodel = require("./models/Cartmodel");
 const app = express();
+
+// AWS S3 stuff
+require('dotenv').config();
+const multerS3 = require('multer-s3');
+const aws = require('aws-sdk');
+
+const bucketName = process.env.AWS_BUCKET_NAME 
+const region =  process.env.AWS_BUCKET_REGION 
+const accessKeyId = process.env.AWS_ACCESS_KEY
+const secretAccessKey = process.env.AWS_SECRET_KEY 
+
+aws.config.update({
+  secretAccessKey: secretAccessKey,
+  accessKeyId: accessKeyId,
+  region: region
+})
+
+const s3 = new aws.S3();
+
+// function to upload file to s3
+const uploadS3 = multer({
+  storage: multerS3({
+    s3,
+    ACL: 'public-read',
+    bucket: bucketName,
+    contentType: multerS3.AUTO_CONTENT_TYPE,
+    key: function (req, file, cb) {
+      cb(null, file.originalname)
+    }
+    //limits: { fileSize: "1000000" },
+    //fileFilter: (req, file, cb) => {
+    //  const fileTypes = /jpeg|jpg|png|gif/;
+    //  const mimType = fileTypes.test(file.mimetype);
+    //  const extname = fileTypes.test(path.extname(file.originalname));
+
+    //  if (mimType && extname) {
+    //    return cb(null, true);
+    //  }
+    //  cb("Give proper file name");
+    //}
+  })
+}).single("itemImage");
+
+
 
 app.use(bodyParser.json({ limit: "20mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "20mb", extended: true }));
@@ -29,7 +76,7 @@ require("dotenv").config({path:"./config.env"});
 app.use(
   session({
     key: "email",
-    secret: "cmpe273_kafka_passport_mongo",
+    secret: "cmpe273-etsy-lab2",
     resave: false, 
     saveUninitialized: false, 
     activeDuration: 5 * 60 * 1000,
@@ -122,6 +169,7 @@ app.post('/register',async (req,res)=>{
   }
 })
 
+
 app.get("/signin", (req, res) => {
   if (req.session.user) {
     res.send({ loggedIn: true, user: req.session.user });
@@ -205,13 +253,14 @@ app.post("/createShop/:id", async(req, res) => {
 });
 
 
-app.post("/addProduct/:id", async (req, res) => {
-    let upload = multer({ storage: storage }).single("itemImage");
-    console.log(req.body);
-    upload(req, res, function (err) {
-      if (!req.file) {
-        return res.send("Please select an image to upload");
-      } else if (err instanceof multer.MulterError) {
+app.post("/addProduct/:id", (req, res) => {
+    //let upload = multer({ storage: storage }).single("itemImage");
+    //
+    //upload(req, res, function (err) {
+      uploadS3(req, res, function (err) {
+      //if (!req.file) {
+      //  return res.send("Please select an image to upload");
+      if (err instanceof multer.MulterError) {
         return res.send(err);
       } else if (err) {
         return res.send(err);
@@ -258,7 +307,7 @@ app.post("/getAllProducts/:id", (req, res) => {
 app.get("/getItemById/:userId", (req, res) => {
   
   console.log("Get items by item ID");
-  const userId = req.params.userid;
+  const userId = req.params.userId;
   Items.find(userId, (err, result) => {  
     if (err) {
       res.send(err);

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Navbar from "./Navbar";
 import Hoverbar from "./Hoverbar";
 import { selectUser } from "../features/userSlice";
-import addProducts from "./products/addProducts";
+import AddProducts from "./products/AddProducts";
 import Axios from "axios";
 import EditProducts from "./products/editProducts";
 import EditItemImage from "./products/editItemImage";
@@ -230,7 +230,7 @@ function shopHome() {
         </div>
       </div>
       {showProductsAddPage && (
-        <addProducts setShowProductsAddPage={setShowProductsAddPage} />
+        <AddProducts setShowProductsAddPage={setShowProductsAddPage} />
       )}
       {showProductsEditPage && (
         <EditProducts

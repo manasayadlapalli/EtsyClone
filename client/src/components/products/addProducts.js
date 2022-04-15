@@ -5,7 +5,7 @@ import { selectUser } from "../../features/userSlice";
 import CloseLogin from "../closeLogin";
 import CategoryComponent from "./CategoryComponent";
 
-function addProducts({ setShowProductsAddPage }) {
+function AddProducts({ setShowProductsAddPage }) {
   const user = useSelector(selectUser);
   const [itemName, setItemName] = useState("");
   const [itemImage, setItemImage] = useState("");
@@ -219,4 +219,4 @@ function addProducts({ setShowProductsAddPage }) {
   );
 }
 
-export default addProducts;
+export default AddProducts;
