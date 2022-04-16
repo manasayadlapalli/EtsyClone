@@ -136,7 +136,7 @@ function profileForm() {
                 <div className="profile-pic">
                   <img
                     width="200px"
-                    src={"/Users/Images/" + userImage}
+                    src={userImage}
                     alt="shop"
                   ></img>
                 </div>

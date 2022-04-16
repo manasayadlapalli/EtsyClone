@@ -79,7 +79,7 @@ function profileDashboard() {
               <FavoriteBorderIcon />
             </div>
             <img
-              src={"/Images/" + pro.itemImage}
+              src={pro.itemImage}
               className="card-img-top"
               alt="..."
             />
@@ -111,7 +111,7 @@ function profileDashboard() {
         {user !== null && (
           <img
             className="profile_image"
-            src={"/Users/Images/" + user.profilePic}
+            src={user.profilePic}
             alt="profile pic"
           />
         )}

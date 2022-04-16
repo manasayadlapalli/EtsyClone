@@ -62,7 +62,7 @@ function shopHeader({ searchProductUserId }) {
         <h6 style={{ fontSize: "18px" }}>SHOP OWNER</h6>
         <img
           style={{ width: "30%", borderRadius: "50%", height: "100px" }}
-          src={"/Users/Images/" + user.profilePic}
+          src={user.profilePic}
         ></img>
         <h5>{userName}</h5>
       </div>

@@ -7,7 +7,7 @@ const CartItem = ({ item, qtyChangeHandler, qty, removeHandler }) => {
     <div className="cartitem">
       <div className="cartitem__image">
         <img
-          src={"/Images/" + item.itemImage}
+          src={item.itemImage}
           // src={require("../Images/" + item.itemImage)}
           alt={item.name}
           width={150}

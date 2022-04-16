@@ -86,7 +86,7 @@ function ProductOverView() {
         <div className="productscreen__left">
           <div className="left__image">
             <img
-              src={"/Images/" + productView.itemImage}
+              src={productView.itemImage}
               alt={productView.itemName}
               //   height={300}
               width={450}

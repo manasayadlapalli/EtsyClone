@@ -41,6 +41,7 @@ function EtsyBody() {
          dispatch(getAllItems(response.data.result));
 
         for (let i = 0; i < response.data.result.length; i++) {
+             console.log('Images --> ' + response.data.result[i].itemImage);
              const updateItems = [
             ...items,
             {
@@ -55,8 +56,8 @@ function EtsyBody() {
             },
           ];
           SetItems(updateItems);
-          console.log("All products");
-          console.log(items);
+          // console.log("All products");
+          // console.log(items);
         }
       }
     });
@@ -116,7 +117,8 @@ function EtsyBody() {
             <FavoriteTwoToneIcon />           
           </div>
           <img
-            src={"/Images/" + pro.itemImage}
+            //src={pro.itemImage}
+            src={pro.itemImage}
             className="home_image card-img-top"
             alt="..."
             onClick={() => {

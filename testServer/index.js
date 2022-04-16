@@ -1,8 +1,5 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-// const jwt = require('jsonwebtoken');
-// require('./passport');
-// const passport = require("passport");
 const cors = require("cors");
 const session = require("express-session");
 const Users = require('./models/Usermodel');
@@ -58,7 +55,6 @@ const uploadS3 = multer({
     //}
   })
 }).single("itemImage");
-
 
 
 app.use(bodyParser.json({ limit: "20mb", extended: true }));
@@ -270,13 +266,13 @@ app.post("/addProduct/:id", (req, res) => {
       const itemDescription = req.body.itemDescription;
       const itemPrice = req.body.itemPrice;
       const itemCount = req.body.itemCount;
-      const itemImage = req.file.filename;
+      const itemImage = req.file.location;
       const itemCategory = req.body.itemCategory;
       
       console.log ("Trying to add a item into MongoDB");
       
       Items.create( {userId,itemImage,itemName,itemDescription,itemPrice,itemCount,itemCategory },(err, result) => {
-        console.log(result);
+        console.log(req.file);
         if (err) {
           console.log(err);
           res.send(err);
@@ -527,8 +523,7 @@ app.post("/addFavourite", (req, res) => {
 
 app.get("/getFavourites/:id", (req, res) => {
   const userId = req.body.userId;
-  console.log("Displaying user favourites");
- 
+   
   Favourites.find(userId ,(err, result) => {
       if (err) {
         console.log(err);

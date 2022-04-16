@@ -55,7 +55,7 @@ function OrderHistory() {
               <FavoriteBorderIcon />
             </div>
             <img
-              src={"/Images/" + pro.itemImage}
+              src={pro.itemImage}
               className="card-img-top"
               alt="..."
             />

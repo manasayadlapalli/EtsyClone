@@ -71,15 +71,17 @@ function shopHome() {
 
   var viewItems = (variables) => {
     setShowProds(true);
-    console.log("---------------in view Items-------------------");
+    // console.log("---------------in view Items-------------------");
     Axios.post(
       "http://localhost:4000/getAllProducts/" + user.id,
       variables
     ).then((response) => {
       if (response.data.success) {
         if (variables.loadMore) {
+
+          console.log("All products result" + response.data.result)
           setProducts([...products, ...response.data.result]);
-          console.log(products);
+          console.log("Empty products"+products);
         } else {
           setProducts(response.data.result);
         }
@@ -129,7 +131,7 @@ function shopHome() {
       <div className="col-md-4 mb-4">
         <div className="card">
           <img
-            src={"/Images/" + pro.itemImage}
+            src={pro.itemImage}
             className="card-img-top"
             alt="..."
           />

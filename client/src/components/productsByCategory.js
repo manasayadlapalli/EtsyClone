@@ -43,7 +43,7 @@ function productsByCategory() {
               <FavoriteTwoToneIcon />
             </div>
             <img
-              src={"/Images/" + pro.itemImage}
+              src={pro.itemImage}
               // src={require("../Images/" + pro.itemImage)}
               className="card-img-top"
               alt="..."
