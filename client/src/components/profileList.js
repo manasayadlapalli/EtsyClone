@@ -27,6 +27,9 @@ function profileList({ setShowProfileLists }) {
   const loadProfilePage = () => {
     navigate("/profile");
   };
+  const loadPurchasePage = ()=> {
+    navigate("/purchases");
+  }
 
   const handleSellOnEtsy = () => {
     navigate("/sellonetsy");
@@ -65,7 +68,9 @@ function profileList({ setShowProfileLists }) {
             </li>
             <li className="profile-icon">Gift card balance: $0.00</li>
             <li className="profile-icon">Messages</li>
-            <li className="profile-icon">My Purchases</li>
+            <li onClick={loadPurchasePage} className="profile-icon">
+              <span style={{ fontSize: "14px" }}>My Purchases</span>
+              </li>
             <li className="profile-icon">Account Settings</li>
             <li onClick={handleSellOnEtsy} className="profile-icon">
               Sell on Etsy

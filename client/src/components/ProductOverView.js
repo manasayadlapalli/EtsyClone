@@ -29,15 +29,15 @@ function ProductOverView() {
     setAddToCart("Item added to your cart successfully");
     // cartItems.map((ele) => console.log(ele));
     // if (cartItems) {
+    console.log("I the product you are adding", productView)
     dispatch(
       createCartItem({
-        itemId: productView.itemId,
+        itemId: productView._id,
         itemName: productView.itemName,
         itemDescription: productView.itemDescription,
         itemImage: productView.itemImage,
         itemPrice: productView.itemPrice,
         itemCount: productView.itemCount,
-        itemId: productView.itemId,
         qty: Number(qty),
       })
     );

@@ -24,7 +24,7 @@ const CartScreen = () => {
   // const cart = useSelector((state) => state.cart);
   // const { cartItems } = cart;
   const finalCartProducts = useSelector(getCartItems);
-
+  console.log("Recieved final cart Products List:, Here is the data for the 1st Item", finalCartProducts[0]);
   // useEffect(() => {}, []);
 
   const removeFromCartHandler = (id) => {
@@ -53,6 +53,7 @@ const CartScreen = () => {
   };
 
   const handleCheckOut = () => {
+    console.log("Checkout clicked, Handling the checkout");
     
     localStorage.setItem("purchase", JSON.stringify(finalCartProducts));
 
@@ -67,20 +68,27 @@ const CartScreen = () => {
           console.log(err);
         });
     });
+
+    console.log(finalCartProducts[0], typeof finalCartProducts);
     
-    window.location.pathname = "/orderhistory";
+    let itemId_list = [];
+    for (let i = 0; i < finalCartProducts.length; i++) {
+      itemId_list.push(finalCartProducts[i].itemId)
+    } 
+    window.location.pathname = "/purchases";
 
     Axios.post("http://localhost:4000/addCartProduct/" + user.id, {
       items: JSON.stringify(finalCartProducts),
-      orderId: Math.floor(Math.random() * 1000),
+      orderId: Math.floor(Math.random() * 1000000),
       price: getCartSubTotal(),
+      itemIds : itemId_list,
     }).then((response) => {
       if (response.data.success === true) {
         console.log("item create in cart");
-    
       }
     });
-    window.localStorage("orderhistory" + user.id, {});
+    dispatch(clearCart());
+
   };
 
   return (

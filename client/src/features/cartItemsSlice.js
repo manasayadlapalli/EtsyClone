@@ -10,9 +10,13 @@ export const cartItemsSlice = createSlice({
    
     createCartItem: (state, action) => {      
 
-      const exist = state.cartItems.findIndex(
-        (ele) => ele._id === action.payload.itemId
-      );
+      if (state.cartItems == null) {
+        state.cartItems = []
+      }
+
+      // const exist = state.cartItems.findIndex(
+      //   (ele) => ele._id === action.payload.itemId
+      // );
       
       console.log ("Adding a new Item to the Cart");
       console.log (action.payload);
@@ -38,9 +42,12 @@ export const cartItemsSlice = createSlice({
       //   state.cartProducts = null;
       // console.log(item + "----------------------------: deleted");
     },
+    
     clearCart: (state) => {
       state.cartItems = [];
-    },
+   },
+
+
     updateCartItem: (state, action) => {
       state.cartItems = action.payload;
     },

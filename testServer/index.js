@@ -36,7 +36,7 @@ const s3 = new aws.S3();
 const uploadS3 = multer({
   storage: multerS3({
     s3,
-    ACL: 'public-read',
+    //ACL: 'public-read',
     bucket: bucketName,
     contentType: multerS3.AUTO_CONTENT_TYPE,
     key: function (req, file, cb) {
@@ -204,7 +204,6 @@ app.post('/signin', async (req, res) => {
 })
 
 app.get("/user", (req, res) => {
-  console.log("hello" + req.session);
   if (req.session.user) {
     res.send({ loggedIn: true, user: req.session.user });
   } else {
@@ -269,8 +268,6 @@ app.post("/addProduct/:id", (req, res) => {
       const itemImage = req.file.location;
       const itemCategory = req.body.itemCategory;
       
-      console.log ("Trying to add a item into MongoDB");
-      
       Items.create( {userId,itemImage,itemName,itemDescription,itemPrice,itemCount,itemCategory },(err, result) => {
         console.log(req.file);
         if (err) {
@@ -302,7 +299,6 @@ app.post("/getAllProducts/:id", (req, res) => {
 
 app.get("/getItemById/:userId", (req, res) => {
   
-  console.log("Get items by item ID");
   const userId = req.params.userId;
   Items.find(userId, (err, result) => {  
     if (err) {
@@ -317,7 +313,6 @@ app.get("/getItemsByCategory", (req, res) => {
   
   Items.find( { 'itemCategory': req.body.itemCategory },
         (err, result) => {
-        console.log(result);
         if (err) {
         res.send(err);
       } else {
@@ -337,7 +332,6 @@ app.put("/updateItemById/:itemId", (req, res) => {
   
   Items.updateMany({itemName, itemPrice, itemDescription, itemCount, itemCategory},
     (err, result) => {
-      console.log(result);
       if (err) {
         console.log(err);
         res.send(err);
@@ -363,7 +357,6 @@ app.put("/updateItemImageById/:id", (req, res) => {
       const itemImage = req.file.filename;      
       Items.findOneAndUpdate(_id,itemImage,{overwrite: true},
           (err, result) => {
-          console.log(result);
           if (err) {
             console.log(err);
             res.send(err);
@@ -403,7 +396,6 @@ app.get("/getUserInfo/", (req, res) => {
 
   
 app.put("/updateShopImageById/:id", (req, res) => {
-  console.log("Updating shop image");
   try {
     let upload = multer({ storage: shopStorage }).single("shopImage");
     upload(req, res, function (err) {
@@ -419,7 +411,6 @@ app.put("/updateShopImageById/:id", (req, res) => {
       Users.findByIdAndUpdate(_id, 
         {$set:{"shopImage":req.file.filename}},
         (err, result) => {
-        console.log(result);
         if (err) {
           console.log(err);
           res.send(err);
@@ -436,7 +427,6 @@ app.put("/updateShopImageById/:id", (req, res) => {
 
 app.get("/getSearchItems/:searchValue", (req, res) => {
   const searchValue = req.params.searchValue;
-  console.log('Searching for ' + searchValue);
   Items.find({'itemName':{ "$regex": searchValue, "$options": "i" }},(err, result) => {
       if (err) {
         res.send(err);
@@ -469,7 +459,6 @@ app.put("/updateUser/:id", async (req, res) => {
       Users.findOneAndUpdate({"_id":req.params.id}, 
       {$set: { userName, city, dob, gender, about, phoneNumber, userImage}},
          (err, result) => {
-          console.log("Result is "+ result);
          if (err) {
             res.send({ message: "error" });
           } else {
@@ -494,7 +483,6 @@ app.get("/getItems", (req, res) => {
 
 app.get("/getItemsBasedOnUser/", (req, res) => {
   const userId = req.query.id;
-  console.log("Getting all products in home for the user");
   Items.find(userId,(err, result) => {
     if (err) {
       console.log(err);
@@ -538,7 +526,6 @@ app.get("/getFavourites/:id", (req, res) => {
 app.delete("/deleteFavourite/:itemId/:userId", (req, res) => {
   const itemId = req.body.itemId;
   const userId = req.body.userId;
-  console.log("Deleting Fav Item");
   Favourites.findOneAndRemove(itemId, userId, (err, result) => {
         if (err) {
         console.log(err);
@@ -555,10 +542,12 @@ app.post("/addCartProduct/:userId", (req, res) => {
     
   const userId = req.params.userId;
   const items = req.body.items;
+  const itemIds = req.body.itemIds;
+
   const orderId = req.body.orderId;
   const price = req.body.price;
 
-  Cart.create({items, orderId, price, userId},
+  Cart.create({items, itemIds, orderId, price, userId},
     (err, result) => {
       console.log(result);
       if (err) {
@@ -574,11 +563,9 @@ app.post("/addCartProduct/:userId", (req, res) => {
 
 app.get("/getFinalCartProducts/:userId", (req, res) => {
   const userId = req.params.userId;
-  console.log("Getting cart products in cart");
   Items.find({"itemId" : { $in : userId}},
   
     (err, result) => {
-      console.log(result);
       if (err) {
         console.log(err);
         res.send(err);
@@ -599,7 +586,6 @@ app.put("/updateCartQuantity/:userId", (req, res) => {
   Cart.updateOne({"userId" : userId, "itemId" : itemId}, {$set: {"qty" : qty} },
     [qty, itemId, userId],
     (err, result) => {
-      console.log(result);
       if (err) {
         console.log(err);
         res.send(err);
@@ -616,9 +602,7 @@ app.put("/updateCartQuantity/:userId", (req, res) => {
 app.get("/getQtyFromCart/:userid/:itemId", (req, res) => {
   const userId = req.params.userid;
   const itemId = req.params.itemId;
-  console.log("Getting all cart products in home");
   Cart.find(userId, itemId, (err, result) => {
-      console.log(result);
       if (err) {
         console.log(err);
         res.send(err);
@@ -630,19 +614,51 @@ app.get("/getQtyFromCart/:userid/:itemId", (req, res) => {
 });
 
 
-app.get("/getPurchases/:UserId", (req, res) => {
-  const userId = req.params.UserId;
-  console.log("Get purchased items");
-  Cart.find(userId, (err, result) => {
-      console.log(result);
+app.get("/getItemByItemId/:itemId", (req, res) => {
+  
+  const item_id = req.params.userId;
+  Items.find(item_id, (err, result) => {  
+    if (err) {
+      res.send(err);
+    } else {
+        res.send({ success: true, result });        
+      }   
+   })
+});
+
+app.get("/getPurchases/:userId/", (req, res) => {
+  const userId = req.params.userId;
+  Cart.find({userId : userId}, (err, result) => {
       if (err) {
         res.send(err);
       } else {
         res.send({ success: true, result });
-      }
+      } 
     }
   );
 });
+
+app.get("/getAllItemsbyIDs/:id", (req, res) => {
+  const item_ids = JSON.parse(req.params.id);
+  Items.find({_id : {"$all" : item_ids.IDs}}, (err, result) => {
+      if (err) {
+        res.send(err);
+      } else {
+        res.send({ success: true, result });
+      } 
+    }
+  );
+});
+
+
+
+
+
+
+
+
+
+
 
 app.put("/updateItemById/:id", (req, res) => {
   const _id = req.params.id; 
@@ -656,7 +672,6 @@ app.put("/updateItemById/:id", (req, res) => {
  Items.updateOne( _id,
                  { $set:{itemName, itemDescription, itemPrice, itemCount, itemCount, itemCategory }},
     (err, result) => {
-      console.log(result.itemName);
       if (err) {
         console.log(err);
         res.send(err);
