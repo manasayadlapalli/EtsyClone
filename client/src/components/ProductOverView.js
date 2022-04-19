@@ -25,11 +25,9 @@ function ProductOverView() {
   const [addToCartMessage, setAddToCart] = useState("");
 
   const addToCartHandler = () => {
-    console.log("add to cart handler");
     setAddToCart("Item added to your cart successfully");
     // cartItems.map((ele) => console.log(ele));
     // if (cartItems) {
-    console.log("I the product you are adding", productView)
     dispatch(
       createCartItem({
         itemId: productView._id,

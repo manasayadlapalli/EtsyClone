@@ -24,7 +24,8 @@ function productsByCategory() {
     renderFavourites = () => {
       return <div>No Favourites added</div>;
     };
-  } else {
+  } 
+  else {
     renderFavourites = products.map((pro) => {
       return (
         <div className="home_cards col-md-4 mb-4">

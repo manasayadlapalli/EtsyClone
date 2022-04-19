@@ -24,12 +24,12 @@ const CartScreen = () => {
   // const cart = useSelector((state) => state.cart);
   // const { cartItems } = cart;
   const finalCartProducts = useSelector(getCartItems);
-  console.log("Recieved final cart Products List:, Here is the data for the 1st Item", finalCartProducts[0]);
+  //console.log("Received final cart Products List:, Here is the data for the 1st Item", finalCartProducts[0]);
   // useEffect(() => {}, []);
 
-  const removeFromCartHandler = (id) => {
-    // dispatch(removeFromCart(id));
-  };
+  // const removeFromCartHandler = (id) => {
+  //   // dispatch(removeFromCart(id));
+  // };
 
   const getCartCount = () => {
     if (finalCartProducts === null) {
@@ -52,42 +52,45 @@ const CartScreen = () => {
     // return finalPrice;
   };
 
-  const handleCheckOut = () => {
-    console.log("Checkout clicked, Handling the checkout");
+  const handleCheckOut = (userId)=> {    
+    // finalCartProducts.map((product) => {
+    //   Axios.post(`http://localhost:4000/editCount/${product.itemId}`, {
+    //     quantity: product.qty,
+    //   })
+    //     .then((response) => {
+    //       console.log(response);
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     });
+    // });
+
     
-    localStorage.setItem("purchase", JSON.stringify(finalCartProducts));
-
-    finalCartProducts.map((product) => {
-      Axios.post(`http://localhost:4000/editCount/${product.itemId}`, {
-        quantity: product.qty,
-      })
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    });
-
-    console.log(finalCartProducts[0], typeof finalCartProducts);
+  
+    // for (let i = 0; i < finalCartProducts.length; i++) {
+    //   itemId_list.push(finalCartProducts[i].itemId)
+    // } 
+    // window.location.pathname = "/purchases";
+    console.log("item Id sending to node js", finalCartProducts);
     
-    let itemId_list = [];
-    for (let i = 0; i < finalCartProducts.length; i++) {
-      itemId_list.push(finalCartProducts[i].itemId)
-    } 
-    window.location.pathname = "/purchases";
+    let itemId = null;
+    for (let i=0; i<finalCartProducts.length; i++) {
+      itemId = finalCartProducts[i].itemId;
+      Axios.post("http://localhost:4000/addCartProduct/" + user.id, {
+        itemId : itemId,
+        orderId: Math.floor(Math.random() * 1000000),
+        price: getCartSubTotal(),
+      }).then((response) => {
+        if (response.data.success === true) {
+          console.log("item created in cart");
+        }
+      }).catch((err) => {
+        console.log(err);
+      });
+    }
 
-    Axios.post("http://localhost:4000/addCartProduct/" + user.id, {
-      items: JSON.stringify(finalCartProducts),
-      orderId: Math.floor(Math.random() * 1000000),
-      price: getCartSubTotal(),
-      itemIds : itemId_list,
-    }).then((response) => {
-      if (response.data.success === true) {
-        console.log("item create in cart");
-      }
-    });
     dispatch(clearCart());
+    window.location.pathname = "/purchases";
 
   };
 

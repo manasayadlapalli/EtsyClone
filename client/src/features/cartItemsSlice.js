@@ -47,7 +47,6 @@ export const cartItemsSlice = createSlice({
       state.cartItems = [];
    },
 
-
     updateCartItem: (state, action) => {
       state.cartItems = action.payload;
     },

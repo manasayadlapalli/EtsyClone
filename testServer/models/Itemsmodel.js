@@ -35,6 +35,6 @@ const Itemsmodel = new mongoose.Schema({
       default:null
       
     },
-  })
+  }, { timestamps: true });
 
   module.exports = Items = mongoose.model('Items',Itemsmodel)      

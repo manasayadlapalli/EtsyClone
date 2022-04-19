@@ -4,6 +4,7 @@ const Favouritesmodel = new mongoose.Schema({
     
     itemId: {
       type: mongoose.Schema.Types.ObjectId,
+      ref:"Items",
       required: true
     },
     userId: {

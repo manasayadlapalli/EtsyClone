@@ -76,11 +76,9 @@ function EtsyBody() {
   };
 
   const handleFavourite = (itemId, userId) => {
-    console.log("Favourites added for itemdid: " + itemId + " userid: " + userId);
-    Axios.post("http://localhost:4000/addFavourite", {
-      itemId: itemId,
-      userId: userId,
-    }).then((response) => {
+    
+    Axios.post("http://localhost:4000/addFavourite", { itemId: itemId, userId: userId })
+    .then((response) => {
       if (response.data.success === true) {
         console.log(response.data.result);
        
@@ -117,7 +115,6 @@ function EtsyBody() {
             <FavoriteTwoToneIcon />           
           </div>
           <img
-            //src={pro.itemImage}
             src={pro.itemImage}
             className="home_image card-img-top"
             alt="..."

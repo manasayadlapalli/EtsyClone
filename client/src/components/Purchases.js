@@ -1,119 +1,117 @@
-import Axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { getFinalCart } from "../features/cartItemsSlice";
+import "./Cart.css";
+import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import CartItem from "./CartItem";
+import Axios from "axios";
+import { createCart, getCart, } from "../features/purchaseSlice";
 import { selectUser } from "../features/userSlice";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import Navbar from "./Navbar";
 import Hoverbar from "./Hoverbar";
-
-function Purchases() {
-  const user = useSelector(selectUser);
-  const [purchaseHistory, setPurchasedHistory] = useState([]);
-
-  useEffect(() => {
-    getFinalCart();
-  }, []);
-
-  const getFinalCart = () => {
-    Axios.get("http://localhost:4000/getPurchases/" + user.id).then(
-      (response) => {
-        if (response.data.success === true) {
-          console.log("----------------Purchased products-------------------");
-          console.log(response.data.result);
-          setPurchasedHistory(response.data.result);
-        }
-      }
-    );
-  };
-
-  let renderFavourites = null;
-
-  // const purchasedProducts = JSON.parse(localStorage.getItem("purchase"));
-  let purchasedProducts = []
-  ;
-  for (let i=0; i<purchaseHistory.length; i++) {
-
-    let data = {
-      "IDs" : purchaseHistory[i].itemIds
-    }
-
-    Axios.get("http://localhost:4000/getAllItemsbyIDs/" + JSON.stringify(data)).then(
-      (response) => {
-        console.log(i, response.data.result);
-        purchasedProducts = response.data.result;
-        // 
-        renderFavourites = purchasedProducts.map((pro) => {
-          return (
-            "YES"
-          );
-        });
-      }
-    ); 
-  } 
+import "./CartItem.css";
+import Pagination from './Pagination';
+import Moment from 'react-moment';
 
 
-  // if (purchasedProducts.length === 0) {
-  //   renderFavourites = () => {
-  //     return <div>No orders found!</div>;    };
-  // } else {
-  //   renderFavourites = purchasedProducts.map((pro) => {
-  //     return (
-  //       <div className="home_cards col-md-4 mb-4">
-  //         <div className="home_card card">
-  //           <div
-  //             style={{
-  //               backgroundColor: "white",
-  //               borderRadius: "50%",
-  //               padding: "5px",
-  //             }}
-  //             className="favourite_icon"
-  //             onClick={() => {
-  //               // handleFavourite(pro.itemId, user.id);
-  //             }}
-  //           >
-  //             <FavoriteBorderIcon />
-  //           </div>
-  //           <img
-  //             src={pro.itemImage}
-  //             className="card-img-top"
-  //             alt="..."
-  //           />
-  //           <p className="home_price">
-  //              ${pro.itemPrice}
-  //           </p>
+const Purchases = () => {
+    const dispatch = useDispatch();
+    const user = useSelector(selectUser);
+    const products = useSelector(getCart);
+    const [posts, setPosts] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [postsPerPage,setPostsPerPage] = useState(5);
 
-  //           <div className="card-body">
-  //             <h5 className="card-title">{pro.itemName}</h5>
+    // localStorage.setItem("postsPerPage", 5);
+    // let postsPerPage = localStorage.getItem("postsPerPage");
 
-  //             <p className="card-text">{pro.itemDescription}</p>
-  //             {/* <button className="btn-sm btn-dark">Edit</button> */}
-  //           </div>
-  //         </div>
-  //       </div>
-  //     );
-  //   });
-  // }
+    // Get current posts
 
-  return (
-    <>
-      <Navbar />
-      <Hoverbar />
-      <hr></hr>
-      <h2 style={{ marginLeft: "110px" }}> Purchases</h2>
-      <h6 style={{ marginLeft: "110px" }}>Order ID: </h6>
-      
-      <div className="profile_favourites">
-        <div className="container-fluid mx-1">
-          <div className="row mt-5 mx-1">
-            <div className="col-md-9">
-              <div className="row"> {renderFavourites} </div>
+    const qtyChangeHandler = (qty) => {
+
+        console.log("pagination");
+        console.log("qty",qty);
+
+        setPostsPerPage(qty);
+        
+        // // {currentPage === 1 ?(
+        // // window.location.pathname = "/purchase"):(<></>);}
+
+        // localStorage.setItem("postsPerPage", qty);
+        // postsPerPage = localStorage.getItem("postsPerPage");
+
+        console.log("postsPerPage",postsPerPage);};
+
+    useEffect(() => { getCartItems(); }, []);
+
+    const getCartItems = () => {
+        setLoading(true);
+        Axios.get("http://localhost:4000/getPurchases/" + user.id).then(
+            (response) => {
+                console.log("Get Purchases ASDFG ",response.data.result);
+                setPosts(response.data.result);
+                dispatch(createCart(response.data.result));
+                if (response.data.success === true) {
+                    setLoading(false);
+                }
+            });
+    };
+
+    // Change page
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+
+
+    const paginate = pageNumber => {
+        setCurrentPage(pageNumber);
+        console.log("pageNumber", pageNumber);
+        console.log('currentPage', currentPage);
+
+    };
+
+    return (
+        <>
+            <Navbar />
+            <Hoverbar />
+            <hr></hr>
+            <div className="cartscreen">
+                <div className="cartscreen__left">
+                    <h2>Previous Purchases</h2>
+                    <p>Number of purchases per page</p><select value={postsPerPage} onChange={(e) => qtyChangeHandler(e.target.value)}  >
+                        {[2, 5, 10].map((x) => (
+                            <option key={x} value={x}>
+                                {x}
+                            </option>
+                        ))}
+                    </select>
+                    {currentPosts.length === 0 ? (<div> You have no previous purchases. <Link to="/">Go Back</Link> </div>) : (
+                        currentPosts.map((item) => (
+
+                            <div className="cart_pag" style={{ display: "flex", width: "100%", height: "200px", }} >
+                                <div className="cartitem">
+                                    <p className="cartitem__price">Order ID: {item._id}</p>
+                                    <p className="cartitem__price">Purchased On:<Moment format='MMMM Do YYYY, h:mm:ss a'>{item.updatedAt}</Moment></p>
+                                    {console.log("PURCHASE DATE:", item)}
+                                    <Link to={`/product/${item.product}`} className="cartItem__name">
+                                        <p>{item.itemId.itemName}</p>
+                                    </Link>
+                                    <div className="cartitem__image">
+                                        <img src={ item.itemId.itemImage} alt={item.itemId.itemName} width={150} height={100} />
+                                    </div>
+
+                                    <p className="cartitem__price">${item.itemId.itemPrice}</p>
+                                </div>
+                            </div>
+                        ))
+                    )}
+                    <Pagination postsPerPage={postsPerPage} totalPosts={posts.length} paginate={paginate} />
+                </div>
+
             </div>
-          </div>
-        </div>
-      </div>
-    </>
-  );
-}
+
+        </>
+    );
+};
 
 export default Purchases;

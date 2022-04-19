@@ -18,7 +18,7 @@ export class GiftWrap extends Component {
           <Checkbox value="1">
             Gift wrap?
             {this.state.checked.indexOf("1") !== -1 ? (
-              <h6> Gift packaging added!</h6>
+              <input type={text}></input>
             ) : null}
           </Checkbox>
         </CheckboxGroup>

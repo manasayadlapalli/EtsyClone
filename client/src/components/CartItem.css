@@ -1,6 +1,6 @@
 .cartitem {
   /* width: 80%; */
-  padding: 1rem;
+  padding: 2rem;
   display: grid;
   grid-template-columns: 1fr 4fr 1fr 1fr 1fr;
   /* gap: 8px; */

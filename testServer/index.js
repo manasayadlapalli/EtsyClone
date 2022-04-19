@@ -497,8 +497,7 @@ app.post("/addFavourite", (req, res) => {
   const userId = req.body.itemId;
   const itemId = req.body.userId;
   
-  Favourites.create({userId,itemId},(err, result) => {
-    
+  Favourites.create({userId,itemId},(err, result) => {    
     if (err) {
       console.log(err);
       res.send(err);
@@ -538,23 +537,25 @@ app.delete("/deleteFavourite/:itemId/:userId", (req, res) => {
 });
 
 
-app.post("/addCartProduct/:userId", (req, res) => {  
-    
+app.post("/addCartProduct/:userId", (req, res) => {      
   const userId = req.params.userId;
-  const items = req.body.items;
-  const itemIds = req.body.itemIds;
-
+  const itemId = req.body.itemId;
   const orderId = req.body.orderId;
-  const price = req.body.price;
+  const qty = req.body.qty;
+  const gift = req.body.gift;
+  const price =req.body.price;
+  const purchase = req.body.purchase;
 
-  Cart.create({items, itemIds, orderId, price, userId},
-    (err, result) => {
-      console.log(result);
+  console.log("Item Id to Backend", itemId);
+
+  Cart.create({userId, itemId, orderId, price, gift, purchase},
+    (err, result) => {      
       if (err) {
         console.log(err);
         res.send(err);
       } else {
         res.send({ success: true, result });
+        console.log("Added cart ITEMS", result)
       }
     }
   );
@@ -594,10 +595,8 @@ app.put("/updateCartQuantity/:userId", (req, res) => {
       }
     }
   );
-
-
-
 });
+
 
 app.get("/getQtyFromCart/:userid/:itemId", (req, res) => {
   const userId = req.params.userid;
@@ -626,21 +625,26 @@ app.get("/getItemByItemId/:itemId", (req, res) => {
    })
 });
 
-app.get("/getPurchases/:userId/", (req, res) => {
+app.get("/getPurchases/:userId", (req, res) => {
   const userId = req.params.userId;
-  Cart.find({userId : userId}, (err, result) => {
-      if (err) {
-        res.send(err);
-      } else {
-        res.send({ success: true, result });
-      } 
-    }
-  );
+  console.log("USER ID:", userId)
+  Cart.find().select({ userId: userId, purchase: 1 }).populate("itemId").exec((err, result) => {  
+    if (err) {
+      res.send(err);
+    } else {
+        res.send({ success: true, result });    
+    console.log("purchased items", result)
+
+    }   
+  });
+    
+
 });
 
+
 app.get("/getAllItemsbyIDs/:id", (req, res) => {
-  const item_ids = JSON.parse(req.params.id);
-  Items.find({_id : {"$all" : item_ids.IDs}}, (err, result) => {
+  const _id = req.params.id;
+  Items.find({_id : {"$all" : itemId}}, (err, result) => {
       if (err) {
         res.send(err);
       } else {

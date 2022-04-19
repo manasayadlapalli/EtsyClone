@@ -4,10 +4,13 @@ const Cartmodel = new mongoose.Schema({
   
   userId: {
     type: mongoose.Schema.Types.ObjectId,
+    ref:'Users'
   },
 
-  itemIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'items' }], 
-
+  itemId: { 
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Items'
+   }, 
 
   orderId: {
     type: String
@@ -16,7 +19,15 @@ const Cartmodel = new mongoose.Schema({
   qty: {
     type: String,
   },
-})
+
+  gift:{
+    type: String
+  }, 
+
+  purchase: {
+    type:Number
+  },
+}, { timestamps: true });
 
 
 module.exports =  mongoose.model('Cart',Cartmodel)    
