@@ -542,9 +542,8 @@ app.post("/addCartProduct/:userId", (req, res) => {
   const itemId = req.body.itemId;
   const orderId = req.body.orderId;
   const qty = req.body.qty;
-  const gift = req.body.gift;
   const price =req.body.price;
-  const purchase = req.body.purchase;
+  const purchase = 0;
 
   console.log("Item Id to Backend", itemId);
 
@@ -654,12 +653,24 @@ app.get("/getAllItemsbyIDs/:id", (req, res) => {
   );
 });
 
+app.post("/giftMessage/:id/", (req, res) => {
 
-
-
-
-
-
+  const id = req.params.id;
+  const gift = req.body.qty;
+  console.log("updating gift")
+  CartModel.findByIdAndUpdate(id, { gift: gift }, (err, result) => {
+    if (err) {
+      console.log("couldnt update")
+      console.log(err);
+    } else {
+      console.log(result);
+      // res.send(result);
+      res.send("Qty updated");
+      console.log("qty update")
+    }
+  }
+  );
+});
 
 
 

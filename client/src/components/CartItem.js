@@ -1,6 +1,6 @@
 import "./CartItem.css";
 import { Link } from "react-router-dom";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createFinalCart, removeCartItem } from "../features/cartItemsSlice";
 import { Delete } from "@material-ui/icons";
@@ -9,6 +9,8 @@ import { selectUser } from "../features/userSlice";
 
 const CartItem = ({ item }) => {
   const dispatch = useDispatch();
+  const [gift, SetGift] = useState(false);
+
 
   const qtyChangeHandler = (qty) => {
     dispatch(
@@ -33,6 +35,24 @@ const CartItem = ({ item }) => {
       })
     );
   };
+
+  const giftMessageHandler = (qty) => {
+
+    console.log("giftMessageHandler");
+
+    Axios.post("http://localhost:4000/giftMessage/" + item._id, {qty} )
+      .then((response) => {
+        console.log("gift messsage updated");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    // window.location.pathname = "/cart";
+  };
+  const giftHandler = (gift) => {
+    SetGift(true);
+  }
 
   return (
     <div
@@ -75,6 +95,22 @@ const CartItem = ({ item }) => {
         >
           <Delete />
         </button>
+        <div>
+          <input
+            type="checkbox"
+            name="giftbox"
+            id="checkbox"
+            checked={gift}
+            value={gift}
+            onChange={e => {
+              giftHandler(e.target.value);
+            }}
+          />
+          <label for="checkbox"> Gift Card</label>
+          {gift && (<div> <input type="gift" id="gift" placeholder="gift message" onChange={(event) => { giftMessageHandler(event.target.value); }} required /></div>
+          )}
+        </div>
+        
       </div>
     </div>
   );

@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import CartItem from "./CartItem";
 import Axios from "axios";
-import {GiftWrap} from "./GiftWrap";
+
 
 import {
   clearCart,
@@ -71,8 +71,7 @@ const CartScreen = () => {
     //   itemId_list.push(finalCartProducts[i].itemId)
     // } 
     // window.location.pathname = "/purchases";
-    console.log("item Id sending to node js", finalCartProducts);
-    
+        
     let itemId = null;
     for (let i=0; i<finalCartProducts.length; i++) {
       itemId = finalCartProducts[i].itemId;
@@ -119,7 +118,6 @@ const CartScreen = () => {
               />
             ))
           )}
-          <GiftWrap/>
         </div>
         <div
           className="cartscreen__right"
