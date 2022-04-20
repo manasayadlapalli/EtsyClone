@@ -44,13 +44,13 @@ function editProducts({ setShowProductsEditPage, products, itemId }) {
     Axios.get("http://localhost:4000/getItemById/" + itemId).then(
       (response) => {
         if (response) {
-          console.log(response.data);
-          setItemName(response.data.itemName);
-          setItemDescription(response.data.itemDescription);
-          setItemPrice(response.data.itemPrice);
-          setItemCount(response.data.itemCount);
-          setItemCategory(response.data.itemCategory);
-          setProduct(response.data);
+          console.log(response.data[0]);
+          setItemName(response.data[0].itemName);
+          setItemDescription(response.data[0].itemDescription);
+          setItemPrice(response.data[0].itemPrice);
+          setItemCount(response.data[0].itemCount);
+          setItemCategory(response.data[0].itemCategory);
+          setProduct(response.data[0]);
           setProductExist(true);
           console.log("Products stored in product");
         }
@@ -62,7 +62,6 @@ function editProducts({ setShowProductsEditPage, products, itemId }) {
       <div className="modal-content">
         <CloseLogin setshowSignIn={setShowProductsEditPage} />
         <h2 className="addProd_title">Edit product</h2>
-        {console.log("==================Hello===================")}
         {console.log(product)}
         {productExist ? (
           <form className="items_form" encType="multipart/form-data">

@@ -13,13 +13,7 @@ export const cartItemsSlice = createSlice({
       if (state.cartItems == null) {
         state.cartItems = []
       }
-
-      // const exist = state.cartItems.findIndex(
-      //   (ele) => ele._id === action.payload.itemId
-      // );
       
-      console.log ("Adding a new Item to the Cart");
-      console.log (action.payload);
       state.cartItems.push(action.payload);
     },
 

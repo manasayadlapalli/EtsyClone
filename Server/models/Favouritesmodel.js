@@ -9,6 +9,7 @@ const Favouritesmodel = new mongoose.Schema({
     },
     userId: {
       type: mongoose.Schema.Types.ObjectId,
+      ref:"Users",
       required: true
     }
   });

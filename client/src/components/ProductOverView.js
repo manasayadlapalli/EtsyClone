@@ -20,16 +20,28 @@ function ProductOverView() {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const productView = useSelector(getAllCartProducts);
-  // const cartProduct = useSelector(getAllCartProducts);
-  // const cartItems = useSelector(getCartItems);
   const [addToCartMessage, setAddToCart] = useState("");
 
-  const addToCartHandler = () => {
+  const addToCartHandler = (itemId, userId) => {
     console.log("add to cart handler");
     setAddToCart("Item added to your cart successfully");
-    // cartItems.map((ele) => console.log(ele));
-    // if (cartItems) {
-    console.log("I the product you are adding", productView)
+  
+    console.log("Items added to Cart" + itemId + userId);
+    Axios.post("http://localhost:4000/addCart", {
+      
+      itemId: productView._id,
+      userId: productView.userId,
+      qty: Number(qty)
+      
+    }).then((response) => {
+      if (response.data.success === true) {
+        console.log(response.data.result);
+        console.log("new cart item added");
+      }
+    });
+
+ console.log('ITEMS CCCCC ', productView)
+
     dispatch(
       createCartItem({
         itemId: productView._id,

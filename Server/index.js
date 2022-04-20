@@ -14,11 +14,12 @@ const Favouritesmodel = require("./models/Favouritesmodel");
 const Cartmodel = require("./models/Cartmodel");
 const app = express();
 
-// AWS S3 stuff
 require('dotenv').config();
+
+
+// AWS S3 stuff
 const multerS3 = require('multer-s3');
 const aws = require('aws-sdk');
-
 const bucketName = process.env.AWS_BUCKET_NAME 
 const region =  process.env.AWS_BUCKET_REGION 
 const accessKeyId = process.env.AWS_ACCESS_KEY
@@ -30,9 +31,8 @@ aws.config.update({
   region: region
 })
 
+//new s3 instance
 const s3 = new aws.S3();
-
-// function to upload file to s3
 const uploadS3 = multer({
   storage: multerS3({
     s3,
@@ -41,20 +41,10 @@ const uploadS3 = multer({
     contentType: multerS3.AUTO_CONTENT_TYPE,
     key: function (req, file, cb) {
       cb(null, file.originalname)
-    }
-    //limits: { fileSize: "1000000" },
-    //fileFilter: (req, file, cb) => {
-    //  const fileTypes = /jpeg|jpg|png|gif/;
-    //  const mimType = fileTypes.test(file.mimetype);
-    //  const extname = fileTypes.test(path.extname(file.originalname));
-
-    //  if (mimType && extname) {
-    //    return cb(null, true);
-    //  }
-    //  cb("Give proper file name");
-    //}
+    }    
   })
 }).single("itemImage");
+
 
 
 app.use(bodyParser.json({ limit: "20mb", extended: true }));
@@ -82,6 +72,8 @@ app.use(
   })
 );
 
+
+//Allow Access Control
 app.use(function (req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
   res.setHeader("Access-Control-Allow-Credentials", "true");
@@ -97,13 +89,14 @@ app.use(function (req, res, next) {
   next();
 });
 
+//
 mongoose.connect(process.env.MONGODB_URI,{
     useUnifiedTopology:true,
     useNewUrlParser:true
 }).then(()=> console.log('Database connected...'))
   .catch(err =>console.log(err))
 
-// storage
+
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -494,8 +487,8 @@ app.get("/getItemsBasedOnUser/", (req, res) => {
 });
 
 app.post("/addFavourite", (req, res) => {  
-  const userId = req.body.itemId;
-  const itemId = req.body.userId;
+  const userId = req.body.userId;
+  const itemId = req.body.itemId;
   
   Favourites.create({userId,itemId},(err, result) => {    
     if (err) {
@@ -510,8 +503,8 @@ app.post("/addFavourite", (req, res) => {
 
 app.get("/getFavourites/:id", (req, res) => {
   const userId = req.body.userId;
-   
-  Favourites.find(userId ,(err, result) => {
+  Favourites.find().select(userId).populate("itemId").exec((err, result) => {
+  //  Favourites.find(userId, (err, result) => {
       if (err) {
         console.log(err);
         res.send(err);
@@ -555,6 +548,31 @@ app.post("/addCartProduct/:userId", (req, res) => {
       } else {
         res.send({ success: true, result });
         console.log("Added cart ITEMS", result)
+      }
+    }
+  );
+});
+
+app.post("/addCart", (req, res) => {
+  const userId = req.body.userId;
+  console.log(userId);
+  const itemId = req.body.itemId;
+  const qty = req.body.qty;
+  const purchase = 0;
+  const newFav = new Cart({
+    itemId: itemId, userId: userId, qty: qty, purchase: purchase
+  });
+  console.log(itemId, "itemId")
+  console.log("qty", qty)
+
+  newFav.save({},
+    (err, result) => {
+      console.log(result);
+      if (err) {
+        console.log(err);
+        res.send(err);
+      } else {
+        res.send({ success: true, result });
       }
     }
   );

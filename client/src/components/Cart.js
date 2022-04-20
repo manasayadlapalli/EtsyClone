@@ -10,6 +10,7 @@ import {
   clearCart,
   createCartItem,
   createFinalCart,
+  updateCartItem,
   getCartItems,
 } from "../features/cartItemsSlice";
 import { selectUser } from "../features/userSlice";
@@ -20,6 +21,7 @@ const CartScreen = () => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const [finalAmount, setFinalAmount] = useState();
+
 
   // const cart = useSelector((state) => state.cart);
   // const { cartItems } = cart;
@@ -32,21 +34,21 @@ const CartScreen = () => {
   // };
 
   const getCartCount = () => {
-    if (finalCartProducts === null) {
-      return 0;
-    } else {
+    // if (finalCartProducts === null) {
+    //   return 0;
+    // } else {
       return finalCartProducts.reduce((qty, item) => Number(item.qty) + qty, 0);
-    }
+    
   };
 
   const getCartSubTotal = () => {
-    if (finalCartProducts === null) {
-      return 0;
-    } else {
+    // if (finalCartProducts === null) {
+    //   return 0;
+    // } else {
       return finalCartProducts
         .reduce((price, item) => price + item.itemPrice * item.qty, 0)
         .toFixed(2);
-    }
+    //}
 
     // setFinalAmount(finalPrice);
     // return finalPrice;

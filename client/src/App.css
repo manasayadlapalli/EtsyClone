@@ -619,10 +619,12 @@ body {
 }
 
 .home_price {
-  width: 30%;
-  border-radius: 3px;
+  width: 28%;
+  font-weight: 550;
+  font-size: 12px;
+  border-radius: 4px;
   padding-left: 4px;
-  background-color: #dde8df17;
+  background-color: #3e372530;
   margin-left: 3%;
   margin-top: 50%;
   position: absolute;
@@ -786,6 +788,7 @@ body {
 }
 
 .home_card:hover {
-  transform: scale(1.1);
-  transition: 0.6s;
+  transform: scale(1.06);
+  transition: 0.4s;
+  box-shadow: 3px 3px rgba(169, 167, 167, 0.202);
 }

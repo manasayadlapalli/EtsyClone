@@ -31,6 +31,7 @@ function profileDashboard() {
       (response) => {
          if (response.data.success === true) {
           dispatch(favouritesList(response.data.result));
+          console.log("FAVORITES",response.data.result)
          }
       }
     );
@@ -79,18 +80,18 @@ function profileDashboard() {
               <FavoriteBorderIcon />
             </div>
             <img
-              src={pro.itemImage}
+              src={pro.itemId.itemImage}
               className="card-img-top"
               alt="..."
             />
             <p className="home_price">
-               ${pro.itemPrice}
+               ${pro.itemId.itemPrice}
             </p>
 
             <div className="card-body">
-              <h5 className="card-title">{pro.itemName}</h5>
+              <h5 className="card-title">{pro.itemId.itemName}</h5>
 
-              <p className="card-text">{pro.itemDescription}</p>
+              <p className="card-text">{pro.itemId.itemDescription}</p>
               {/* <button className="btn-sm btn-dark">Edit</button> */}
             </div>
           </div>
