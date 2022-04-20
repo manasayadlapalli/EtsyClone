@@ -18,12 +18,12 @@ import ShopHomeOtherUser from "./shopHomeOtherUser";
 function shopHomeByOther() {
   const { id } = useParams(); //itemId
   const [userIdFromSearch, setUserIdFromSearch] = useState();
-  // const user = useSelector(selectUser);
+  const user = useSelector(selectUser);
 
   const [userInfo, setUserInfo] = useState("");
   const [itemsByUser, setItemsByUser] = useState([]);
   const dispatch = useDispatch();
-  const userid = useSelector(getUserId);
+  const userId = useSelector(getUserId);
 
   useEffect(() => {
     getUserIdFromItemId();
@@ -37,38 +37,39 @@ function shopHomeByOther() {
     //   userDetails();
     // }, 3000);
   });
-
+ 
   const getUserIdFromItemId = () => {
     Axios.get("http://localhost:4000/getItemById/" + id).then((response) => {
       if (response) {
         dispatch(userId(response.data.userId));
+        console.log("GET USER ID FROM ITEMID", response.data)
+        
       }
     });
   };
 
   const getItemsFromUserid = () => {
-    Axios.get("http://localhost:4000/getItemsBasedOnUser/" + userid).then(
+    Axios.get("http://localhost:4000/getItemsBasedOnUser/" + user.id).then(
       (response) => {
         if (response) {
           console.log(response);
           // setUserInfo();
           dispatch(createProducts(response.data.result));
-          console.log("helllo");
-          console.log(userInfo);
+          console.log("Items based on other user",response.data.result);
         }
       }
     );
   };
 
   const getUserDetails = () => {
-    Axios.get("http://localhost:4000/getShopById/" + userid).then(
+    Axios.get("http://localhost:4000/getShopById/" + userId).then(
       (response) => {
         if (response) {
           console.log(response);
           // setUserInfo(response.data.result[0]);
           dispatch(userDetails(response.data.result));
           // console.log(response.data.result.name);
-          console.log("hi");
+          console.log("Get  shop by id",response.data);
         }
       }
     );

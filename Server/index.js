@@ -16,10 +16,12 @@ const app = express();
 
 require('dotenv').config();
 
+var kafka = require('./kafka-backend/kafka/client');
 
 // AWS S3 stuff
 const multerS3 = require('multer-s3');
 const aws = require('aws-sdk');
+const { Kafka } = require("aws-sdk");
 const bucketName = process.env.AWS_BUCKET_NAME 
 const region =  process.env.AWS_BUCKET_REGION 
 const accessKeyId = process.env.AWS_ACCESS_KEY
@@ -242,9 +244,7 @@ app.post("/createShop/:id", async(req, res) => {
 
 
 app.post("/addProduct/:id", (req, res) => {
-    //let upload = multer({ storage: storage }).single("itemImage");
-    //
-    //upload(req, res, function (err) {
+   
       uploadS3(req, res, function (err) {
       //if (!req.file) {
       //  return res.send("Please select an image to upload");
@@ -293,7 +293,7 @@ app.post("/getAllProducts/:id", (req, res) => {
 app.get("/getItemById/:userId", (req, res) => {
   
   const userId = req.params.userId;
-  Items.find(userId, (err, result) => {  
+  Items.findById(userId, (err, result) => {  
     if (err) {
       res.send(err);
     } else {
@@ -463,16 +463,33 @@ app.put("/updateUser/:id", async (req, res) => {
 });
 
 
+// app.get("/getItems", (req, res) => {
+//    Items.find({}, (err, result) => {
+//     if (err) {
+//       console.log(err);
+//       res.send(err);
+//     } else {
+//       res.send({ success: true, result });
+//     }
+//   });
+// });
+
 app.get("/getItems", (req, res) => {
-   Items.find({}, (err, result) => {
-    if (err) {
-      console.log(err);
-      res.send(err);
-    } else {
-      res.send({ success: true, result });
-    }
-  });
+  console.log("get items");
+    kafka.make_request('getItems', req.body, function(err, results) {
+      if (err) {
+        res.json({
+          status: "error",
+          msg: "System Error, Try Again."
+        })
+      } else {
+        res.json(results);
+        console.log("----> getItems backend: " + results);
+        res.end();
+      }
+    });
 });
+
 
 app.get("/getItemsBasedOnUser/", (req, res) => {
   const userId = req.query.id;
