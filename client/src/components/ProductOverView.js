@@ -17,16 +17,26 @@ import { Link } from "react-router-dom";
 
 function ProductOverView() {
   const [qty, setQty] = useState(1);
+  const [maxQty, setMaxQty] = useState(10);
+  const productView = useSelector(getAllCartProducts);
+  const [totalPrice, setTotalPrice] = useState(productView.itemPrice);
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
-  const productView = useSelector(getAllCartProducts);
   const [addToCartMessage, setAddToCart] = useState("");
+
+  const qtyChangeHandler = (newQty) => {
+    
+    console.log(newQty)
+    setTotalPrice(Number(productView.itemPrice) * Number(newQty));
+    setQty(Number(newQty))
+  }
 
   const addToCartHandler = (itemId, userId) => {
     console.log("add to cart handler");
     setAddToCart("Item added to your cart successfully");
-  
     console.log("Items added to Cart" + itemId + userId);
+    console.log("Qty of item Added", qty)
+
     Axios.post("http://localhost:4000/addCart", {
       
       itemId: productView._id,
@@ -40,7 +50,7 @@ function ProductOverView() {
       }
     });
 
- console.log('ITEMS CCCCC ', productView)
+
 
     dispatch(
       createCartItem({
@@ -53,31 +63,8 @@ function ProductOverView() {
         qty: Number(qty),
       })
     );
-    // }
 
-    // if (cartItems) {
-    //   console.log(cartItems.qty);
-    //   console.log(qty);
-    // } else {
-    //   console.log("No cart items");
-    // }
-    // console.log(productView.length);
-    // if (user !== null) {
-    //   Axios.post("http://54.193.95.78:4000/addProductToCart/" + user.id, {
-    // itemId: cartProduct.itemId,
-    // itemName: cartProduct.itemName,
-    // itemDescription: cartProduct.itemDescription,
-    // itemImage: cartProduct.itemImage,
-    // itemPrice: cartProduct.itemPrice,
-    // itemId: cartProduct.itemId,
-    // qty: qty,
-    //   }).then((response) => {
-    //     if (response.data.success === true) {
-    //       
-    //     }
-    //   });
-    //   console.log("Add to cart clicked");
-    // }
+
   };
   return (
     <>
@@ -120,7 +107,7 @@ function ProductOverView() {
           <div className="right__info">
             <p>
               Price:
-              <span>${productView.itemPrice}</span>
+              <span>${totalPrice}</span>
             </p>
             <p>
               Status:
@@ -130,13 +117,18 @@ function ProductOverView() {
             </p>
             <p>
               Qty
-              <select value={qty} onChange={(e) => setQty(e.target.value)}>
+            <select  value={qty} onChange={(e) => qtyChangeHandler(e.target.value)}>
+              {[...Array(Number(productView.itemCount)).keys()].map((x) => (<option key={x+1} value={x+1}> {x+1} </option>))}
+            </select> 
+              
+              {/* <select value={qty} onChange={(e) => setQty(e.target.value)}>
                 {[...Array(productView.itemCount).keys()].map((x) => (
                   <option key={x + 1} value={x + 1}>
                     {x + 1}
                   </option>
                 ))}
-              </select>
+              </select> */}
+              
             </p>
             <p>
               <button type="button" onClick={addToCartHandler}>

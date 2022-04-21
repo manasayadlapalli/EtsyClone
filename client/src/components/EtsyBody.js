@@ -41,7 +41,6 @@ function EtsyBody() {
          dispatch(getAllItems(response.data.result));
 
         for (let i = 0; i < response.data.result.length; i++) {
-             console.log('Images --> ' + response.data.result[i].itemImage);
              const updateItems = [
             ...items,
             {
@@ -56,8 +55,7 @@ function EtsyBody() {
             },
           ];
           SetItems(updateItems);
-          // console.log("All products");
-          // console.log(items);
+         
         }
       }
     });
@@ -76,7 +74,6 @@ function EtsyBody() {
   };
 
   const handleFavourite = (itemId, userId) => {
-    console.log("Favourites added for itemdid: " + itemId + " userid: " + userId);
     Axios.post("http://localhost:4000/addFavourite", {
       itemId: itemId,
       userId: userId,
@@ -117,7 +114,6 @@ function EtsyBody() {
             <FavoriteTwoToneIcon />           
           </div>
           <img
-            //src={pro.itemImage}
             src={pro.itemImage}
             className="home_image card-img-top"
             alt="..."
@@ -133,12 +129,10 @@ function EtsyBody() {
             {pro.itemName}
           </p>
 
-          {/* <div className="card-body">
-            <h5 className="card-title">{pro.itemName}</h5>
-
-            <p className="card-text">{pro.itemDescription}</p>
-            <button className="btn-sm btn-dark">View Product</button>
-          </div> */}
+          <div className="card-body">
+            <h6 className="card-title">{pro.itemName}</h6>
+            <p className="card-text">{pro.itemDescription}</p>            
+          </div>
         </div>
       </div>
     );
@@ -148,7 +142,6 @@ function EtsyBody() {
     <div
       className="etsy_body"
       style={{
-        // backgroundColor: "red",
         marginTop: "10%",
         marginLeft: "3%",
         marginRight: "3%",

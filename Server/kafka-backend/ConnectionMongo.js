@@ -1,15 +1,6 @@
 require('dotenv').config({path:__dirname+'/../.env'});
 const mongoose = require('mongoose');
 
-// mongoose.connect(mongoURI, {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-//   useCreateIndex: true,
-//   poolSize: 15
-// }).then(res=>{
-//     console.log("connected!!!!!!!!!!!!!!!!!");
-// });
-
 
 mongoose.connect(process.env.MONGODB_URI,{
     useUnifiedTopology:true,

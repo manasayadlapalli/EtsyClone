@@ -5,6 +5,7 @@ require('./ConnectionMongo')
 
 // Topic files
 var getItems = require('./services/getItems')
+var getSearchItems = require('./services/getSearchItems')
 
 function handleTopicRequest(topic_name, fname) {
     var consumer = connection.getConsumer(topic_name);
@@ -36,3 +37,4 @@ function handleTopicRequest(topic_name, fname) {
 
 // Topics are added here
 handleTopicRequest("getItems", getItems)
+handleTopicRequest("getSearchItems", getSearchItems)

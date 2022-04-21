@@ -77,13 +77,14 @@ const CartItem = ({ item }) => {
         <Link to={`/product/${item.product}`} className="cartItem__name">
           <p>{item.itemName}</p>
         </Link>
-        <p className="cartitem__price">${item.itemPrice}</p>
+        <p className="cartitem__price">${Number(item.itemPrice) * Number(item.qty)}</p>
+        {console.log("Quantity of Item is " ,item.qty)}
         <select
-          value={item.qty}
+          value={Number(item.qty)}
           onChange={(e) => qtyChangeHandler(e.target.value)}
           className="cartItem__select"
         >
-          {[...Array(item.itemCount).keys()].map((x) => (
+          {[...Array(Number(item.itemCount)).keys()].map((x) => (
             <option key={x + 1} value={x + 1}>
               {x + 1}
             </option>

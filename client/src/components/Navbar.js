@@ -8,6 +8,7 @@ import {
   NotificationsNoneSharp,
   FavoriteBorderSharp,
 } from "@material-ui/icons";
+import { GiShoppingCart } from "react-icons/gi";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import ProfileList from "./profileList";
@@ -17,7 +18,7 @@ import SearchBar from "./searchBar";
 import Axios from "axios";
 
 function Navbar() {
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   const user = useSelector(selectUser);
   const [showSignIn, setshowSignIn] = useState(false);
   const [showProfileLists, setShowProfileLists] = useState(false);
@@ -57,19 +58,19 @@ function Navbar() {
           <Person />
         </li>
         <li>
-          <ShoppingCart onClick={handleOpenCart} />
+          <GiShoppingCart onClick={handleOpenCart} size={30} />
         </li>
       </ul>
     );
   } else {
     
     navLogin = (
-      <ul className="icons">
+      <ul className="icons" data-testid='navbar-1'>
         <li className="icons_nav" onClick={popUpSignIn}>
-          Login
+          Sign in
         </li>
         <li>
-          <ShoppingCart />
+          <GiShoppingCart size={30}/>
         </li>
       </ul>
     );

@@ -5,7 +5,7 @@ function Dashboard() {
   return (
     <div>
       <div className="dash_board">
-        <h1 className="title">Welcome to Etsy, {cookie.load("user")}!</h1>
+        <h3 className="title">Welcome to Etsy, {cookie.load("user")}!</h3>
         <div className="dashboard_items">
           <div className="dashboard_item">
             <img
@@ -57,6 +57,7 @@ function Dashboard() {
               On Sale 
             </h3>
           </div>
+         
         </div>
       </div>
     </div>

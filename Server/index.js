@@ -179,8 +179,7 @@ app.post('/signin', async (req, res) => {
                  { 'password': password }
                ]
         }
-      );
-      
+      );      
       if(!user) {
           return res.status(400).send('User Not Found');
       }
@@ -190,7 +189,7 @@ app.post('/signin', async (req, res) => {
         path: "/",
       });
       req.session.user = user;
-      res.send(user);   
+      res.status(200).send(user);   
   }
   catch(err){
       console.log(err);
@@ -215,7 +214,7 @@ app.post("/findShopDuplicates", async (req, res) => {
         console.log("Shop name already exists");
       }
       else{
-        res.send({ message: "No duplicates", });
+        res.status(200).send({ message: "No duplicates", });
         console.log("Shop name is available");
        }         
     }
@@ -418,17 +417,43 @@ app.put("/updateShopImageById/:id", (req, res) => {
   }
 });
 
-app.get("/getSearchItems/:searchValue", (req, res) => {
+
+
+
+
+// app.get("/getSearchItems/:searchValue", (req, res) => {
+//   const searchValue = req.params.searchValue;
+//   Items.find({'itemName':{ "$regex": searchValue, "$options": "i" }},(err, result) => {
+//       if (err) {
+//         res.send(err);
+//       } else {
+//         res.send({ success: true, result });
+//       }
+//     }
+//   );
+// });
+
+
+app.get("/getSearchItems/:searchValue", async (req, res) => {
   const searchValue = req.params.searchValue;
+
+  kafka.make_request('getSearchItems', req.params.searchValue, function(err, results) {
   Items.find({'itemName':{ "$regex": searchValue, "$options": "i" }},(err, result) => {
-      if (err) {
-        res.send(err);
-      } else {
-        res.send({ success: true, result });
-      }
+    if (err) {
+      res.json({
+        status: "error",
+        msg: "System Error, Try Again."
+      })
+    } else {
+      res.send({ success: true, result });
+      console.log("----> GETSEARCHITEMS backend: " + results);
+      res.end();
+    }
     }
   );
 });
+})
+
 
 app.put("/updateUser/:id", async (req, res) => {
 
@@ -671,8 +696,6 @@ app.get("/getPurchases/:userId", (req, res) => {
 
     }   
   });
-    
-
 });
 
 
@@ -708,8 +731,6 @@ app.post("/giftMessage/:id/", (req, res) => {
 });
 
 
-
-
 app.put("/updateItemById/:id", (req, res) => {
   const _id = req.params.id; 
   // const userId = req.params.id;
@@ -720,7 +741,7 @@ app.put("/updateItemById/:id", (req, res) => {
   const itemCategory = req.body.itemCategory;
 
  Items.updateOne( _id,
-                 { $set:{itemName, itemDescription, itemPrice, itemCount, itemCount, itemCategory }},
+    { $set:{itemName, itemDescription, itemPrice, itemCount, itemCount, itemCategory }},
     (err, result) => {
       if (err) {
         console.log(err);
