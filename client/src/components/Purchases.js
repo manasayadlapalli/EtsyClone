@@ -22,11 +22,6 @@ const Purchases = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage,setPostsPerPage] = useState(5);
 
-    // localStorage.setItem("postsPerPage", 5);
-    // let postsPerPage = localStorage.getItem("postsPerPage");
-
-    // Get current posts
-
     const qtyChangeHandler = (qty) => {
 
         console.log("pagination");
@@ -34,12 +29,6 @@ const Purchases = () => {
 
         setPostsPerPage(qty);
         
-        // // {currentPage === 1 ?(
-        // // window.location.pathname = "/purchase"):(<></>);}
-
-        // localStorage.setItem("postsPerPage", qty);
-        // postsPerPage = localStorage.getItem("postsPerPage");
-
         console.log("postsPerPage",postsPerPage);};
 
     useEffect(() => { getCartItems(); }, []);
@@ -48,7 +37,6 @@ const Purchases = () => {
         setLoading(true);
         Axios.get("http://localhost:4000/getPurchases/" + user.id).then(
             (response) => {
-                console.log("Get Purchases ASDFG ",response.data.result);
                 setPosts(response.data.result);
                 dispatch(createCart(response.data.result));
                 if (response.data.success === true) {
@@ -57,7 +45,6 @@ const Purchases = () => {
             });
     };
 
-    // Change page
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
     const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
@@ -75,10 +62,11 @@ const Purchases = () => {
             <Navbar />
             <Hoverbar />
             <hr></hr>
-            <div className="cartscreen">
-                <div className="cartscreen__left">
-                    <h2>Previous Purchases</h2>
-                    <p>Number of purchases per page</p><select value={postsPerPage} onChange={(e) => qtyChangeHandler(e.target.value)}  >
+            <div className="purchasePage">
+                <div className="purchasePage_items">
+                    <h2>Purchases</h2>
+                    <p>Number of purchases per page</p>
+                    <select value={postsPerPage} onChange={(e) => qtyChangeHandler(e.target.value)}  >
                         {[2, 5, 10].map((x) => (
                             <option key={x} value={x}>
                                 {x}
@@ -90,17 +78,17 @@ const Purchases = () => {
 
                             <div className="cart_pag" style={{ display: "flex", width: "100%", height: "200px", }} >
                                 <div className="cartitem">
-                                    <p className="cartitem__price">Order ID: {item._id}</p>
-                                    <p className="cartitem__price">Purchased On:<Moment format='MMMM Do YYYY, h:mm:ss a'>{item.updatedAt}</Moment></p>
-                                    {console.log("PURCHASE DATE:", item)}
+                                    <p className="cartitem__price"><u>Order ID:</u> {item._id}</p>
+                                    {console.log(item)}
+                                    <p className="cartitem__price"><u>Purchased On:</u><Moment format='MMMM Do YYYY, h:mm:ss a'>{item.updatedAt}</Moment></p>
+                                    
                                     <Link to={`/product/${item.product}`} className="cartItem__name">
                                         <p>{item.itemId.itemName}</p>
+                                        <p className="cartitem__price">${item.itemId.itemPrice}</p>
                                     </Link>
-                                    <div className="cartitem__image">
-                                        <img src={ item.itemId.itemImage} alt={item.itemId.itemName} width={150} height={100} />
+                                    <div className="purchasePage_items_image">
+                                        <img src={ item.itemId.itemImage} alt={item.itemId.itemName} width={150} height={156} />
                                     </div>
-
-                                    <p className="cartitem__price">${item.itemId.itemPrice}</p>
                                 </div>
                             </div>
                         ))

@@ -12,7 +12,7 @@ function productsByCategory() {
     Axios.get("http://localhost:4000/getItemsByCategory").then(
       (response) => {
         if (response.data.success === true) {
-          console.log(response.data.result);
+          //console.log(response.data.result);
           setProducts(response.data.result);
         }
       }

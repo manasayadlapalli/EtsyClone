@@ -24,7 +24,6 @@ import SearchResultItems from "./components/searchResultItems";
 import ProfileForm from "./components/profileForm";
 import ProfileDashboard from "./components/profileDashboard";
 import ProductOverView from "./components/ProductOverView";
-// import CartScreen from "./components/CartScreen";
 import Cart from "./components/Cart";
 import Purchases from "./components/Purchases";
 import ProductView from "./components/ProductView";

@@ -125,8 +125,7 @@ function EtsyBody() {
             
             &nbsp;
             {localStorage.getItem("preferedCurrency")}
-            {pro.itemPrice} <br/>
-            {pro.itemName}
+            {pro.itemPrice} <br/>            
           </p>
 
           <div className="card-body">

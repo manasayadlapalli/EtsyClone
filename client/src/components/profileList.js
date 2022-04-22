@@ -64,15 +64,12 @@ function profileList({ setShowProfileLists }) {
             <li onClick={loadProfilePage} className="profile-icon">
               <b>{cookie.load("user")}</b>
               <br />
-              <span style={{ fontSize: "14px" }}>View your profile</span>
+              <span style={{ fontSize: "14px" }}>My profile</span>
             </li>
-            <li className="profile-icon">Gift card balance: $0.00</li>
-            <li className="profile-icon">Messages</li>
-            <li onClick={loadPurchasePage} className="profile-icon">
+             <li onClick={loadPurchasePage} className="profile-icon">
               <span style={{ fontSize: "14px" }}>My Purchases</span>
               </li>
-            <li className="profile-icon">Account Settings</li>
-            <li onClick={handleSellOnEtsy} className="profile-icon">
+             <li onClick={handleSellOnEtsy} className="profile-icon">
               Sell on Etsy
             </li>
             <li onClick={handleSignOut} className="profile-icon">

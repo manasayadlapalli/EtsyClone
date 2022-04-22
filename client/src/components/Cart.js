@@ -4,8 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import CartItem from "./CartItem";
 import Axios from "axios";
-
-
 import {
   clearCart,
   createCartItem,
@@ -13,6 +11,7 @@ import {
   updateCartItem,
   getCartItems,
 } from "../features/cartItemsSlice";
+
 import { selectUser } from "../features/userSlice";
 import Navbar from "./Navbar";
 import Hoverbar from "./Hoverbar";
@@ -54,33 +53,17 @@ const CartScreen = () => {
     // return finalPrice;
   };
 
-  const handleCheckOut = (userId)=> {    
-    // finalCartProducts.map((product) => {
-    //   Axios.post(`http://localhost:4000/editCount/${product.itemId}`, {
-    //     quantity: product.qty,
-    //   })
-    //     .then((response) => {
-    //       console.log(response);
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //     });
-    // });
-
-    
-  
-    // for (let i = 0; i < finalCartProducts.length; i++) {
-    //   itemId_list.push(finalCartProducts[i].itemId)
-    // } 
-    // window.location.pathname = "/purchases";
-        
-    let itemId = null;
+  const handleCheckOut = (userId)=> {
+    console.log("!!!!!!!!!!!!!!! Handle Checkout !!!!!!!!!!!!!!!!!!");
+    let itemId, giftMessage = null;
     for (let i=0; i<finalCartProducts.length; i++) {
       itemId = finalCartProducts[i].itemId;
+      giftMessage = finalCartProducts[i].giftMessage;
       Axios.post("http://localhost:4000/addCartProduct/" + user.id, {
         itemId : itemId,
         orderId: Math.floor(Math.random() * 1000000),
         price: getCartSubTotal(),
+        giftMessage: giftMessage
       }).then((response) => {
         if (response.data.success === true) {
           console.log("item created in cart");

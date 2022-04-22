@@ -19,12 +19,6 @@ export const purchaseSlice = createSlice({
         ({ id }) => id === action.payload.id
       );
       state.cartItems.splice(index, 1);
-      // state.cartItems.splice(action.payload, 1);
-      // const item = state.cartItems.filter(
-      //   (ele) => ele.itemId === action.payload
-      // );
-      //   state.cartProducts = null;
-      // console.log(item + "----------------------------: deleted");
     },
     updateCartItem: (state, action) => {
       state.cartItems = action.payload;

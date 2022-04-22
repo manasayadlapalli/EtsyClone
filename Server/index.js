@@ -577,12 +577,13 @@ app.post("/addCartProduct/:userId", (req, res) => {
   const itemId = req.body.itemId;
   const orderId = req.body.orderId;
   const qty = req.body.qty;
-  const price =req.body.price;
+  const giftMessage= req.body.giftMessage;
   const purchase = 0;
 
+  console.log("Backend: addcartproduct giftmessage: " + giftMessage);
   console.log("Item Id to Backend", itemId);
 
-  Cart.create({userId, itemId, orderId, price, gift, purchase},
+  Cart.create({userId, itemId, orderId, giftMessage, qty, purchase},
     (err, result) => {      
       if (err) {
         console.log(err);
@@ -692,7 +693,6 @@ app.get("/getPurchases/:userId", (req, res) => {
       res.send(err);
     } else {
         res.send({ success: true, result });    
-    console.log("purchased items", result)
 
     }   
   });
@@ -708,25 +708,6 @@ app.get("/getAllItemsbyIDs/:id", (req, res) => {
         res.send({ success: true, result });
       } 
     }
-  );
-});
-
-app.post("/giftMessage/:id/", (req, res) => {
-
-  const id = req.params.id;
-  const gift = req.body.qty;
-  console.log("updating gift")
-  CartModel.findByIdAndUpdate(id, { gift: gift }, (err, result) => {
-    if (err) {
-      console.log("couldnt update")
-      console.log(err);
-    } else {
-      console.log(result);
-      // res.send(result);
-      res.send("Qty updated");
-      console.log("qty update")
-    }
-  }
   );
 });
 

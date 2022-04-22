@@ -51,7 +51,7 @@ function searchBar(props) {
         type="text"
         // id="searchBar"
         className="searchBar"
-        placeholder="Search for anything..."
+        placeholder="Search for anything"
         onChange={(event) => {
           setSearchValue(event.target.value);
         }}

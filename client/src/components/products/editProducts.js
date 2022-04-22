@@ -26,8 +26,7 @@ function editProducts({ setShowProductsEditPage, products, itemId }) {
   const editItem = (e) => {
     // e.preventDefault();
     console.log("Inedit client axios");
-    Axios.put(
-      "http://localhost:4000/updateItemById/" + itemId,
+    Axios.put( "http://localhost:4000/updateItemById/" + itemId,
       itemDetails
     ).then((response) => {
       if (response.data.success) {

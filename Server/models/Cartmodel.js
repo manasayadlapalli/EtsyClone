@@ -15,14 +15,14 @@ const Cartmodel = new mongoose.Schema({
   orderId: {
     type: String
   },
+  giftMessage:{
+    type: String,
+    default:null,
+  },
 
   qty: {
     type: String,
   },
-
-  gift:{
-    type: String
-  }, 
 
   purchase: {
     type:Number

@@ -51,9 +51,7 @@ function Navbar() {
         <li onClick={showFavourites}>
           <FavoriteBorderSharp />
         </li>
-        <li>
-          <NotificationsNoneSharp />
-        </li>
+        
         <li onClick={showProfileList}>
           <Person />
         </li>

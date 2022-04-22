@@ -21,7 +21,6 @@ const CartItem = ({ item }) => {
         itemImage: item.itemImage,
         itemPrice: item.itemPrice,
         itemCount: item.itemCount,
-        // itemId: item.itemId,
         qty: Number(qty),
       })
     );
@@ -36,23 +35,26 @@ const CartItem = ({ item }) => {
     );
   };
 
-  const giftMessageHandler = (qty) => {
-
-    console.log("giftMessageHandler");
-
-    Axios.post("http://localhost:4000/giftMessage/" + item._id, {qty} )
-      .then((response) => {
-        console.log("gift messsage updated");
+  const giftMessageHandler = (giftMessage) => {
+    dispatch(
+      createFinalCart({
+        itemId: item.itemId,
+        itemName: item.itemName,
+        itemDescription: item.itemDescription,
+        itemImage: item.itemImage,
+        itemPrice: item.itemPrice,
+        itemCount: item.itemCount,
+        giftMessage: giftMessage,
       })
-      .catch((err) => {
-        console.log(err);
-      });
-
-    // window.location.pathname = "/cart";
+    );
   };
+
+
+
   const giftHandler = (gift) => {
     SetGift(true);
   }
+  // console.log('ITEM ID IS ',item.itemId)
 
   return (
     <div
@@ -60,7 +62,6 @@ const CartItem = ({ item }) => {
       style={{
         display: "flex",
         width: "100%",
-        // backgroundColor: "green",
         height: "200px",
       }}
     >
@@ -68,7 +69,6 @@ const CartItem = ({ item }) => {
         <div className="cartitem__image">
           <img
             src={item.itemImage}
-            // src={require("../Images/" + item.itemImage)}
             alt={item.itemName}
             width={150}
             height={100}
@@ -78,7 +78,7 @@ const CartItem = ({ item }) => {
           <p>{item.itemName}</p>
         </Link>
         <p className="cartitem__price">${Number(item.itemPrice) * Number(item.qty)}</p>
-        {console.log("Quantity of Item is " ,item.qty)}
+        {/* {console.log("Quantity of Item is " ,item.qty)} */}
         <select
           value={Number(item.qty)}
           onChange={(e) => qtyChangeHandler(e.target.value)}
@@ -107,8 +107,8 @@ const CartItem = ({ item }) => {
               giftHandler(e.target.value);
             }}
           />
-          <label for="checkbox"> Gift Card</label>
-          {gift && (<div> <input type="gift" id="gift" placeholder="gift message" onChange={(event) => { giftMessageHandler(event.target.value); }} required /></div>
+          <label for="checkbox"> Gift Wrap</label>
+          {gift && (<div> <input type="gift" id="gift" placeholder="Gift message" onChange={(event) => { giftMessageHandler(event.target.value); }} required /></div>
           )}
         </div>
         

@@ -26,10 +26,7 @@ function ProductView() {
   // const cartItems = useSelector(getCartItems);
 
   const addToCartHandler = () => {
-    console.log("add to cart handler");
 
-    // cartItems.map((ele) => console.log(ele));
-    // if (cartItems) {
     dispatch(
       createCartItem({
         itemId: productView.itemId,
@@ -42,31 +39,6 @@ function ProductView() {
         qty: Number(qty),
       })
     );
-    // }
-
-    // if (cartItems) {
-    //   console.log(cartItems.qty);
-    //   console.log(qty);
-    // } else {
-    //   console.log("No cart items");
-    // }
-    // console.log(productView.length);
-    // if (user !== null) {
-    //   Axios.post("http://54.193.95.78:4000/addProductToCart/" + user.id, {
-    // itemId: cartProduct.itemId,
-    // itemName: cartProduct.itemName,
-    // itemDescription: cartProduct.itemDescription,
-    // itemImage: cartProduct.itemImage,
-    // itemPrice: cartProduct.itemPrice,
-    // itemId: cartProduct.itemId,
-    // qty: qty,
-    //   }).then((response) => {
-    //     if (response.data.success === true) {
-    //       console.log("-------------responce data ------", response.data);
-    //     }
-    //   });
-    //   console.log("Add to cart clicked");
-    // }
   };
   
   return (
@@ -76,53 +48,6 @@ function ProductView() {
       <hr></hr>
       <h1>{id}</h1>
 
-      {/* <div className="productscreen">
-        <div className="productscreen__left">
-          <div className="left__image">
-            <img
-              src={require("../Images/" + productView.itemImage)}
-              alt={productView.itemName}
-              //   height={300}
-              width={450}
-            />
-          </div>
-
-          <div className="left__info">
-            <p className="left__name">{productView.itemName}</p>
-            <p>Price: ${productView.itemPrice}</p>
-            <p>Description: {productView.itemDescription}</p>
-          </div>
-        </div>
-        <div className="productscreen__right">
-          <div className="right__info">
-            <p>
-              Price:
-              <span>${productView.itemPrice}</span>
-            </p>
-            <p>
-              Status:
-              <span>
-                {productView.itemCount > 0 ? "In Stock" : "Out of Stock"}
-              </span>
-            </p>
-            <p>
-              Qty
-              <select value={qty} onChange={(e) => setQty(e.target.value)}>
-                {[...Array(productView.itemCount).keys()].map((x) => (
-                  <option key={x + 1} value={x + 1}>
-                    {x + 1}
-                  </option>
-                ))}
-              </select>
-            </p>
-            <p>
-              <button type="button" onClick={addToCartHandler}>
-                Add To Cart
-              </button>
-            </p>
-          </div>
-        </div>
-      </div> */}
     </>
   );
 }
