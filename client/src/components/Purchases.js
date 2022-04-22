@@ -79,7 +79,9 @@ const Purchases = () => {
                             <div className="cart_pag" style={{ display: "flex", width: "100%", height: "200px", }} >
                                 <div className="cartitem">
                                     <p className="cartitem__price"><u>Order ID:</u> {item._id}</p>
-                                    {console.log(item)}
+                                    {
+                                        //console.log(item)
+                                    }
                                     <p className="cartitem__price"><u>Purchased On:</u><Moment format='MMMM Do YYYY, h:mm:ss a'>{item.updatedAt}</Moment></p>
                                     
                                     <Link to={`/product/${item.product}`} className="cartItem__name">

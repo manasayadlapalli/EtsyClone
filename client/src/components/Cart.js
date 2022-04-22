@@ -54,11 +54,11 @@ const CartScreen = () => {
   };
 
   const handleCheckOut = (userId)=> {
-    console.log("!!!!!!!!!!!!!!! Handle Checkout !!!!!!!!!!!!!!!!!!");
     let itemId, giftMessage = null;
     for (let i=0; i<finalCartProducts.length; i++) {
       itemId = finalCartProducts[i].itemId;
       giftMessage = finalCartProducts[i].giftMessage;
+      console.log("finalCartProducts: ",+ finalCartProducts)
       Axios.post("http://localhost:4000/addCartProduct/" + user.id, {
         itemId : itemId,
         orderId: Math.floor(Math.random() * 1000000),
@@ -73,8 +73,8 @@ const CartScreen = () => {
       });
     }
 
-    dispatch(clearCart());
-    window.location.pathname = "/purchases";
+    //dispatch(clearCart());
+    //window.location.pathname = "/purchases";
 
   };
 
