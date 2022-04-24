@@ -63,7 +63,7 @@ app.use(bodyParser.json({ limit: "20mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "20mb", extended: true }));
 app.use(
   cors({
-    origin: ["http://localhost:3000"],
+    origin: ["http://ec2-13-56-211-75.us-west-1.compute.amazonaws.com:3000"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
@@ -87,7 +87,7 @@ app.use(
 
 //Allow Access Control
 app.use(function (req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.setHeader("Access-Control-Allow-Origin", "http://ec2-13-56-211-75.us-west-1.compute.amazonaws.com:3000");
   res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader(
     "Access-Control-Allow-Methods",

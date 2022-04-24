@@ -26,7 +26,7 @@ function editProducts({ setShowProductsEditPage, products, itemId }) {
   const editItem = (e) => {
     // e.preventDefault();
     console.log("Inedit client axios");
-    Axios.put( "http://localhost:4000/updateItemById/" + itemId,
+    Axios.put( "http://ec2-13-56-211-75.us-west-1.compute.amazonaws.com:4000/updateItemById/" + itemId,
       itemDetails
     ).then((response) => {
       if (response.data.success) {
@@ -40,7 +40,7 @@ function editProducts({ setShowProductsEditPage, products, itemId }) {
   }, []);
 
   const fetchItemDetails = () => {
-    Axios.get("http://localhost:4000/getItemById/" + itemId).then(
+    Axios.get("http://ec2-13-56-211-75.us-west-1.compute.amazonaws.com:4000/getItemById/" + itemId).then(
       (response) => {
         if (response) {
           console.log(response.data[0]);

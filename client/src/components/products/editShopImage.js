@@ -18,12 +18,12 @@ const editShopImage = ({ editShopPage }) => {
     formData.append("shopImage", shopImage);
     console.log("Shop image update");
     Axios.put(
-      "http://localhost:4000/updateShopImageById/" + user.id,
+      "http://ec2-13-56-211-75.us-west-1.compute.amazonaws.com:4000/updateShopImageById/" + user.id,
       formData
     ).then((response) => {
       if (response.data.success) {
         console.log(response);
-        
+
         console.log("Item details edited successfully.....");
         window.location.pathname = "/shopHome";
       }
@@ -35,7 +35,7 @@ const editShopImage = ({ editShopPage }) => {
   }, []);
 
   const fetchItemDetails = () => {
-    Axios.get("http://localhost:4000/getShopById/" + user.id).then(
+    Axios.get("http://ec2-13-56-211-75.us-west-1.compute.amazonaws.com:4000/getShopById/" + user.id).then(
       (response) => {
         if (response) {
           setShopImage(response.data.result.shopImage);

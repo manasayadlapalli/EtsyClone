@@ -32,7 +32,7 @@ function Signin({ setshowSignIn }) {
   const checkUser = (e) => {
     e.preventDefault();
 
-    Axios.post("http://localhost:4000/signin", {
+    Axios.post("http://ec2-13-56-211-75.us-west-1.compute.amazonaws.com:4000/signin", {
       email: email,
       password: password,
     })
@@ -66,7 +66,7 @@ function Signin({ setshowSignIn }) {
   };
 
   useEffect(() => {
-    Axios.get("http://localhost:4000/signin").then((response) => {
+    Axios.get("http://ec2-13-56-211-75.us-west-1.compute.amazonaws.com:4000/signin").then((response) => {
       
       if (response.data.loggedIn === true) {
         setLoginStatus(response.data.user);

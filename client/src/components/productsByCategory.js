@@ -9,7 +9,7 @@ function productsByCategory() {
   }, []);
 
   const getItemsByCategory = () => {
-    Axios.get("http://localhost:4000/getItemsByCategory").then(
+    Axios.get("http://ec2-13-56-211-75.us-west-1.compute.amazonaws.com:4000/getItemsByCategory").then(
       (response) => {
         if (response.data.success === true) {
           //console.log(response.data.result);

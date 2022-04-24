@@ -39,17 +39,17 @@ function shopHomeByOther() {
   });
  
   const getUserIdFromItemId = () => {
-    Axios.get("http://localhost:4000/getItemById/" + id).then((response) => {
+    Axios.get("http://ec2-13-56-211-75.us-west-1.compute.amazonaws.com:4000/getItemById/" + id).then((response) => {
       if (response) {
         dispatch(userId(response.data.userId));
         console.log("GET USER ID FROM ITEMID", response.data)
-        
+
       }
     });
   };
 
   const getItemsFromUserid = () => {
-    Axios.get("http://localhost:4000/getItemsBasedOnUser/" + user.id).then(
+    Axios.get("http://ec2-13-56-211-75.us-west-1.compute.amazonaws.com:4000/getItemsBasedOnUser/" + user.id).then(
       (response) => {
         if (response) {
           console.log(response);
@@ -62,7 +62,7 @@ function shopHomeByOther() {
   };
 
   const getUserDetails = () => {
-    Axios.get("http://localhost:4000/getShopById/" + userId).then(
+    Axios.get("http://ec2-13-56-211-75.us-west-1.compute.amazonaws.com:4000/getShopById/" + userId).then(
       (response) => {
         if (response) {
           console.log(response);

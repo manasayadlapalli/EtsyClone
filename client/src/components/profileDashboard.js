@@ -28,7 +28,7 @@ function profileDashboard() {
 
   const getFavouriteItems = () => {
     console.log("getFavourites frontend call: user.id: ", user.id);
-    Axios.get("http://localhost:4000/getFavourites/" + user.id).then(
+    Axios.get("http://ec2-13-56-211-75.us-west-1.compute.amazonaws.com:4000/getFavourites/" + user.id).then(
       (response) => {
          if (response.data.success === true) {
           dispatch(favouritesList(response.data.result));
@@ -44,7 +44,7 @@ function profileDashboard() {
 
   const handleFavourite = (itemId, userId) => {
     console.log("Favourites deleted" + itemId + userId);
-    Axios.delete("http://localhost:4000/deleteFavourite/" + itemId + "/" + userId,
+    Axios.delete("http://ec2-13-56-211-75.us-west-1.compute.amazonaws.com:4000/deleteFavourite/" + itemId + "/" + userId,
       {
         itemId: itemId,
         userId: userId,

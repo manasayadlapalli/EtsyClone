@@ -36,7 +36,7 @@ function EtsyBody() {
   }, []);
 
   const getItems = () => {
-    Axios.get("http://localhost:4000/getItems").then((response) => {
+    Axios.get("http://ec2-13-56-211-75.us-west-1.compute.amazonaws.com:4000/getItems").then((response) => {
       if (response.data.success === true) {
          dispatch(getAllItems(response.data.result));
 
@@ -63,7 +63,7 @@ function EtsyBody() {
 
   const getFavourites = () => {
     if (user !== null) {
-      Axios.get("http://localhost:4000/getFavourites/" + user.id).then(
+      Axios.get("http://ec2-13-56-211-75.us-west-1.compute.amazonaws.com:4000/getFavourites/" + user.id).then(
         (response) => {
           if (response.data.success === true) {
             dispatch(favouritesList(response.data.result));
@@ -74,7 +74,7 @@ function EtsyBody() {
   };
 
   const handleFavourite = (itemId, userId) => {
-    Axios.post("http://localhost:4000/addFavourite", {
+    Axios.post("http://ec2-13-56-211-75.us-west-1.compute.amazonaws.com:4000/addFavourite", {
       itemId: itemId,
       userId: userId,
     }).then((response) => {

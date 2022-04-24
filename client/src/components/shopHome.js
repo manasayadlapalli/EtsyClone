@@ -47,7 +47,7 @@ function shopHome() {
   }, []);
 
   const getItemsByItemSearchId = () => {
-    Axios.get("http://localhost:4000/getItemById/" + id).then((response) => {
+    Axios.get("http://ec2-13-56-211-75.us-west-1.compute.amazonaws.com:4000/getItemById/" + id).then((response) => {
       console.log(response);
       if (response) {
         setSearchItemDetails(response.data.result);
@@ -72,7 +72,7 @@ function shopHome() {
   var viewItems = (variables) => {
     setShowProds(true);
     Axios.post(
-      "http://localhost:4000/getAllProducts/" + user.id,
+      "http://ec2-13-56-211-75.us-west-1.compute.amazonaws.com:4000/getAllProducts/" + user.id,
       variables
     ).then((response) => {
       if (response.data.success) {

@@ -13,7 +13,7 @@ function register({ setShowRegister }) {
     e.preventDefault();
     
     console.log(username)
-    Axios.post("http://localhost:4000/register", {
+    Axios.post("http://ec2-13-56-211-75.us-west-1.compute.amazonaws.com:4000/register", {
       email: email,
       username: username,
       password: password,

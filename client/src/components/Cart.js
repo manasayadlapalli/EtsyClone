@@ -61,7 +61,7 @@ const CartScreen = () => {
       itemId = finalCartProducts[i].itemId;
       giftMessage = finalCartProducts[i].giftMessage;
       if (Number(finalCartProducts[i].qty) > 0) {
-        Axios.post("http://localhost:4000/addCartProduct/" + user.id, {
+        Axios.post("http://ec2-13-56-211-75.us-west-1.compute.amazonaws.com:4000/addCartProduct/" + user.id, {
           itemId : itemId,
           orderId: uniqueOrderId,
           orderAmount: Number(getCartSubTotal()),          

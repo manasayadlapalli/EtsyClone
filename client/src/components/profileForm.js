@@ -32,7 +32,7 @@ function profileForm() {
 
     console.log(formData);
 
-    Axios.put("http://localhost:4000/updateUser/" + user.id, formData, {
+    Axios.put("http://ec2-13-56-211-75.us-west-1.compute.amazonaws.com:4000/updateUser/" + user.id, formData, {
       headers: { "content-Type": "multipart/form-data" },
     }).then((response) => {
       console.warn(response);
@@ -63,7 +63,7 @@ function profileForm() {
 
   const fetchItemDetails = (e) => {
     // e.preventDefault();
-    Axios.get("http://localhost:4000/getShopById/" + user.id).then(
+    Axios.get("http://ec2-13-56-211-75.us-west-1.compute.amazonaws.com:4000/getShopById/" + user.id).then(
       (response) => {
         console.log("getshopbyId" + response);
 

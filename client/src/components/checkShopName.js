@@ -19,7 +19,7 @@ function checkShopName() {
       setError("Minimum 4 characters required");
     } else {
       setError("Available");
-      Axios.post("http://localhost:4000/findShopDuplicates/", {
+      Axios.post("http://ec2-13-56-211-75.us-west-1.compute.amazonaws.com:4000/findShopDuplicates/", {
         shopName: shopName,
       })
         .then((response) => {
@@ -36,7 +36,7 @@ function checkShopName() {
   };
 
   const handleCreateShop = () => {
-    Axios.post("http://localhost:4000/createShop/" + user.id, {
+    Axios.post("http://ec2-13-56-211-75.us-west-1.compute.amazonaws.com:4000/createShop/" + user.id, {
       shopName: shopName,
     }).then((response) => {
       if (response.data) {

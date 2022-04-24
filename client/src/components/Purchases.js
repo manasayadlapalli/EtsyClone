@@ -33,7 +33,7 @@ const Purchases = () => {
 
     const getCartItems = () => {
         setLoading(true);
-        Axios.get("http://localhost:4000/getPurchases/" + user.id).then(
+        Axios.get("http://ec2-13-56-211-75.us-west-1.compute.amazonaws.com:4000/getPurchases/" + user.id).then(
             (response) => {
                 setPosts(response.data.result);
                 dispatch(createCart(response.data.result));
