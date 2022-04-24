@@ -1,0 +1,25 @@
+const Cart = require("../../models/Cartmodel");
+
+function handle_request(msg, callback){
+    console.log("In getPurchases kafka handle_request");
+    try{
+        Cart.aggregate( [
+            {
+              $lookup:
+                {
+                  from: "items",
+                  localField: "itemId",
+                  foreignField: "_id",
+                  as: "itemInfo"
+                }
+            }
+          ] ).sort({"updatedAt" : -1}).exec((err, result) => {
+              callback(null, err ? err : {success: true, result});
+            });
+    } catch(err) {
+        console.log(err);
+        callback(null, 'Internal Server Error.');
+      }
+  };
+exports.handle_request = handle_request;
+
