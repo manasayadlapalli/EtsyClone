@@ -802,7 +802,8 @@ body {
 .purchasePage_items{
   width: 90%;
   margin-left: 6%;
-  font-size: 13px;
+  font-size: 14px;
+  font-weight: 600;
   justify-content: space-between;
 }
 .purchasePage{
