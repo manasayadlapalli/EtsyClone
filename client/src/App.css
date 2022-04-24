@@ -808,6 +808,9 @@ body {
   align-items: center;
   background-color: rgba(202, 201, 195, 0.541);
 }
-.purchasePage_items_image{
-  padding-left: 100%;
+.purchasePage_items_date{
+margin-left: -200px;
+}
+.purchasePage_items_message{
+  margin-left: -270px;;
 }

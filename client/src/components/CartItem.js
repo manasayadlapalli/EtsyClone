@@ -4,8 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createFinalCart, removeCartItem } from "../features/cartItemsSlice";
 import { Delete } from "@material-ui/icons";
-import Axios from "axios";
-import { selectUser } from "../features/userSlice";
+import {BsGift} from "react-icons/bs";
 
 const CartItem = ({ item }) => {
   const dispatch = useDispatch();
@@ -70,23 +69,23 @@ const CartItem = ({ item }) => {
           <img
             src={item.itemImage}
             alt={item.itemName}
-            width={150}
-            height={100}
+            width={170}
+            height={210}
           />
         </div>
         <Link to={`/product/${item.product}`} className="cartItem__name">
           <p>{item.itemName}</p>
         </Link>
-        <p className="cartitem__price">${Number(item.itemPrice) * Number(item.qty)}</p>
+        <p className="cartitem__price">${Number(item.itemPrice)}</p>
         {/* {console.log("Quantity of Item is " ,item.qty)} */}
         <select
           value={Number(item.qty)}
           onChange={(e) => qtyChangeHandler(e.target.value)}
           className="cartItem__select"
         >
-          {[...Array(Number(item.itemCount)).keys()].map((x) => (
-            <option key={x + 1} value={x + 1}>
-              {x + 1}
+          {[...Array(Number(item.itemCount) + 1).keys()].map((x) => (
+            <option key={x} value={x}>
+              {x}
             </option>
           ))}
         </select>
@@ -107,8 +106,8 @@ const CartItem = ({ item }) => {
               giftHandler(e.target.value);
             }}
           />
-          <label for="checkbox"> Gift Wrap</label>
-          {gift && (<div> <input type="gift" id="gift" placeholder="Gift message" onChange={(event) => { giftMessageHandler(event.target.value); }} required /></div>
+          <label className="checkbox" for="checkbox"> This order is a gift <BsGift/></label>
+          {gift && (<div> <input type="gift" id="gift" placeholder="Add gift message for free" onChange={(event) => { giftMessageHandler(event.target.value); }} required /></div>
           )}
         </div>
         

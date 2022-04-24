@@ -32,25 +32,6 @@ function ProductOverView() {
   }
 
   const addToCartHandler = (itemId, userId) => {
-    console.log("add to cart handler");
-    setAddToCart("Item added to your cart successfully");
-    console.log("Items added to Cart" + itemId + userId);
-    console.log("Qty of item Added", qty)
-
-    Axios.post("http://localhost:4000/addCart", {
-      
-      itemId: productView._id,
-      userId: productView.userId,
-      qty: Number(qty)
-      
-    }).then((response) => {
-      if (response.data.success === true) {
-        console.log(response.data.result);
-        console.log("new cart item added");
-      }
-    });
-
-
 
     dispatch(
       createCartItem({
@@ -63,7 +44,7 @@ function ProductOverView() {
         qty: Number(qty),
       })
     );
-
+    window.location.pathname = "/cart";
 
   };
   return (

@@ -74,22 +74,25 @@ const Purchases = () => {
                         ))}
                     </select>
                     {currentPosts.length === 0 ? (<div> You have no previous purchases. <Link to="/">Go Back</Link> </div>) : (
-                        currentPosts.map((item) => (
+                        currentPosts.map((OrderInfo) => (
 
                             <div className="cart_pag" style={{ display: "flex", width: "100%", height: "200px", }} >
                                 <div className="cartitem">
-                                    <p className="cartitem__price"><u>Order ID:</u> {item._id}</p>
+                                    <p className="cartitem__price"><u>Order ID:</u> {OrderInfo.orderId}</p>
                                     {
                                         //console.log(item)
                                     }
-                                    <p className="cartitem__price"><u>Purchased On:</u><Moment format='MMMM Do YYYY, h:mm:ss a'>{item.updatedAt}</Moment></p>
-                                    
-                                    <Link to={`/product/${item.product}`} className="cartItem__name">
-                                        <p>{item.itemId.itemName}</p>
-                                        <p className="cartitem__price">${item.itemId.itemPrice}</p>
+                                    <p className="purchasePage_items_date"><u>Purchased On:</u> <Moment format='MMMM Do YYYY, h:mm:ss a'>{OrderInfo.updatedAt}</Moment></p>
+                                    <p className="purchasePage_items_message">Gift message: {OrderInfo.giftMessage}</p>
+                                    <Link to={`/product/${OrderInfo.itemInfo.product}`} className="cartItem__name">
+                                        <p>{OrderInfo.itemInfo[0].itemName}</p>
+                                        <p>${OrderInfo.itemInfo[0].itemPrice}</p>
+                                        {console.log(OrderInfo)}
+                                        <p>Quantity: {OrderInfo.itemInfo[0].qty}</p>
+                                        
                                     </Link>
                                     <div className="purchasePage_items_image">
-                                        <img src={ item.itemId.itemImage} alt={item.itemId.itemName} width={150} height={156} />
+                                        <img src={ OrderInfo.itemInfo[0].itemImage} alt={OrderInfo.itemInfo[0].itemName} width={150} height={156} />
                                     </div>
                                 </div>
                             </div>

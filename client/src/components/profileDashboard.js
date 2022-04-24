@@ -27,6 +27,7 @@ function profileDashboard() {
   }, []);
 
   const getFavouriteItems = () => {
+    console.log("getFavourites frontend call: user.id: ", user.id);
     Axios.get("http://localhost:4000/getFavourites/" + user.id).then(
       (response) => {
          if (response.data.success === true) {

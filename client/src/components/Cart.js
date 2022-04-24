@@ -55,27 +55,29 @@ const CartScreen = () => {
 
   const handleCheckOut = (userId)=> {
     let itemId, giftMessage = null;
+    let uniqueOrderId = Math.floor(Math.random() * 1000000)
+    
     for (let i=0; i<finalCartProducts.length; i++) {
       itemId = finalCartProducts[i].itemId;
       giftMessage = finalCartProducts[i].giftMessage;
-      console.log("finalCartProducts: ",+ finalCartProducts)
-      Axios.post("http://localhost:4000/addCartProduct/" + user.id, {
-        itemId : itemId,
-        orderId: Math.floor(Math.random() * 1000000),
-        price: getCartSubTotal(),
-        giftMessage: giftMessage
-      }).then((response) => {
-        if (response.data.success === true) {
-          console.log("item created in cart");
-        }
-      }).catch((err) => {
-        console.log(err);
-      });
+      if (Number(finalCartProducts[i].qty) > 0) {
+        Axios.post("http://localhost:4000/addCartProduct/" + user.id, {
+          itemId : itemId,
+          orderId: uniqueOrderId,
+          price: Number(getCartSubTotal()),          
+          giftMessage: giftMessage
+        }).then((response) => {
+          if (response.data.success === true) {
+            console.log("item created in cart");
+            dispatch(clearCart());
+            {console.log("Order AMOUNT",Number(getCartSubTotal()))}
+            window.location.pathname = "/purchases";
+          }
+        }).catch((err) => {
+          console.log(err);
+        });
+      }
     }
-
-    //dispatch(clearCart());
-    //window.location.pathname = "/purchases";
-
   };
 
   return (

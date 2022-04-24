@@ -10,8 +10,6 @@ const mongoose = require("mongoose");
 const cookieParser = express("cookie-parser");
 const multer = require("multer");
 const path = require("path");
-const Favouritesmodel = require("./models/Favouritesmodel");
-const Cartmodel = require("./models/Cartmodel");
 const app = express();
 
 require('dotenv').config();
@@ -21,7 +19,7 @@ var kafka = require('./kafka-backend/kafka/client');
 // AWS S3 stuff
 const multerS3 = require('multer-s3');
 const aws = require('aws-sdk');
-const { Kafka } = require("aws-sdk");
+//const { Kafka } = require("aws-sdk");
 const bucketName = process.env.AWS_BUCKET_NAME 
 const region =  process.env.AWS_BUCKET_REGION 
 const accessKeyId = process.env.AWS_ACCESS_KEY
@@ -46,6 +44,18 @@ const uploadS3 = multer({
     }    
   })
 }).single("itemImage");
+
+const uploadS3_userImage = multer({
+  storage: multerS3({
+    s3,
+    //ACL: 'public-read',
+    bucket: bucketName,
+    contentType: multerS3.AUTO_CONTENT_TYPE,
+    key: function (req, file, cb) {
+      cb(null, file.originalname)
+    }    
+  })
+}).single("userImage");
 
 
 
@@ -147,6 +157,7 @@ const upload = multer({
 app.use("/Images", express.static("./Images"));
 
 
+
 app.post('/register',async (req,res)=>{  
   try{
       const {username,email,password} = req.body; 
@@ -243,15 +254,16 @@ app.post("/createShop/:id", async(req, res) => {
 
 
 app.post("/addProduct/:id", (req, res) => {
+
+  uploadS3(req, res, function (err) {
+    //if (!req.file) {
+    //  return res.send("Please select an image to upload");
+    if (err instanceof multer.MulterError) {
+      return res.send(err);
+    } else if (err) {
+      return res.send(err);
+    }
    
-      uploadS3(req, res, function (err) {
-      //if (!req.file) {
-      //  return res.send("Please select an image to upload");
-      if (err instanceof multer.MulterError) {
-        return res.send(err);
-      } else if (err) {
-        return res.send(err);
-      }
       const userId = req.params.id;
       const itemName = req.body.itemName;
       const itemDescription = req.body.itemDescription;
@@ -259,7 +271,7 @@ app.post("/addProduct/:id", (req, res) => {
       const itemCount = req.body.itemCount;
       const itemImage = req.file.location;
       const itemCategory = req.body.itemCategory;
-      
+
       Items.create( {userId,itemImage,itemName,itemDescription,itemPrice,itemCount,itemCategory },(err, result) => {
         console.log(req.file);
         if (err) {
@@ -336,8 +348,8 @@ app.put("/updateItemById/:itemId", (req, res) => {
 
 app.put("/updateItemImageById/:id", (req, res) => {
   try {
-    let upload = multer({ storage: storage }).single("itemImage");
-    upload(req, res, function (err) {
+    // let upload = multer({ storage: storage }).single("itemImage");
+    uploadS3(req, res, function (err) {
       if (!req.file) {
         return res.send("Please select an image to upload");
       } else if (err instanceof multer.MulterError) {
@@ -457,8 +469,7 @@ app.get("/getSearchItems/:searchValue", async (req, res) => {
 
 app.put("/updateUser/:id", async (req, res) => {
 
-    let upload = multer({ storage: userStorage }).single("userImage");
-    upload(req, res, function (err) {
+    uploadS3_userImage(req, res, function (err) {
       if (!req.file) {
         return res.send("Please select an image to upload");
       } else if (err instanceof multer.MulterError) {
@@ -466,14 +477,15 @@ app.put("/updateUser/:id", async (req, res) => {
       } else if (err) {
         return res.send(err);
       }
+
       const userName = req.body.userName;
       const gender = req.body.gender;
       const city = req.body.city;
       const dob = req.body.dob;
-      const userImage = req.file.filename;
+      const userImage = req.file.location;
       const about = req.body.about;
       const phoneNumber = req.body.phoneNumber;
-                
+        
       Users.findOneAndUpdate({"_id":req.params.id}, 
       {$set: { userName, city, dob, gender, about, phoneNumber, userImage}},
          (err, result) => {
@@ -500,7 +512,7 @@ app.put("/updateUser/:id", async (req, res) => {
 // });
 
 app.get("/getItems", (req, res) => {
-  console.log("get items");
+  console.log("---> API kafka call: getItems <---");
     kafka.make_request('getItems', req.body, function(err, results) {
       if (err) {
         res.json({
@@ -543,19 +555,35 @@ app.post("/addFavourite", (req, res) => {
 });
 
 
+// app.get("/getFavourites/:id", (req, res) => {
+  
+//   Favourites.find().select({"userId":req.body.userId}).populate("itemId").exec((err, result) => {
+//       if (err) {
+//         console.log(err);
+//         res.send(err);
+//       } else {
+//         res.send({ success: true, result });
+//       }
+//     }
+//   );
+// });
+
 app.get("/getFavourites/:id", (req, res) => {
-  const userId = req.body.userId;
-  Favourites.find().select(userId).populate("itemId").exec((err, result) => {
-  //  Favourites.find(userId, (err, result) => {
+  console.log("---> API kafka call: getFavourites userId: <---", req.params.id);
+    kafka.make_request('getFavourites', req.params.id, function(err, results) {
       if (err) {
-        console.log(err);
-        res.send(err);
+        res.json({
+          status: "error",
+          msg: "System Error, Try Again."
+        })
       } else {
-        res.send({ success: true, result });
+        res.json(results);
+        console.log("----> getfavourites backend: " + results);
+        res.end();
       }
-    }
-  );
+    });
 });
+
 
 app.delete("/deleteFavourite/:itemId/:userId", (req, res) => {
   const itemId = req.body.itemId;
@@ -596,30 +624,30 @@ app.post("/addCartProduct/:userId", (req, res) => {
   );
 });
 
-app.post("/addCart", (req, res) => {
-  const userId = req.body.userId;
-  console.log(userId);
-  const itemId = req.body.itemId;
-  const qty = req.body.qty;
-  const purchase = 0;
-  const newFav = new Cart({
-    itemId: itemId, userId: userId, qty: qty, purchase: purchase
-  });
-  console.log(itemId, "itemId")
-  console.log("qty", qty)
+// app.post("/addCart", (req, res) => {
+//   const userId = req.body.userId;
+//   console.log(userId);
+//   const itemId = req.body.itemId;
+//   const qty = req.body.qty;
+//   const purchase = 0;
+//   const newFav = new Cart({
+//     itemId: itemId, userId: userId, qty: qty, purchase: purchase
+//   });
+//   console.log(itemId, "itemId")
+//   console.log("qty", qty)
 
-  newFav.save({},
-    (err, result) => {
-      console.log(result);
-      if (err) {
-        console.log(err);
-        res.send(err);
-      } else {
-        res.send({ success: true, result });
-      }
-    }
-  );
-});
+//   newFav.save({},
+//     (err, result) => {
+//       console.log(result);
+//       if (err) {
+//         console.log(err);
+//         res.send(err);
+//       } else {
+//         res.send({ success: true, result });
+//       }
+//     }
+//   );
+// });
 
 
 app.get("/getFinalCartProducts/:userId", (req, res) => {
@@ -685,17 +713,40 @@ app.get("/getItemByItemId/:itemId", (req, res) => {
    })
 });
 
+app.get("/getFavourites/:id", (req, res) => {
+  console.log("---> API kafka call: getFavourites userId: <---", req.params.id);
+    kafka.make_request('getFavourites', req.params.id, function(err, results) {
+      if (err) {
+        res.json({
+          status: "error",
+          msg: "System Error, Try Again."
+        })
+      } else {
+        res.json(results);
+        console.log("----> getfavourites backend: " + results);
+        res.end();
+      }
+    });
+});
+
 app.get("/getPurchases/:userId", (req, res) => {
   const userId = req.params.userId;
-  console.log("USER ID:", userId)
-  Cart.find().select({ userId: userId, purchase: 1 }).populate("itemId").exec((err, result) => {  
-    if (err) {
-      res.send(err);
-    } else {
-        res.send({ success: true, result });    
 
-    }   
+  console.log("---> API kafka call: getPurchases userId: <---", req.params.userId);
+  kafka.make_request('getPurchases', req.params.userId, function(err, results) {
+    if (err) {
+      res.json({
+        status: "error",
+        msg: "System Error, Try Again."
+      })
+    } else {
+      res.json(results);
+      console.log("----> getPurchases backend: " + results);
+      res.end();
+    }
   });
+
+  console.log("USER ID:", userId)
 });
 
 

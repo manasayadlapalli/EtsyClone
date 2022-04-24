@@ -6,6 +6,8 @@ require('./ConnectionMongo')
 // Topic files
 var getItems = require('./services/getItems')
 var getSearchItems = require('./services/getSearchItems')
+var getFavourites = require('./services/getFavourites')
+var getPurchases = require("./services/getPurchases")
 
 function handleTopicRequest(topic_name, fname) {
     var consumer = connection.getConsumer(topic_name);
@@ -31,10 +33,11 @@ function handleTopicRequest(topic_name, fname) {
             });
             return;
         });
-
     });
 }
 
 // Topics are added here
 handleTopicRequest("getItems", getItems)
 handleTopicRequest("getSearchItems", getSearchItems)
+handleTopicRequest("getFavourites", getFavourites)
+handleTopicRequest("getPurchases", getPurchases)

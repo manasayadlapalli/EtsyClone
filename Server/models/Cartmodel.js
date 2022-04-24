@@ -23,6 +23,9 @@ const Cartmodel = new mongoose.Schema({
   qty: {
     type: String,
   },
+  orderAmount:{
+    type: String,
+  },
 
   purchase: {
     type:Number

@@ -11,16 +11,14 @@ import ProductsByCategory from "./productsByCategory";
 
 const Home = () => {
   return (
-    <div data-testid='home-1'>
+    <div>
       <Navbar />
       <Hoverbar />
       <Dashboard />
       <Dashboard2/>
       <EtsyBody />
       <ProductsByCategory />
-
       <AboutFooter />
-
       <Footer />
       <FooterBanner />
     </div>

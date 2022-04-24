@@ -71,7 +71,6 @@ function shopHome() {
 
   var viewItems = (variables) => {
     setShowProds(true);
-    // console.log("---------------in view Items-------------------");
     Axios.post(
       "http://localhost:4000/getAllProducts/" + user.id,
       variables
@@ -114,7 +113,6 @@ function shopHome() {
 
   const updateSearchTerm = (newSearchTerm) => {
     setSearchTerm(newSearchTerm);
-    console.log(newSearchTerm + ".........................");
 
     const variables = {
       skip: 0,

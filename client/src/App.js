@@ -11,7 +11,6 @@ import {
   Navigate,
 } from "react-router-dom";
 import Register from "./components/register";
-import WelcomePage from "./components/welcomePage";
 import Navbar from "./components/Navbar";
 import ProfilePage from "./components/profilePage";
 import SellOnEtsy from "./components/sellOnEtsy";
@@ -38,7 +37,6 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/welcome" element={<WelcomePage />} />
           <Route path="/signin" element={<Signin />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/updateProfile" element={<ProfileForm />} />
