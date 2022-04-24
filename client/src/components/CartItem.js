@@ -53,7 +53,6 @@ const CartItem = ({ item }) => {
   const giftHandler = (gift) => {
     SetGift(true);
   }
-  // console.log('ITEM ID IS ',item.itemId)
 
   return (
     <div
@@ -65,36 +64,14 @@ const CartItem = ({ item }) => {
       }}
     >
       <div className="cartitem">
-        <div className="cartitem__image">
+        <div className="gift_message">
           <img
             src={item.itemImage}
             alt={item.itemName}
-            width={170}
+            width={150}
             height={210}
           />
         </div>
-        <Link to={`/product/${item.product}`} className="cartItem__name">
-          <p>{item.itemName}</p>
-        </Link>
-        <p className="cartitem__price">${Number(item.itemPrice)}</p>
-        {/* {console.log("Quantity of Item is " ,item.qty)} */}
-        <select
-          value={Number(item.qty)}
-          onChange={(e) => qtyChangeHandler(e.target.value)}
-          className="cartItem__select"
-        >
-          {[...Array(Number(item.itemCount) + 1).keys()].map((x) => (
-            <option key={x} value={x}>
-              {x}
-            </option>
-          ))}
-        </select>
-        <button
-          className="cartItem__deleteBtn"
-          onClick={() => removeHandler(item.itemId)}
-        >
-          <Delete />
-        </button>
         <div>
           <input
             type="checkbox"
@@ -110,6 +87,49 @@ const CartItem = ({ item }) => {
           {gift && (<div> <input type="gift" id="gift" placeholder="Add gift message for free" onChange={(event) => { giftMessageHandler(event.target.value); }} required /></div>
           )}
         </div>
+       <div> 
+        <Link to={`/product/${item.product}`} className="cartItem__name">
+          <p>{item.itemName}</p>
+        </Link>       
+       
+        <p className="cartitem__price">${Number(item.itemPrice)}</p>
+        </div>
+        <div>
+        <select
+          value={Number(item.qty)}
+          onChange={(e) => qtyChangeHandler(e.target.value)}
+          className="cartItem__select"
+        >
+          {[...Array(Number(item.itemCount) + 1).keys()].map((x) => (
+            <option key={x} value={x}>
+              {x}
+            </option>
+          ))}
+        </select>
+        </div>
+        <div>
+        <button
+          className="cartItem__deleteBtn"
+          onClick={() => removeHandler(item.itemId)}
+        >
+          <Delete />
+        </button>
+        </div>
+        {/* <div>
+          <input
+            type="checkbox"
+            name="giftbox"
+            id="checkbox"
+            checked={gift}
+            value={gift}
+            onChange={e => {
+              giftHandler(e.target.value);
+            }}
+          />
+          <label className="checkbox" for="checkbox"> This order is a gift <BsGift/></label>
+          {gift && (<div> <input type="gift" id="gift" placeholder="Add gift message for free" onChange={(event) => { giftMessageHandler(event.target.value); }} required /></div>
+          )}
+        </div> */}
         
       </div>
     </div>

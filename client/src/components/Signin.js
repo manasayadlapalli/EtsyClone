@@ -52,7 +52,7 @@ function Signin({ setshowSignIn }) {
               gender: response.data.gender,
               city: response.data.city,
               phoneNumber: response.data.phoneNumber,
-              profilePic: response.data.profilePic,
+              userImage: response.data.userImage,
               about: response.data.about,
               shopImage: response.data.shopImage,
               loggedIn: true,

@@ -605,13 +605,13 @@ app.post("/addCartProduct/:userId", (req, res) => {
   const itemId = req.body.itemId;
   const orderId = req.body.orderId;
   const qty = req.body.qty;
+  const orderAmount =req.body.orderAmount;
   const giftMessage= req.body.giftMessage;
   const purchase = 0;
 
-  console.log("Backend: addcartproduct giftmessage: " + giftMessage);
-  console.log("Item Id to Backend", itemId);
+  console.log("REQ>BODY to Backend", req.body);
 
-  Cart.create({userId, itemId, orderId, giftMessage, qty, purchase},
+  Cart.create({userId, itemId, orderId, giftMessage, qty, orderAmount, purchase},
     (err, result) => {      
       if (err) {
         console.log(err);
@@ -624,30 +624,6 @@ app.post("/addCartProduct/:userId", (req, res) => {
   );
 });
 
-// app.post("/addCart", (req, res) => {
-//   const userId = req.body.userId;
-//   console.log(userId);
-//   const itemId = req.body.itemId;
-//   const qty = req.body.qty;
-//   const purchase = 0;
-//   const newFav = new Cart({
-//     itemId: itemId, userId: userId, qty: qty, purchase: purchase
-//   });
-//   console.log(itemId, "itemId")
-//   console.log("qty", qty)
-
-//   newFav.save({},
-//     (err, result) => {
-//       console.log(result);
-//       if (err) {
-//         console.log(err);
-//         res.send(err);
-//       } else {
-//         res.send({ success: true, result });
-//       }
-//     }
-//   );
-// });
 
 
 app.get("/getFinalCartProducts/:userId", (req, res) => {
@@ -723,7 +699,6 @@ app.get("/getFavourites/:id", (req, res) => {
         })
       } else {
         res.json(results);
-        console.log("----> getfavourites backend: " + results);
         res.end();
       }
     });
@@ -731,7 +706,6 @@ app.get("/getFavourites/:id", (req, res) => {
 
 app.get("/getPurchases/:userId", (req, res) => {
   const userId = req.params.userId;
-
   console.log("---> API kafka call: getPurchases userId: <---", req.params.userId);
   kafka.make_request('getPurchases', req.params.userId, function(err, results) {
     if (err) {

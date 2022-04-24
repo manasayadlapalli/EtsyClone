@@ -802,6 +802,7 @@ body {
 .purchasePage_items{
   width: 90%;
   margin-left: 6%;
+  font-size: 13px;
   justify-content: space-between;
 }
 .purchasePage{
@@ -812,5 +813,11 @@ body {
 margin-left: -200px;
 }
 .purchasePage_items_message{
-  margin-left: -270px;;
+  margin-left: -280px;
+  color: rgb(27, 171, 27);
+}
+.purchasePage_items_name{
+  margin-left: -200px;
+  color: black;
+
 }

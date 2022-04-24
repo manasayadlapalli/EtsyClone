@@ -24,12 +24,10 @@ const Purchases = () => {
 
     const qtyChangeHandler = (qty) => {
 
-        console.log("pagination");
-        console.log("qty",qty);
 
         setPostsPerPage(qty);
         
-        console.log("postsPerPage",postsPerPage);};
+    };
 
     useEffect(() => { getCartItems(); }, []);
 
@@ -52,9 +50,6 @@ const Purchases = () => {
 
     const paginate = pageNumber => {
         setCurrentPage(pageNumber);
-        console.log("pageNumber", pageNumber);
-        console.log('currentPage', currentPage);
-
     };
 
     return (
@@ -79,16 +74,13 @@ const Purchases = () => {
                             <div className="cart_pag" style={{ display: "flex", width: "100%", height: "200px", }} >
                                 <div className="cartitem">
                                     <p className="cartitem__price"><u>Order ID:</u> {OrderInfo.orderId}</p>
-                                    {
-                                        //console.log(item)
-                                    }
+                                    
                                     <p className="purchasePage_items_date"><u>Purchased On:</u> <Moment format='MMMM Do YYYY, h:mm:ss a'>{OrderInfo.updatedAt}</Moment></p>
                                     <p className="purchasePage_items_message">Gift message: {OrderInfo.giftMessage}</p>
-                                    <Link to={`/product/${OrderInfo.itemInfo.product}`} className="cartItem__name">
+                                    <Link className="purchasePage_items_name" to={`/product/${OrderInfo.itemInfo.product}`} >
                                         <p>{OrderInfo.itemInfo[0].itemName}</p>
-                                        <p>${OrderInfo.itemInfo[0].itemPrice}</p>
-                                        {console.log(OrderInfo)}
-                                        <p>Quantity: {OrderInfo.itemInfo[0].qty}</p>
+                                        <p>Order Amount: ${OrderInfo.orderAmount}</p>
+                                        
                                         
                                     </Link>
                                     <div className="purchasePage_items_image">

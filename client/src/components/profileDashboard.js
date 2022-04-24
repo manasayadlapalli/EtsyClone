@@ -93,7 +93,6 @@ function profileDashboard() {
               <h5 className="card-title">{pro.itemId.itemName}</h5>
 
               <p className="card-text">{pro.itemId.itemDescription}</p>
-              {/* <button className="btn-sm btn-dark">Edit</button> */}
             </div>
           </div>
         </div>
@@ -113,11 +112,11 @@ function profileDashboard() {
         {user !== null && (
           <img
             className="profile_image"
-            src={user.profilePic}
+            src={user.userImage}
             alt="profile pic"
           />
         )}
-        {/* <img className="profile_pic" src="" /> */}
+         {console.log("PROFILE PIC", user)}
         <span className="profile_imageIcon">
           <PhotoCameraOutlined />
         </span>

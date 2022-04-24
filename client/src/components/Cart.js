@@ -64,13 +64,12 @@ const CartScreen = () => {
         Axios.post("http://localhost:4000/addCartProduct/" + user.id, {
           itemId : itemId,
           orderId: uniqueOrderId,
-          price: Number(getCartSubTotal()),          
+          orderAmount: Number(getCartSubTotal()),          
           giftMessage: giftMessage
         }).then((response) => {
           if (response.data.success === true) {
             console.log("item created in cart");
             dispatch(clearCart());
-            {console.log("Order AMOUNT",Number(getCartSubTotal()))}
             window.location.pathname = "/purchases";
           }
         }).catch((err) => {
@@ -108,7 +107,7 @@ const CartScreen = () => {
         </div>
         <div
           className="cartscreen__right"
-          style={{ marginTop: "80px", width: "30%" }}
+          style={{ marginTop: "80px", width: "20%" }}
         >
           <div className="cartscreen__info">
             <p>Subtotal ({getCartCount()}) items</p>

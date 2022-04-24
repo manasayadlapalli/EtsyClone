@@ -54,7 +54,7 @@
   }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 900px) {
   .cartItem__name {
     font-size: 0.6rem;
   }
@@ -102,7 +102,7 @@
 }
 
 .cartscreen__info p {
-  padding: 8px;
+  padding: 4px;
 }
 
 .cartscreen__info p:first-child {
@@ -126,7 +126,7 @@
   opacity: 0.9;
 }
 
-@media (max-width: 1320px) {
+/* @media (max-width: 1320px) {
   .cartscreen {
     max-width: 900px;
   }
@@ -146,4 +146,4 @@
   .cartscreen__right {
     margin: 1rem;
   }
-}
+} */
