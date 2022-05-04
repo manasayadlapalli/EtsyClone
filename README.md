@@ -6,4 +6,4 @@ To run this project, install dependencies for client, Server and  kafka Backend
 ```npm install``` <br/>
 To start client: ```npm run start``` <br/>
 To start server: ```npm run start``` <br/>
-To start kafka Backend ```npm server.js``` <br/>
+To start kafka Backend ```node server.js``` <br/>
